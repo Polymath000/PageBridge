@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quicknotion/feature/auth/presentation/views/login_view.dart';
+import 'package:quicknotion/feature/auth/presentation/views/auth_view.dart';
 
 sealed class AppRoutes {
   const AppRoutes();
@@ -39,7 +39,7 @@ sealed class AppRoutes {
 
   // Routes without arguments
   static Future<Object?> loginView(final BuildContext context) =>
-      _pushNamed(context, LoginView.routeName);
+      _pushNamed(context, AuthView.routeName);
 }
 
 class CreateNewPasswordViewArgs {
@@ -49,7 +49,7 @@ class CreateNewPasswordViewArgs {
 }
 
 Map<String, Widget Function(BuildContext, Object?)> _routes = {
-  LoginView.routeName: (_, _) => const LoginView(),
+  AuthView.routeName: (_, _) => const AuthView(),
   // CreateNewPasswordView.routeName: (_, final args) {
   //   final data = args! as CreateNewPasswordViewArgs;
   //   return CreateNewPasswordView(email: data.email, code: data.code);

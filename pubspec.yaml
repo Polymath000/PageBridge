@@ -15,16 +15,20 @@ dependencies:
   # flutter_web_auth: ^0.6.0
   font_awesome_flutter: ^10.12.0
   hive: ^2.2.3
-  http: ^1.6.0
   intl: ^0.18.1
   logger: ^2.6.2
   shared_preferences: ^2.5.3
-  url_launcher: ^6.3.2
 
 dev_dependencies:
-  flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
 
 flutter:
+  assets:
+    - assets/images/
   uses-material-design: true
+
+flutter_assets:
+  assets_path: assets/images/
+  output_path: lib/core/utls/
+  filename: app_images.dart
