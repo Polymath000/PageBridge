@@ -6,6 +6,6 @@ class TokenView extends StatelessWidget {
   static const String routeName = 'token';
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: TokenViewBody());
+    return Scaffold(body: TokenViewBody());
   }
 }
