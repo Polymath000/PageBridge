@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
-import 'package:quicknotion/feature/auth/presentation/widgets/submit_button.dart';
-import 'package:quicknotion/feature/auth/presentation/widgets/token_text_field.dart';
+import 'package:quicknotion/feature/database_view/presentation/widgets/submit_button.dart';
+import 'package:quicknotion/feature/database_view/presentation/widgets/token_text_field.dart';
 
 class TokenViewBody extends StatelessWidget {
   TokenViewBody({super.key});

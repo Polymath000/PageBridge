@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quicknotion/feature/auth/presentation/views/token_view.dart';
+import 'package:quicknotion/feature/database_view/presentation/views/token_view.dart';
 
 sealed class AppRoutes {
   const AppRoutes();
