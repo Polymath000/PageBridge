@@ -34,11 +34,7 @@ class ServerFailure extends Failure {
 
       case DioExceptionType.badResponse:
         final statusCode = e.response?.statusCode;
-        final statusMessage =
-            e.response?.statusMessage ?? 'Unexpected server response.';
-        return ServerFailure(
-          message: 'Server error ($statusCode): $statusMessage',
-        );
+        return ServerFailure.fromServer(statusCode);
 
       case DioExceptionType.cancel:
         return ServerFailure(
@@ -62,5 +58,21 @@ class ServerFailure extends Failure {
           );
         }
     }
+  }
+
+  factory ServerFailure.fromServer(int? statusCode) {
+    if (statusCode == 401) {
+      return ServerFailure(message: "The Token is incorrect");
+    }
+    return ServerFailure(message: "there was an error please try again later");
+  }
+}
+
+
+
+class NetworkFailure extends Failure{
+  NetworkFailure({required super.message});
+  factory NetworkFailure.error(){
+    return NetworkFailure(message: "No internet connection. Please connect to a network.");
   }
 }
