@@ -10,7 +10,8 @@ class DioConsumer extends ApiConsumer {
     dio..interceptors.addAll([LoggerInterceptor()]);
     dio.options.baseUrl = EndPoint.baseUrl;
   }
-
+  
+  //!POST
   @override
   Future<Response> post(
     String path, {

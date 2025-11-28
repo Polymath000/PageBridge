@@ -1,9 +1,9 @@
 sealed class EndPoint {
   const EndPoint();
-  static const String baseUrl = 'https://identitytoolkit.googleapis.com/v1';
-  static const String webApiKey = "AIzaSyCIM21p0mHSdyxtwxoeIP6wITogBcjG-i0";
-  // static const String = ;
-  static const String loginUrl = '$baseUrl/accounts:signInWithPassword?key=$webApiKey';
-  static const String signUpUrl = '$baseUrl/accounts:signUp?key=$webApiKey';
-  static const String updateDisplayName = '$baseUrl/accounts:update?key=$webApiKey';
+  static const String baseUrl = 'https://api.notion.com/v1';
+  // This endpoint need : Token (Authorization) ,and Notion-Version return list of database in the token
+  // and body 
+  static const String allDatabases = "$baseUrl/search";
+  // This endpoint need : Token (Authorization) , Notion-Version and body 
+  static const String addNewPage = "$baseUrl/pages/";
 }
