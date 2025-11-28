@@ -17,6 +17,7 @@ class DioConsumer extends ApiConsumer {
     String path, {
     data,
     Map<String, dynamic>? queryParameters,
+    Options? options,
     bool isFormData = false,
   }) async {
     try {
@@ -26,6 +27,7 @@ class DioConsumer extends ApiConsumer {
             ? FormData.fromMap(data as Map<String, dynamic>)
             : data,
         queryParameters: queryParameters,
+        options: options
       );
       return response;
     } on DioException catch (e) {

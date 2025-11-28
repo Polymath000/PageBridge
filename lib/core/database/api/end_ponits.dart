@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+
 sealed class EndPoint {
   const EndPoint();
   static const String baseUrl = 'https://api.notion.com/v1';
@@ -7,3 +9,11 @@ sealed class EndPoint {
   // This endpoint need : Token (Authorization) , Notion-Version and body 
   static const String addNewPage = "$baseUrl/pages/";
 }
+
+Options headers(String token) => Options(
+  headers: {
+    "Authorization": "Bearer $token",
+    "Notion-Version": "2022-06-28",
+    "Content-Type": "application/json",
+  },
+);

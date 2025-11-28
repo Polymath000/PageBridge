@@ -3,5 +3,5 @@ import 'package:quicknotion/core/errors/failure.dart';
 import 'package:quicknotion/feature/database_view/domain/entities/database_entity.dart';
 
 abstract class DatabaseRepo {
-  Future<Either<Failure, List<DatabaseEntity>>> signInWithToken(String token);
+  Future<Either<Failure, List<DatabaseEntity>>> checkTokenAndReturnTheDatabases(String token);
 }

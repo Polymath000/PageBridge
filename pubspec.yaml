@@ -13,6 +13,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_getit: ^3.0.1
+  flutter_secure_storage: ^9.2.4
   font_awesome_flutter: ^10.12.0
   hive: ^2.2.3
   http: ^1.6.0
