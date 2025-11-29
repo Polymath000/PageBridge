@@ -8,7 +8,7 @@ part 'add_token_state.dart';
 class AddTokenCubit extends Cubit<AddTokenState> {
   AddTokenCubit({required this.databaseRepo}) : super(AddTokenInitial());
   final DatabaseRepoImpl databaseRepo;
-  Future<void> addToken(String token) async {
+  Future<void> addToken({required String token}) async {
     emit(AddTokenLoading());
     final result = await databaseRepo.checkTokenAndReturnTheDatabases(token);
     result.fold(

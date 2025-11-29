@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quicknotion/feature/database_view/presentation/views/home_view.dart';
 import 'package:quicknotion/feature/database_view/presentation/views/token_view.dart';
 
 sealed class AppRoutes {
@@ -42,6 +43,8 @@ sealed class AppRoutes {
   // _pushNamedAndRemoveAll(context, OnboardingView.routeName);
   static Future<Object?> tokenView(final BuildContext context) =>
       _pushNamedAndRemoveAll(context, TokenView.routeName);
+  static Future<Object?> homeView(final BuildContext context) =>
+      _pushNamedAndRemoveAll(context, HomeView.routeName);
 }
 
 class CreateNewPasswordViewArgs {
@@ -52,6 +55,7 @@ class CreateNewPasswordViewArgs {
 
 Map<String, Widget Function(BuildContext, Object?)> _routes = {
   TokenView.routeName: (_, _) => const TokenView(),
+  HomeView.routeName: (_, _) => const HomeView(),
 
   // OnboardingView.routeName: (_, _) => const OnboardingView(),
   // CreateNewPasswordView.routeName: (_, final args) {

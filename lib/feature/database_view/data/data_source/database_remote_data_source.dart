@@ -26,8 +26,7 @@ class DatabaseRemoteDataSourceImpl implements DatabaseRemoteDataSource {
     List<DatabaseEntity> databases = [];
     if (data.data != null && data.data['results'] != null) {
       databases = await getDatabaseList(data);
-      SecureStorage storage = SecureStorage();
-      storage.writeData(key: tokenKey, value: token);
+      SecureStorage.writeData(key: tokenKey, value: token);
     }
     return databases;
   }
