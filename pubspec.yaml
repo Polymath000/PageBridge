@@ -7,14 +7,17 @@ environment:
   sdk: ^3.9.2
 
 dependencies:
+  bloc: ^9.1.0
   dartz: ^0.10.1
   data_connection_checker_tv: ^0.3.5-nullsafety
   dio: ^5.9.0
   flutter:
     sdk: flutter
+  flutter_bloc: ^9.1.1
   flutter_getit: ^3.0.1
   flutter_secure_storage: ^9.2.4
   font_awesome_flutter: ^10.12.0
+  get_it: ^7.7.0
   hive: ^2.2.3
   http: ^1.6.0
   intl: ^0.18.1
