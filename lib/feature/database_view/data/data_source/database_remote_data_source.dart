@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:quicknotion/core/constants/constants.dart';
 import 'package:quicknotion/core/database/api/dio_consumer.dart';
 import 'package:quicknotion/core/database/api/end_ponits.dart';
@@ -27,6 +29,8 @@ class DatabaseRemoteDataSourceImpl implements DatabaseRemoteDataSource {
     if (data.data != null && data.data['results'] != null) {
       databases = await getDatabaseList(data);
       SecureStorage.writeData(key: tokenKey, value: token);
+      // String? ken = await SecureStorage.readData(key: tokenKey);
+      // log(ken ?? "There is no token");
     }
     return databases;
   }

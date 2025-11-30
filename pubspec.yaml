@@ -33,3 +33,10 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/images/
+
+flutter_assets:
+  assets_path: assets/images/
+  output_path: lib/core/utls/
+  filename: app_images.dart
