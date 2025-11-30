@@ -10,12 +10,14 @@ class DioConsumer extends ApiConsumer {
     dio..interceptors.addAll([LoggerInterceptor()]);
     dio.options.baseUrl = EndPoint.baseUrl;
   }
-
+  
+  //!POST
   @override
   Future<Response> post(
     String path, {
     data,
     Map<String, dynamic>? queryParameters,
+    Options? options,
     bool isFormData = false,
   }) async {
     try {
@@ -25,6 +27,7 @@ class DioConsumer extends ApiConsumer {
             ? FormData.fromMap(data as Map<String, dynamic>)
             : data,
         queryParameters: queryParameters,
+        options: options
       );
       return response;
     } on DioException catch (e) {

@@ -2,23 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:quicknotion/config/routes/on_generate_routes.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
 import 'package:quicknotion/config/themes/theme_config.dart' show ThemeConfig;
-import 'package:quicknotion/feature/onboarding/presentation/views/token_view.dart';
+import 'package:quicknotion/feature/database_view/presentation/views/splash_view.dart';
 
 import 'config/themes/app_colors.dart';
 
 class QuickNotionApp extends StatelessWidget {
+  const QuickNotionApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       onGenerateRoute: onGenerateRoute,
-      initialRoute: TokenView.routeName,
+      initialRoute: SplashView.routeName,
       theme: const ThemeConfig().light,
       darkTheme: const ThemeConfig().dark,
       debugShowCheckedModeBanner: false,
-      builder: (final context, final child) {
+      builder: (context, child) {
         AppColors.init(context);
         AppTextStyles.init(context);
-        return child!;
+        return child ?? const SizedBox();
       },
     );
   }
