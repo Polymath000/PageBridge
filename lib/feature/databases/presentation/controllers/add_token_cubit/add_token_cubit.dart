@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:quicknotion/feature/database_view/data/repos/database_repo_impl.dart';
-import 'package:quicknotion/feature/database_view/domain/entities/database_entity.dart';
+import 'package:quicknotion/feature/databases/data/repos/database_repo_impl.dart';
+import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
 
 part 'add_token_state.dart';
 

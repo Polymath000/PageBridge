@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:quicknotion/feature/database_view/presentation/views/home_view.dart';
-import 'package:quicknotion/feature/database_view/presentation/views/splash_view.dart';
-import 'package:quicknotion/feature/database_view/presentation/views/token_view.dart';
+import 'package:quicknotion/feature/databases/presentation/views/home_view.dart';
+import 'package:quicknotion/feature/onboarding&splash/presentation/views/splash_view.dart';
+import 'package:quicknotion/feature/databases/presentation/views/token_view.dart';
 
 sealed class AppRoutes {
   const AppRoutes();

@@ -2,8 +2,8 @@ import 'package:quicknotion/core/constants/constants.dart';
 import 'package:quicknotion/core/database/api/dio_consumer.dart';
 import 'package:quicknotion/core/database/api/end_ponits.dart';
 import 'package:quicknotion/core/database/cache/secure_storage.dart';
-import 'package:quicknotion/feature/database_view/data/model/database_model.dart';
-import 'package:quicknotion/feature/database_view/domain/entities/database_entity.dart';
+import 'package:quicknotion/feature/databases/data/model/database_model.dart';
+import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
 
 abstract class DatabaseRemoteDataSource {
   Future<List<DatabaseEntity>> checkTokenAndReturnTheDatabases(String token);

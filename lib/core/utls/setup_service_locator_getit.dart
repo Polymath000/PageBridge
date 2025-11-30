@@ -3,8 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:quicknotion/core/database/api/dio_consumer.dart';
 import 'package:quicknotion/core/network/network_info.dart';
-import 'package:quicknotion/feature/database_view/data/data_source/database_remote_data_source.dart';
-import 'package:quicknotion/feature/database_view/data/repos/database_repo_impl.dart';
+import 'package:quicknotion/feature/databases/data/data_source/database_remote_data_source.dart';
+import 'package:quicknotion/feature/databases/data/repos/database_repo_impl.dart';
 
 final getit = GetIt.instance;
 

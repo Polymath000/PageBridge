@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quicknotion/config/routes/on_generate_routes.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
 import 'package:quicknotion/config/themes/theme_config.dart' show ThemeConfig;
-import 'package:quicknotion/feature/database_view/presentation/views/splash_view.dart';
+import 'package:quicknotion/feature/onboarding&splash/presentation/views/splash_view.dart';
 
 import 'config/themes/app_colors.dart';
 

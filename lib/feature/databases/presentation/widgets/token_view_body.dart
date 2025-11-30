@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quicknotion/feature/database_view/presentation/widgets/token_form_body.dart';
+import 'package:quicknotion/feature/databases/presentation/widgets/token_form_body.dart';
 
 class TokenViewBody extends StatelessWidget {
   const TokenViewBody({super.key});

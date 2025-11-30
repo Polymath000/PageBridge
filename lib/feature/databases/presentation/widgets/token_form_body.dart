@@ -4,9 +4,9 @@ import 'package:quicknotion/config/routes/on_generate_routes.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
 import 'package:quicknotion/core/helpers/custom_show_snack_bar.dart';
 import 'package:quicknotion/core/utls/custom_loading_indecator.dart';
-import 'package:quicknotion/feature/database_view/presentation/controllers/add_token_cubit/add_token_cubit.dart';
-import 'package:quicknotion/feature/database_view/presentation/widgets/submit_button.dart';
-import 'package:quicknotion/feature/database_view/presentation/widgets/token_text_field.dart';
+import 'package:quicknotion/feature/databases/presentation/controllers/add_token_cubit/add_token_cubit.dart';
+import 'package:quicknotion/feature/databases/presentation/widgets/submit_button.dart';
+import 'package:quicknotion/feature/databases/presentation/widgets/token_text_field.dart';
 
 class TokenFormBody extends StatefulWidget {
   TokenFormBody({super.key, required this.context});
