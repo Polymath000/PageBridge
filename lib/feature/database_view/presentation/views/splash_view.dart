@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:quicknotion/config/routes/on_generate_routes.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
+import 'package:quicknotion/core/constants/constants.dart';
+import 'package:quicknotion/core/database/cache/secure_storage.dart';
 import 'package:quicknotion/core/utls/app_images.dart';
 
 class SplashView extends StatefulWidget {
@@ -11,6 +14,24 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
+  String? token;
+  @override
+  void initState() {
+    _checkAuthentication();
+    super.initState();
+  }
+
+  void _checkAuthentication() async {
+    await Future.delayed(const Duration(seconds: 3));
+    if (!mounted) return;
+    token = await SecureStorage.readData(key: tokenKey);
+    if (token != null) {
+      AppRoutes.homeView(context);
+    } else {
+      AppRoutes.tokenView(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
