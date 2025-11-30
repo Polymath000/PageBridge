@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:quicknotion/core/constants/constants.dart';
 import 'package:quicknotion/core/database/api/dio_consumer.dart';
 import 'package:quicknotion/core/database/api/end_ponits.dart';

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:loading_indicator/loading_indicator.dart';
 import 'package:quicknotion/config/routes/on_generate_routes.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
 import 'package:quicknotion/core/helpers/custom_show_snack_bar.dart';
+import 'package:quicknotion/core/utls/custom_loading_indecator.dart';
 import 'package:quicknotion/feature/database_view/presentation/controllers/add_token_cubit/add_token_cubit.dart';
 import 'package:quicknotion/feature/database_view/presentation/widgets/submit_button.dart';
 import 'package:quicknotion/feature/database_view/presentation/widgets/token_text_field.dart';
@@ -18,9 +18,7 @@ class TokenFormBody extends StatefulWidget {
 
 class _TokenFormBodyState extends State<TokenFormBody> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
-
   String token = "";
 
   @override
@@ -36,13 +34,7 @@ class _TokenFormBodyState extends State<TokenFormBody> {
       },
       builder: (context, state) {
         if (state is AddTokenLoading) {
-          return LoadingIndicator(
-            indicatorType: Indicator.circleStrokeSpin,
-            colors: const [Colors.white],
-            strokeWidth: 2,
-            backgroundColor: Colors.black,
-            pathBackgroundColor: Colors.black,
-          );
+          return CustomLoadingIndecator();
         } else if (state is AddTokenFailure) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             customShowSnackBar(message: state.message, context: context);

@@ -4,11 +4,11 @@ class DatabaseModel extends DatabaseEntity {
   final String id;
   const DatabaseModel({
     required this.id,
-    required String title,
-    CoverModel? cover,
-    IconModel? icon,
-    required List<PropertyModel> properties,
-  }) : super(title: title, cover: cover, icon: icon, properties: properties);
+    required super.title,
+    CoverModel? super.cover,
+    IconModel? super.icon,
+    required List<PropertyModel> super.properties,
+  });
 
   factory DatabaseModel.fromJson(Map<String, dynamic> json) {
     String parsedTitle = "No Title Found";
@@ -39,20 +39,13 @@ class DatabaseModel extends DatabaseEntity {
 
 class PropertyModel extends PropertyEntity {
   const PropertyModel({
-    required String name,
-    required String type,
-    required bool canEdit,
-    List<SelectOptionModel>? selectOptions,
-    String? formulaExpression,
-    String? relationDatabaseId,
-  }) : super(
-         name: name,
-         type: type,
-         canEdit: canEdit,
-         selectOptions: selectOptions,
-         formulaExpression: formulaExpression,
-         relationDatabaseId: relationDatabaseId,
-       );
+    required super.name,
+    required super.type,
+    required super.canEdit,
+    List<SelectOptionModel>? super.selectOptions,
+    super.formulaExpression,
+    super.relationDatabaseId,
+  });
 
   factory PropertyModel.fromJson(String name, Map<String, dynamic> json) {
     final type = json['type'];
@@ -103,8 +96,7 @@ class PropertyModel extends PropertyEntity {
 }
 
 class SelectOptionModel extends SelectOptionEntity {
-  const SelectOptionModel({required String name, required String color})
-    : super(name: name, color: color);
+  const SelectOptionModel({required super.name, required super.color});
 
   factory SelectOptionModel.fromJson(Map<String, dynamic> json) {
     return SelectOptionModel(
@@ -115,7 +107,7 @@ class SelectOptionModel extends SelectOptionEntity {
 }
 
 class CoverModel extends CoverEntity {
-  const CoverModel({String? type, String? url}) : super(type: type, url: url);
+  const CoverModel({super.type, super.url});
 
   factory CoverModel.fromJson(Map<String, dynamic> json) {
     final type = json['type'];
@@ -130,8 +122,7 @@ class CoverModel extends CoverEntity {
 }
 
 class IconModel extends IconEntity {
-  const IconModel({String? type, String? emoji, String? url})
-    : super(type: type, emoji: emoji, url: url);
+  const IconModel({super.type, super.emoji, super.url});
 
   factory IconModel.fromJson(Map<String, dynamic> json) {
     final type = json['type'];
