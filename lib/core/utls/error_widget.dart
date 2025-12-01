@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
+import 'package:quicknotion/core/utls/app_icons.dart';
 
 class CustomErrorWidget extends StatelessWidget {
   const CustomErrorWidget({super.key, required this.errorMessage});
@@ -14,7 +15,7 @@ class CustomErrorWidget extends StatelessWidget {
         child: Column(
           children: [
             Spacer(flex: 1),
-            Icon(Icons.error, color: AppColors.red, size: 32),
+            Icon(AppIcons.errorIcon, color: AppColors.red, size: 32),
             SizedBox(height: 16),
             Text(
               errorMessage,

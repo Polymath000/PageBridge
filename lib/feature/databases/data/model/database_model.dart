@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:quicknotion/core/utls/get_icon_depends_on_property_type.dart';
+
 import '../../domain/entities/database_entity.dart';
 
 class DatabaseModel extends DatabaseEntity {
@@ -21,7 +24,16 @@ class DatabaseModel extends DatabaseEntity {
     List<PropertyModel> parsedProperties = [];
     if (json['properties'] != null) {
       (json['properties'] as Map<String, dynamic>).forEach((key, value) {
-        if (value['type'] != 'button') {
+        if (value['type'] != 'button' &&
+            value['type'] != 'place' &&
+            value['type'] != 'created_by' &&
+            value['type'] != 'relation' &&
+            value['type'] != 'rollup' &&
+            value['type'] != 'people' &&
+            value['type'] != 'last_edited_by' &&
+            value['type'] != 'last_edited_time' &&
+            value['type'] != 'formula' &&
+            value['type'] != 'unique_id') {
           parsedProperties.add(PropertyModel.fromJson(key, value));
         }
       });
@@ -45,6 +57,7 @@ class PropertyModel extends PropertyEntity {
     List<SelectOptionModel>? super.selectOptions,
     super.formulaExpression,
     super.relationDatabaseId,
+    IconData? super.icon,
   });
 
   factory PropertyModel.fromJson(String name, Map<String, dynamic> json) {
@@ -64,6 +77,7 @@ class PropertyModel extends PropertyEntity {
     List<SelectOptionModel>? options;
     String? expression;
     String? relatedDbId;
+    IconData? icon;
 
     final config = json[type];
     if (config != null && config is Map<String, dynamic>) {
@@ -83,7 +97,7 @@ class PropertyModel extends PropertyEntity {
         relatedDbId = config['database_id'];
       }
     }
-
+    icon = getIconDependsOnPropertyType(type);
     return PropertyModel(
       name: name,
       type: type,
@@ -91,6 +105,7 @@ class PropertyModel extends PropertyEntity {
       selectOptions: options,
       formulaExpression: expression,
       relationDatabaseId: relatedDbId,
+      icon: icon,
     );
   }
 }

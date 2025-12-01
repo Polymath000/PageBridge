@@ -18,6 +18,8 @@ class HomeViewBody extends StatefulWidget {
 
 class _HomeViewBodyState extends State<HomeViewBody> {
   bool _isFetched = false;
+  late List<DatabaseEntity> databases = [];
+  bool isLoading = true;
 
   @override
   void didChangeDependencies() {
@@ -28,13 +30,11 @@ class _HomeViewBodyState extends State<HomeViewBody> {
     }
   }
 
-  late List<DatabaseEntity> databases = [];
   void _getDatabases() async {
     final String? token = await SecureStorage.readData(key: tokenKey);
     context.read<AddTokenCubit>().addToken(token: token ?? "");
   }
 
-  bool isLoading = true;
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AddTokenCubit, AddTokenState>(
@@ -45,7 +45,6 @@ class _HomeViewBodyState extends State<HomeViewBody> {
               isLoading = false;
               databases = state.databases;
             });
-            // AppRoutes.homeView(context);
           });
         }
       },
@@ -56,11 +55,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
           isLoading = false;
           return CustomErrorWidget(errorMessage: state.message);
         }
-        return
-        // databases.isEmpty
-        //     ? ErrorWidget(errorMessage: "There is no databases")
-        //     :
-        Skeletonizer(
+        return Skeletonizer(
           enabled: isLoading,
           containersColor: AppColors.darkSurface,
           switchAnimationConfig: SwitchAnimationConfig(
@@ -68,7 +63,18 @@ class _HomeViewBodyState extends State<HomeViewBody> {
             switchInCurve: Curves.elasticInOut,
           ),
           child: Column(
-            children: databases.map((e) => DatabaseCard(database: e)).toList(),
+            children:
+                (isLoading
+                        ? List.generate(
+                            5,
+                            (index) => const DatabaseEntity(
+                              title: "Loading Database Title",
+                              properties: [],
+                            ),
+                          )
+                        : databases)
+                    .map((e) => DatabaseCard(database: e))
+                    .toList(),
           ),
         );
       },

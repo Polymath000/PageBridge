@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class DatabaseEntity {
   final String title;
   final CoverEntity? cover;
@@ -10,6 +12,21 @@ class DatabaseEntity {
     this.icon,
     required this.properties,
   });
+
+  DatabaseEntity copyWith({
+    String? title,
+    CoverEntity? cover,
+    IconEntity? icon,
+    List<PropertyEntity>? properties,
+  }) {
+    return DatabaseEntity(
+      title: title ?? this.title,
+      cover: cover ?? this.cover,
+      icon: icon ?? this.icon,
+      properties: properties ?? this.properties,
+    );
+  }
+
 }
 
 class PropertyEntity {
@@ -19,6 +36,7 @@ class PropertyEntity {
   final List<SelectOptionEntity>? selectOptions;
   final String? formulaExpression;
   final String? relationDatabaseId;
+  final IconData? icon;
 
   const PropertyEntity({
     required this.name,
@@ -27,7 +45,20 @@ class PropertyEntity {
     this.selectOptions,
     this.formulaExpression,
     this.relationDatabaseId,
+    this.icon,
   });
+
+  copyWith({required IconData icon}) {
+    return PropertyEntity(
+      name: name,
+      type: type,
+      canEdit: canEdit,
+      selectOptions: selectOptions,
+      formulaExpression: formulaExpression,
+      relationDatabaseId: relationDatabaseId,
+      icon: icon,
+    );
+  }
 }
 
 class SelectOptionEntity {
