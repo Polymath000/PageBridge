@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
-import 'package:quicknotion/config/themes/app_text_style.dart';
 import 'package:quicknotion/core/constants/constants.dart';
 import 'package:quicknotion/core/database/cache/secure_storage.dart';
 import 'package:quicknotion/core/utls/error_widget.dart';
@@ -9,7 +8,6 @@ import 'package:quicknotion/feature/databases/domain/entities/database_entity.da
 import 'package:quicknotion/feature/databases/presentation/controllers/add_token_cubit/add_token_cubit.dart';
 import 'package:quicknotion/feature/databases/presentation/views/database_card.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:quicknotion/core/utls/error_widget.dart';
 
 class HomeViewBody extends StatefulWidget {
   const HomeViewBody({super.key});
@@ -19,7 +17,6 @@ class HomeViewBody extends StatefulWidget {
 }
 
 class _HomeViewBodyState extends State<HomeViewBody> {
-  @override
   bool _isFetched = false;
 
   @override
@@ -34,7 +31,6 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   late List<DatabaseEntity> databases = [];
   void _getDatabases() async {
     final String? token = await SecureStorage.readData(key: tokenKey);
-    if (!mounted) return;
     context.read<AddTokenCubit>().addToken(token: token ?? "");
   }
 

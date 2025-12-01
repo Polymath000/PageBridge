@@ -9,7 +9,7 @@ class TokenViewBody extends StatelessWidget {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: Builder(builder: (context) => TokenFormBody(context: context)),
+        child: Builder(builder: (context) => TokenFormBody()),
       ),
     );
   }

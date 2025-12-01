@@ -9,8 +9,7 @@ import 'package:quicknotion/feature/databases/presentation/widgets/submit_button
 import 'package:quicknotion/feature/databases/presentation/widgets/token_text_field.dart';
 
 class TokenFormBody extends StatefulWidget {
-  TokenFormBody({super.key, required this.context});
-  final BuildContext context;
+  const TokenFormBody({super.key});
 
   @override
   State<TokenFormBody> createState() => _TokenFormBodyState();

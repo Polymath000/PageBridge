@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
 
 class TokenTextField extends StatelessWidget {
-   TokenTextField({super.key, required this.onChanged});
-void Function(String)? onChanged;
+  const TokenTextField({super.key, required this.onChanged});
+  final void Function(String)? onChanged;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -13,7 +13,7 @@ void Function(String)? onChanged;
         }
         return null;
       },
-      onChanged:onChanged,
+      onChanged: onChanged,
       decoration: InputDecoration(
         border: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(12)),
