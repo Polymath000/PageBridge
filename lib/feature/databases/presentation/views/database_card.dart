@@ -3,10 +3,11 @@ import 'package:flutter_animate_on_scroll/flutter_animate_on_scroll.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
 import 'package:quicknotion/core/utls/app_images.dart';
+import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
 
 class DatabaseCard extends StatelessWidget {
-  const DatabaseCard({super.key});
-
+  const DatabaseCard({super.key, required this.database});
+  final DatabaseEntity database;
   @override
   Widget build(BuildContext context) {
     return FadeIn(
@@ -24,18 +25,19 @@ class DatabaseCard extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  SizedBox(
-                    height: 16,
-                    child: Image(
-                      image: AssetImage(Assets.assetsImagesDatabaseicon),
-                    ),
-                  ),
-                  // Text('✅'),
-                  SizedBox(width: 8),
+                  (database.icon?.emoji?.isEmpty ?? true)
+                      ? SizedBox(
+                          height: 16,
+                          child: Image(
+                            image: AssetImage(Assets.assetsImagesDatabaseicon),
+                          ),
+                        )
+                      : Text(database.icon?.emoji ?? ""),
+                  const SizedBox(width: 8),
                   SizedBox(
                     width: MediaQuery.sizeOf(context).width * 0.75,
                     child: Text(
-                      'All Tasks',
+                      database.title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.titleLarge!.copyWith(
@@ -43,6 +45,7 @@ class DatabaseCard extends StatelessWidget {
                       ),
                     ),
                   ),
+                  Icon(Icons.arrow_forward_ios, color: AppColors.lightGray),
                 ],
               ),
             ),

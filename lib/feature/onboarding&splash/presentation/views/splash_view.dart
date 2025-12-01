@@ -22,7 +22,7 @@ class _SplashViewState extends State<SplashView> {
   }
 
   void _checkAuthentication() async {
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 1));
     if (!mounted) return;
     token = await SecureStorage.readData(key: tokenKey);
     if (token != null) {

@@ -25,6 +25,7 @@ dependencies:
   loading_indicator: ^3.1.1
   logger: ^2.6.2
   shared_preferences: ^2.5.3
+  skeletonizer: ^2.1.1
   url_launcher: ^6.3.2
 
 dev_dependencies:
