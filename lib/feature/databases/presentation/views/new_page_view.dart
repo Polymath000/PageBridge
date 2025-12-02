@@ -12,8 +12,8 @@ class NewPageView extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: NewPageViewBody(database: database,),
+            padding: const EdgeInsets.only(bottom: 16.0, left: 20, right: 20),
+            child: NewPageViewBody(database: database),
           ),
         ),
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
+import 'package:quicknotion/core/utls/app_icons.dart';
 import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/property_widget.dart';
 
@@ -12,6 +13,14 @@ class NewPageViewBody extends StatelessWidget {
     return Form(
       child: Column(
         children: [
+          GestureDetector(
+            onTap: () => Navigator.pop(context),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Icon(AppIcons.angleRight),
+            ),
+          ),
+          SizedBox(height: 8),
           TextFormField(
             maxLines: 2,
             decoration: InputDecoration(
@@ -25,7 +34,14 @@ class NewPageViewBody extends StatelessWidget {
           ),
           ...List.generate(
             database.properties.length,
-            (index) => PropertyWidget(property: database.properties[index]),
+            (index) => PropertyWidget(
+              property: database.properties[index],
+              onChanged: (value) {
+                print(
+                  "Property ${database.properties[index].name} changed: $value",
+                );
+              },
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 32.0),

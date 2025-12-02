@@ -24,4 +24,6 @@ class AppIcons {
   static final IconData checkbox = FontAwesomeIcons.solidSquareCheck;
   static final IconData files = FontAwesomeIcons.paperclip;
   static final IconData calender = FontAwesomeIcons.calendarWeek;
+  static final IconData angleRight = FontAwesomeIcons.angleLeft;
+  static final IconData relationArrow = Icons.arrow_outward;
 }
