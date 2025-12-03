@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quicknotion/core/utls/custom_check_box.dart';
 import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
+import 'package:quicknotion/feature/databases/presentation/widgets/notion_date_widget.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/property_type_multi_select.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/property_type_select_one_item.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/property_type_text_and_file.dart';
@@ -17,7 +18,7 @@ class PropertyType extends StatefulWidget {
 class _PropertyTypeState extends State<PropertyType> {
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.sizeOf(context).width * 0.5,
+      width: MediaQuery.sizeOf(context).width * 0.55,
       child:
           widget.property.type == 'text' ||
               widget.property.type == 'number' ||
@@ -41,6 +42,8 @@ class _PropertyTypeState extends State<PropertyType> {
             )
           : widget.property.type == "checkbox"
           ? CustomCheckBox(onChanged: widget.onChanged)
+          : widget.property.type == "date"
+          ? NotionDateWidget(widget: widget)
           : Container(),
     );
   }

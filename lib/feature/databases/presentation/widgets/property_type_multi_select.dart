@@ -109,29 +109,45 @@ class _PropertyTypeMultiSelectState extends State<PropertyTypeMultiSelect> {
           hintText: "Empty",
           hintStyle: AppTextStyles.titleMedium!.copyWith(color: AppColors.grey),
         ),
-        child: Row(
-          children: List.generate(selectedMultiSelectValues.length, (index) {
-            return Padding(
-              padding: const EdgeInsets.only(right: 6),
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                decoration: BoxDecoration(
-                  color:
-                      (widget.property.selectOptions != null &&
-                          index < widget.property.selectOptions!.length)
-                      ? getColor(widget.property.selectOptions![index].color)
-                      : Colors.transparent,
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Text(
-                  selectedMultiSelectValues[index],
-                  style: AppTextStyles.titleMedium!.copyWith(
-                    color: AppColors.black,
-                  ),
-                ),
-              ),
-            );
-          }),
+        child: SingleChildScrollView(
+          child: Row(
+            children: selectedMultiSelectValues.isEmpty
+                ? [
+                    Text(
+                      "Empty",
+                      style: AppTextStyles.titleMedium!.copyWith(
+                        color: AppColors.grey,
+                      ),
+                    ),
+                  ]
+                : List.generate(selectedMultiSelectValues.length, (index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 4),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 2,
+                        ),
+                        decoration: BoxDecoration(
+                          color:
+                              (widget.property.selectOptions != null &&
+                                  index < widget.property.selectOptions!.length)
+                              ? getColor(
+                                  widget.property.selectOptions![index].color,
+                                )
+                              : Colors.transparent,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text(
+                          selectedMultiSelectValues[index],
+                          style: AppTextStyles.titleMedium!.copyWith(
+                            color: AppColors.black,
+                          ),
+                        ),
+                      ),
+                    );
+                  }),
+          ),
         ),
       ),
     );

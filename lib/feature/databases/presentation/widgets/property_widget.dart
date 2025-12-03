@@ -11,25 +11,36 @@ class PropertyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
+    return SizedBox(
+      width: MediaQuery.sizeOf(context).width,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Icon(property.icon, size: 16, color: AppColors.grey),
-          SizedBox(width: 6),
           SizedBox(
-            width: MediaQuery.sizeOf(context).width * 0.25,
-            child: Text(
-              property.name,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyles.titleMedium!.copyWith(
-                color: const Color.fromARGB(255, 127, 128, 130),
-              ),
+            width: MediaQuery.sizeOf(context).width * 0.32,
+            child: Row(
+              children: [
+                Icon(property.icon, size: 16, color: AppColors.grey),
+                SizedBox(width: 8),
+                SizedBox(
+                  width: MediaQuery.sizeOf(context).width * 0.23,
+                  child: Text(
+                    property.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.titleMedium!.copyWith(
+                      color: const Color.fromARGB(255, 127, 128, 130),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-          SizedBox(width: 6),
-          PropertyType(property: property, onChanged: onChanged),
+          SizedBox(width: 8),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: PropertyType(property: property, onChanged: onChanged),
+          ),
         ],
       ),
     );

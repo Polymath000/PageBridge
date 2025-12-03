@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
+import 'package:quicknotion/core/helpers/custom_button.dart';
 import 'package:quicknotion/core/utls/app_icons.dart';
 import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/property_widget.dart';
@@ -32,54 +33,10 @@ class NewPageViewBody extends StatelessWidget {
             ),
             style: AppTextStyles.titleLarge!.copyWith(color: AppColors.black),
           ),
-          ...List.generate(
-            database.properties.length,
-            (index) => PropertyWidget(
-              property: database.properties[index],
-              onChanged: (value) {
-                print(
-                  "Property ${database.properties[index].name} changed: $value",
-                );
-              },
-            ),
+          ...database.properties.map(
+            (e) => PropertyWidget(property: e, onChanged: (value) {}),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 32.0),
-            child: ElevatedButton(
-              style: ButtonStyle(
-                padding: WidgetStatePropertyAll(
-                  EdgeInsets.symmetric(
-                    vertical: 12,
-                    horizontal: MediaQuery.sizeOf(context).width * 0.15,
-                  ),
-                ),
-                side: WidgetStatePropertyAll(
-                  BorderSide(color: AppColors.lightBlue, width: 1),
-                ),
-                elevation: WidgetStatePropertyAll(2),
-                shape: WidgetStatePropertyAll(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                backgroundColor: WidgetStateProperty.fromMap(
-                  <WidgetStatesConstraint, Color?>{
-                    WidgetState.pressed: AppColors.lightBlue,
-                    WidgetState.hovered: Colors.lightBlue,
-                    WidgetState.disabled: Colors.grey,
-                    WidgetState.any: AppColors.darkBlue,
-                  },
-                ),
-              ),
-              onPressed: () {},
-              child: Text(
-                'Create New Page',
-                style: AppTextStyles.titleMedium!.copyWith(
-                  color: AppColors.white,
-                ),
-              ),
-            ),
-          ),
+          CustomButton(),
         ],
       ),
     );
