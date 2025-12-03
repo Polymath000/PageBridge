@@ -4,7 +4,7 @@ import 'package:quicknotion/config/themes/app_colors.dart';
 Color getColor(String color) {
   switch (color) {
     case 'default':
-      return AppColors.textGray;
+      return AppColors.textGray;      
     case 'gray':
       return AppColors.grey;
     case 'brown':
