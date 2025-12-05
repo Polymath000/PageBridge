@@ -28,21 +28,24 @@ class _CustomCheckBoxState extends State<CustomCheckBox> {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: GestureDetector(
-        onTap: () {
-          setState(() {
-            isButtonPressed = !isButtonPressed;
-          });
-          widget.onChanged?.call(isButtonPressed);
-        },
-        child: Icon(
-          isButtonPressed ? Icons.check_box : Icons.check_box_outline_blank,
-          color: isButtonPressed ? AppColors.darkBlue : AppColors.grey,
-          size: 24,
-          fontWeight: FontWeight.w100,
-          weight: 1,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 14.0),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: GestureDetector(
+          onTap: () {
+            setState(() {
+              isButtonPressed = !isButtonPressed;
+            });
+            widget.onChanged?.call(isButtonPressed);
+          },
+          child: Icon(
+            isButtonPressed ? Icons.check_box : Icons.check_box_outline_blank,
+            color: isButtonPressed ? AppColors.darkBlue : AppColors.grey,
+            size: 24,
+            fontWeight: FontWeight.w100,
+            weight: 1,
+          ),
         ),
       ),
     );

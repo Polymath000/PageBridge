@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quicknotion/core/utls/custom_check_box.dart';
 import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
-import 'package:quicknotion/feature/databases/presentation/widgets/notion_date_widget.dart';
+import 'package:quicknotion/feature/databases/presentation/widgets/property_type_notion_date_widget.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/property_type_multi_select.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/property_type_select_one_item.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/property_type_text_and_file.dart';

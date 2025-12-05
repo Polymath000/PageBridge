@@ -45,10 +45,7 @@ class PropertyTypeSelectOneItem extends StatelessWidget {
                   (e) => DropdownMenuItem(
                     value: e.name,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 2,
-                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 6),
                       decoration: BoxDecoration(
                         color: getColor(e.color),
                         borderRadius: BorderRadius.circular(4),

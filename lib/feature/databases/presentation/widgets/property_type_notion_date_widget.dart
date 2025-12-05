@@ -4,16 +4,15 @@ import 'package:quicknotion/config/themes/app_text_style.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/property_type.dart';
 
 class NotionDateWidget extends StatelessWidget {
-  const NotionDateWidget({
-    super.key,
-    required this.widget,
-  });
+  const NotionDateWidget({super.key, required this.widget});
 
   final PropertyType widget;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 14.0),
+      child: GestureDetector(
         onTap: () async {
           final List<String>? results = await showDialog(
             context: context,
@@ -21,11 +20,14 @@ class NotionDateWidget extends StatelessWidget {
               builder: (context) {
                 return AlertDialog(
                   title: const Text('Select Date'),
-                  content: CalendarDatePicker(
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime.now(),
-                    lastDate: DateTime.now(),
-                    onDateChanged: widget.onChanged ?? (value) {},
+                  content: SizedBox(
+                    width: MediaQuery.sizeOf(context).width * 0.8,
+                    child: CalendarDatePicker(
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(DateTime.now().year - 70),
+                      lastDate: DateTime(DateTime.now().year + 70),
+                      onDateChanged: widget.onChanged ?? (value) {},
+                    ),
                   ),
                   actions: [
                     TextButton(
@@ -48,10 +50,9 @@ class NotionDateWidget extends StatelessWidget {
         },
         child: Text(
           "Empty",
-          style: AppTextStyles.titleMedium!.copyWith(
-            color: AppColors.grey,
-          ),
+          style: AppTextStyles.titleMedium!.copyWith(color: AppColors.grey),
         ),
-      );
+      ),
+    );
   }
 }
