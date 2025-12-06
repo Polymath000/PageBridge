@@ -33,7 +33,7 @@ class PropertyModel extends PropertyEntity {
     IconData? icon;
 
     final config = json[type];
-    
+
     if (config != null && config is Map<String, dynamic>) {
       if (['select', 'multi_select', 'status'].contains(type)) {
         if (config['options'] != null) {
@@ -51,8 +51,7 @@ class PropertyModel extends PropertyEntity {
         relatedDbId = config['database_id'];
       }
     }
-    
-    
+
     return PropertyModel(
       name: name,
       type: type,
@@ -67,27 +66,22 @@ class PropertyModel extends PropertyEntity {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> config = {};
     if (['select', 'multi_select', 'status'].contains(type)) {
-      config['options'] = selectOptions?.map((e) => (e as SelectOptionModel).toJson()).toList() ?? [];
-    }
-
-    else if (type == 'formula') {
+      config['options'] =
+          selectOptions
+              ?.map((e) => (e as SelectOptionModel).toJson())
+              .toList() ??
+          [];
+    } else if (type == 'formula') {
       config['expression'] = formulaExpression ?? '';
-    }
-
-    else if (type == 'relation') {
+    } else if (type == 'relation') {
       config['database_id'] = relationDatabaseId ?? '';
-    }    
-    return {
-      type: config,
-    };
+    }
+    return {type: config};
   }
 }
 
 class SelectOptionModel extends SelectOptionEntity {
-  const SelectOptionModel({
-    required super.name, 
-    required super.color
-  });
+  const SelectOptionModel({required super.name, required super.color});
 
   factory SelectOptionModel.fromJson(Map<String, dynamic> json) {
     return SelectOptionModel(
@@ -97,9 +91,6 @@ class SelectOptionModel extends SelectOptionEntity {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'color': color,
-    };
+    return {'name': name, 'color': color};
   }
 }
