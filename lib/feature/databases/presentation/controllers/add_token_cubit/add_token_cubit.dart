@@ -10,7 +10,7 @@ class AddTokenCubit extends Cubit<AddTokenState> {
   final DatabaseRepoImpl databaseRepo;
   Future<void> addToken({required String token}) async {
     emit(AddTokenLoading());
-    final result = await databaseRepo.checkTokenAndReturnTheDatabases(token);
+    final result = await databaseRepo.returnTheDatabases(token);
     result.fold(
       (failure) => emit(AddTokenFailure(message: failure.message)),
       (databases) => emit(AddTokenSuccess(databases: databases)),

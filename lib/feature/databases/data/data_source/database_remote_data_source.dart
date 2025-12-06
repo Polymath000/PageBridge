@@ -6,16 +6,14 @@ import 'package:quicknotion/feature/databases/data/model/database_model.dart';
 import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
 
 abstract class DatabaseRemoteDataSource {
-  Future<List<DatabaseEntity>> checkTokenAndReturnTheDatabases(String token);
+  Future<List<DatabaseEntity>> returnTheDatabases(String token);
 }
 
 class DatabaseRemoteDataSourceImpl implements DatabaseRemoteDataSource {
   DioConsumer dioConsumer;
   DatabaseRemoteDataSourceImpl(this.dioConsumer);
   @override
-  Future<List<DatabaseEntity>> checkTokenAndReturnTheDatabases(
-    String token,
-  ) async {
+  Future<List<DatabaseEntity>> returnTheDatabases(String token) async {
     var data = await dioConsumer.post(
       EndPoint.allDatabases,
       options: headers(token),

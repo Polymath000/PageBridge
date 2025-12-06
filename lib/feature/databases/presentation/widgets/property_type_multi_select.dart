@@ -4,6 +4,7 @@ import 'package:quicknotion/config/themes/app_text_style.dart';
 import 'package:quicknotion/core/utls/custom_check_box.dart';
 import 'package:quicknotion/core/utls/get_color.dart';
 import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
+import 'package:quicknotion/feature/databases/domain/entities/property_entity.dart';
 
 class PropertyTypeMultiSelect extends StatefulWidget {
   const PropertyTypeMultiSelect({
