@@ -9,9 +9,11 @@ import 'package:quicknotion/feature/databases/domain/repo/create_new_page_repo.d
 class CreateNewPageRepoImpl extends CreateNewPageRepo {
   final CreateNewPageDataSource createNewPageDataSource;
   final NetworkInfo networkInfo;
-  CreateNewPageRepoImpl(this.createNewPageDataSource, this.networkInfo);
+  CreateNewPageRepoImpl({ required this.createNewPageDataSource,required this.networkInfo});
   @override
-  Future<Either<Failure, void>> createNewPage({required List<PropertyModel> properties}) async {
+  Future<Either<Failure, void>> createNewPage({
+    required List<PropertyModel> properties,
+  }) async {
     try {
       if (await networkInfo.isConnected!) {
         await createNewPageDataSource.createNewPage(properties: properties);
