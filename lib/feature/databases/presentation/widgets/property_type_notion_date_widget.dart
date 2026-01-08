@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/property_type.dart';
 
-class NotionDateWidget extends StatelessWidget {
-  const NotionDateWidget({super.key, required this.widget});
+class NotionDateWidget extends StatefulWidget {
+  const NotionDateWidget({super.key, required this.propertyType});
 
-  final PropertyType widget;
+  final PropertyType propertyType;
+
+  @override
+  State<NotionDateWidget> createState() => _NotionDateWidgetState();
+}
+
+class _NotionDateWidgetState extends State<NotionDateWidget> {
+  DateTime? date;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +22,8 @@ class NotionDateWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 14.0),
       child: GestureDetector(
         onTap: () async {
-          final List<String>? results = await showDialog(
+          DateTime selectedDate = DateTime.now();
+          final DateTime? pickedDate = await showDialog(
             context: context,
             builder: (context) => Builder(
               builder: (context) {
@@ -26,7 +35,9 @@ class NotionDateWidget extends StatelessWidget {
                       initialDate: DateTime.now(),
                       firstDate: DateTime(DateTime.now().year - 70),
                       lastDate: DateTime(DateTime.now().year + 70),
-                      onDateChanged: widget.onChanged ?? (value) {},
+                      onDateChanged: (value) {
+                        selectedDate = value;
+                      },
                     ),
                   ),
                   actions: [
@@ -39,7 +50,7 @@ class NotionDateWidget extends StatelessWidget {
                     TextButton(
                       child: const Text('OK'),
                       onPressed: () {
-                        Navigator.of(context).pop();
+                        Navigator.of(context).pop(selectedDate);
                       },
                     ),
                   ],
@@ -47,10 +58,18 @@ class NotionDateWidget extends StatelessWidget {
               },
             ),
           );
+          if (pickedDate != null) {
+            setState(() {
+              date = pickedDate;
+            });
+            widget.propertyType.onChanged?.call(pickedDate);
+          }
         },
         child: Text(
-          "Empty",
-          style: AppTextStyles.titleMedium!.copyWith(color: AppColors.grey),
+          date != null ? DateFormat('yyyy-MM-dd').format(date!) : "Empty",
+          style: AppTextStyles.titleMedium!.copyWith(
+            color: date != null ? AppColors.black : AppColors.grey,
+          ),
         ),
       ),
     );
