@@ -4,7 +4,8 @@ import 'package:quicknotion/feature/databases/domain/entities/property_entity.da
 import 'package:quicknotion/feature/databases/presentation/widgets/property_type_notion_date_widget.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/property_type_multi_select.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/property_type_select_one_item.dart';
-import 'package:quicknotion/feature/databases/presentation/widgets/property_type_text_and_file.dart';
+import 'package:quicknotion/feature/databases/presentation/widgets/property_type_text.dart';
+import 'package:quicknotion/feature/databases/presentation/widgets/property_type_file.dart';
 
 class PropertyType extends StatefulWidget {
   const PropertyType({super.key, required this.property, this.onChanged});
@@ -27,12 +28,13 @@ class _PropertyTypeState extends State<PropertyType> {
               widget.property.type == 'phone_number' ||
               widget.property.type == 'email' ||
               widget.property.type == 'created_time' ||
-              widget.property.type == 'title' ||
-              widget.property.type == "files"
-          ? PropertyTypeTextAndFile(
+              widget.property.type == 'title'
+          ? PropertyTypeText(
               property: widget.property,
               onChanged: widget.onChanged,
             )
+          : widget.property.type == "files"
+          ? PropertyTypeFile(property: widget.property)
           : widget.property.type == 'select' || widget.property.type == "status"
           ? PropertyTypeSelectOneItem(widget: widget)
           : widget.property.type == 'multi_select'
