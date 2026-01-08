@@ -4,6 +4,7 @@ import 'package:quicknotion/feature/databases/data/model/property_model.dart';
 
 abstract class CreateNewPageRepo {
   Future<Either<Failure, void>> createNewPage({
-    required List<PropertyModel> properties,
+    required String databaseId,
+    required List<PropertyModel>  properties,
   });
 }

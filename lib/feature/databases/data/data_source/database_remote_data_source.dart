@@ -25,8 +25,6 @@ class DatabaseRemoteDataSourceImpl implements DatabaseRemoteDataSource {
     if (data.data != null && data.data['results'] != null) {
       databases = await getDatabaseList(data);
       SecureStorage.writeData(key: tokenKey, value: token);
-      // String? ken = await SecureStorage.readData(key: tokenKey);
-      // log(ken ?? "There is no token");
     }
     return databases;
   }

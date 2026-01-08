@@ -3,9 +3,8 @@ import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({
-    super.key,
-  });
+  final VoidCallback? onPressed;
+  const CustomButton({super.key, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -24,25 +23,20 @@ class CustomButton extends StatelessWidget {
           ),
           elevation: WidgetStatePropertyAll(2),
           shape: WidgetStatePropertyAll(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           ),
-          backgroundColor: WidgetStateProperty.fromMap(
-            <WidgetStatesConstraint, Color?>{
-              WidgetState.pressed: AppColors.lightBlue,
-              WidgetState.hovered: Colors.lightBlue,
-              WidgetState.disabled: Colors.grey,
-              WidgetState.any: AppColors.darkBlue,
-            },
-          ),
+          backgroundColor:
+              WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
+                WidgetState.pressed: AppColors.lightBlue,
+                WidgetState.hovered: Colors.lightBlue,
+                WidgetState.disabled: Colors.grey,
+                WidgetState.any: AppColors.darkBlue,
+              }),
         ),
-        onPressed: () {},
+        onPressed: onPressed,
         child: Text(
           'Create New Page',
-          style: AppTextStyles.titleMedium!.copyWith(
-            color: AppColors.white,
-          ),
+          style: AppTextStyles.titleMedium!.copyWith(color: AppColors.white),
         ),
       ),
     );

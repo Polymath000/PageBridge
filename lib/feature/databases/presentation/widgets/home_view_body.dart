@@ -68,6 +68,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                         ? List.generate(
                             5,
                             (index) => const DatabaseEntity(
+                              id: 'dummy',
                               title: "Loading Database Title",
                               properties: [],
                             ),

@@ -62,7 +62,9 @@ class _NotionDateWidgetState extends State<NotionDateWidget> {
             setState(() {
               date = pickedDate;
             });
-            widget.propertyType.onChanged?.call(pickedDate);
+            widget.propertyType.onChanged?.call(
+              DateFormat('yyyy-MM-dd').format(pickedDate),
+            );
           }
         },
         child: Text(

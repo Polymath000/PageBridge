@@ -8,6 +8,7 @@ class PropertyEntity {
   final String? formulaExpression;
   final String? relationDatabaseId;
   final IconData? icon;
+  final dynamic value;
 
   const PropertyEntity({
     required this.name,
@@ -17,6 +18,7 @@ class PropertyEntity {
     this.formulaExpression,
     this.relationDatabaseId,
     this.icon,
+    this.value,
   });
 
   copyWith({required IconData icon}) {
@@ -28,9 +30,11 @@ class PropertyEntity {
       formulaExpression: formulaExpression,
       relationDatabaseId: relationDatabaseId,
       icon: icon,
+      value: value,
     );
   }
 }
+
 class SelectOptionEntity {
   final String name;
   final String color;

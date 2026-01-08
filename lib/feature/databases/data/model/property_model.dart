@@ -11,6 +11,7 @@ class PropertyModel extends PropertyEntity {
     super.formulaExpression,
     super.relationDatabaseId,
     IconData? super.icon,
+    super.value,
   });
 
   factory PropertyModel.fromJson(String name, Map<String, dynamic> json) {
@@ -64,19 +65,93 @@ class PropertyModel extends PropertyEntity {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> config = {};
-    if (['select', 'multi_select', 'status'].contains(type)) {
-      config['options'] =
-          selectOptions
-              ?.map((e) => (e as SelectOptionModel).toJson())
-              .toList() ??
-          [];
-    } else if (type == 'formula') {
-      config['expression'] = formulaExpression ?? '';
-    } else if (type == 'relation') {
-      config['database_id'] = relationDatabaseId ?? '';
+    if (value == null) return {};
+
+    switch (type) {
+      // Different Types
+      case 'date':
+        return {
+          'date': {'start': value},
+        };
+      case 'files':
+        // Assuming value is a list of file URLs or objects, defaulting to empty if not list
+        // Note: Notion API requires external URL for creating files
+        return {
+          'files': (value is List)
+              ? value
+                    .map(
+                      (file) => {
+                        'name': 'File',
+                        'external': {'url': file.toString()},
+                      },
+                    )
+                    .toList()
+              : [],
+        };
+      case 'checkbox':
+        return {'checkbox': value as bool};
+
+      // Drop Menu
+      case 'status':
+        return {
+          'status': {'name': value},
+        };
+      case 'select':
+        return {
+          'select': {'name': value},
+        };
+      case 'multi_select':
+        // Assuming value is a list of names
+        return {
+          'multi_select': (value is List)
+              ? value.map((name) => {'name': name}).toList()
+              : [],
+        };
+
+      // String
+      case 'url':
+        return {'url': value as String};
+      case 'rich_text':
+        return {
+          'rich_text': [
+            {
+              'text': {'content': value as String},
+            },
+          ],
+        };
+      case 'phone_number':
+        return {'phone_number': value as String};
+      case 'email':
+        return {'email': value as String};
+      case 'number':
+        // Ensure it's a number
+        return {
+          'number': value is num ? value : num.tryParse(value.toString()),
+        };
+      case 'title':
+        return {
+          'title': [
+            {
+              'text': {'content': value as String},
+            },
+          ],
+        };
+
+      // Not Supported / Read-only (Ignore)
+      case 'created_time':
+      case 'place':
+      case 'created_by':
+      case 'relation':
+      case 'rollup':
+      case 'people':
+      case 'button':
+      case 'last_edited_by':
+      case 'last_edited_time':
+      case 'formula':
+      case 'unique_id':
+      default:
+        return {};
     }
-    return {type: config};
   }
 }
 

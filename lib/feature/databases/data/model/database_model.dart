@@ -1,12 +1,11 @@
 import 'package:quicknotion/feature/databases/data/model/property_model.dart';
 import 'package:quicknotion/feature/databases/domain/entities/property_entity.dart';
 
-import '../../domain/entities/database_entity.dart';
+import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
 
 class DatabaseModel extends DatabaseEntity {
-  final String id;
   const DatabaseModel({
-    required this.id,
+    required super.id,
     required super.title,
     CoverModel? super.cover,
     IconModel? super.icon,
