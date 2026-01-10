@@ -15,7 +15,7 @@ class QuickNotionApp extends StatelessWidget {
       onGenerateRoute: onGenerateRoute,
       initialRoute: SplashView.routeName,
       theme: const ThemeConfig().light,
-      darkTheme: const ThemeConfig().dark,
+      // darkTheme: const ThemeConfig().dark,
       debugShowCheckedModeBanner: false,
       builder: (context, child) {
         AppColors.init(context);

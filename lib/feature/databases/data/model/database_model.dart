@@ -26,7 +26,6 @@ class DatabaseModel extends DatabaseEntity {
         if (value['type'] != 'button' &&
             value['type'] != 'place' &&
             value['type'] != 'created_by' &&
-            value['type'] != 'relation' &&
             value['type'] != 'rollup' &&
             value['type'] != 'people' &&
             value['type'] != 'last_edited_by' &&

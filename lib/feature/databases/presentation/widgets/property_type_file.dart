@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
 import 'package:quicknotion/core/helpers/custom_show_snack_bar.dart';
-import 'package:quicknotion/feature/databases/domain/entities/property_entity.dart';
 
 class PropertyTypeFile extends StatefulWidget {
-  const PropertyTypeFile({super.key, required this.property, this.onChanged});
-  final PropertyEntity property;
+  const PropertyTypeFile({super.key,this.onChanged});
   final ValueChanged<dynamic>? onChanged;
 
   @override
@@ -24,6 +22,7 @@ class _PropertyTypeFileState extends State<PropertyTypeFile> {
         FilePickerResult? result = await FilePicker.platform.pickFiles(
           allowMultiple: true,
           type: FileType.any,
+          withData: true
         );
         if (result != null) {
           for (var va in result.files) {

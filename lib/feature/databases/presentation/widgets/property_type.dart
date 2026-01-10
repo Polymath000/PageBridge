@@ -6,6 +6,7 @@ import 'package:quicknotion/feature/databases/presentation/widgets/property_type
 import 'package:quicknotion/feature/databases/presentation/widgets/property_type_select_one_item.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/property_type_text.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/property_type_file.dart';
+import 'package:quicknotion/feature/databases/presentation/widgets/relation_type_widget.dart';
 
 class PropertyType extends StatefulWidget {
   const PropertyType({super.key, required this.property, this.onChanged});
@@ -34,7 +35,7 @@ class _PropertyTypeState extends State<PropertyType> {
               onChanged: widget.onChanged,
             )
           : widget.property.type == "files"
-          ? PropertyTypeFile(property: widget.property)
+          ? PropertyTypeFile(onChanged: widget.onChanged)
           : widget.property.type == 'select' || widget.property.type == "status"
           ? PropertyTypeSelectOneItem(widget: widget)
           : widget.property.type == 'multi_select'
@@ -46,6 +47,8 @@ class _PropertyTypeState extends State<PropertyType> {
           ? CustomCheckBox(onChanged: widget.onChanged)
           : widget.property.type == "date"
           ? NotionDateWidget(propertyType: widget)
+          : widget.property.type == "relation"
+          ? RelationTypeWidget(property: widget.property)
           : Container(),
     );
   }

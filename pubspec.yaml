@@ -25,7 +25,8 @@ dependencies:
   intl: ^0.18.1
   loading_indicator: ^3.1.1
   logger: ^2.6.2
-  open_file_plus: ^3.4.1+1
+  multi_dropdown: ^3.0.1
+  open_filex: ^4.5.0
   shared_preferences: ^2.5.3
   skeletonizer: ^2.1.1
   syncfusion_flutter_pdfviewer: ^32.1.22

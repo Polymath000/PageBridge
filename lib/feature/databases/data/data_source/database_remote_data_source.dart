@@ -15,7 +15,7 @@ class DatabaseRemoteDataSourceImpl implements DatabaseRemoteDataSource {
   @override
   Future<List<DatabaseEntity>> returnTheDatabases(String token) async {
     var data = await dioConsumer.post(
-      EndPoint.allDatabases,
+      EndPoint.search,
       options: headers(token),
       data: {
         "filter": {"value": "database", "property": "object"},

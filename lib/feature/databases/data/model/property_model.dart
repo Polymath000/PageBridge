@@ -81,8 +81,12 @@ class PropertyModel extends PropertyEntity {
               ? value
                     .map(
                       (file) => {
-                        'name': 'File',
-                        'external': {'url': file.toString()},
+                        'name': name,
+                        'external': {
+                          'url':
+                              'https://prod.cosy.bmw.cloud/bmwweb/cosySec?COSY-EU-100-7331LQAISFqIbe1KnRUQCqtUDBCmtOWN%25PduaWhbNmN6hPo90yYZvbHi4TmtY9%25wc3OK7iftxdIUxw178ziQltECUkwb17slGAtsHCrXpF7VslZQ6KCJ1XRaYWlF4Q5nmPXBcagOybQ5unvIT9agZO2B3inE6IjedwOhXBDMztPloeqhk7bSkMLoAC1Q2hJHFlENIou%25KXs0YHSfWQrTq%25V1PaZr9fNEbnRGb10s9OGJJE4riIpnLscZwB6XArxRteUcZZ8XkWfTHWpdM3IO2kdGmT35sgXAHbQT10tq3D%25eqxWAbbH8irTod9cvRLynkIVzUWkTAus0pL3hAl7GRCxEa6sEgpn%25WNRw0Sk%25zG4cxVo7De3xYHEbtgYrxlc9Nv2Z7d5yKlHS91cetUDCnFgLO7G6Y89RpyeYXUrO6JWO7GwgK4PGDoE9cvY30KE0pODR5YgMYFT2a',
+                          // file.toString()
+                        },
                       },
                     )
                     .toList()
