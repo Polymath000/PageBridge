@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quicknotion/config/routes/on_generate_routes.dart';
+import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/core/helpers/custom_show_snack_bar.dart';
 import 'package:quicknotion/core/utls/custom_loading_indecator.dart';
 import 'package:quicknotion/core/utls/setup_service_locator_getit.dart';
@@ -29,7 +30,12 @@ class NewPageView extends StatelessWidget {
                 listener: (context, state) {
                   if (state is NewPageSuccess) {
                     WidgetsBinding.instance.addPostFrameCallback((_) {
-                      AppRoutes.homeView(context);
+                      AppRoutes.pop(context);
+                      customShowSnackBar(
+                        message: "The new page has been added successfully",
+                        context: context,
+                        backgroundColor: AppColors.green,
+                      );
                     });
                   }
                 },

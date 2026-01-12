@@ -12,34 +12,49 @@ class PropertyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.sizeOf(context).width,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SizedBox(
-            width: MediaQuery.sizeOf(context).width * 0.32,
+    return property.type == "title"
+        ? TextFormField(
+            onChanged: onChanged,
+            maxLines: 2,
+            decoration: InputDecoration(
+              hintText: 'New Page',
+              hintStyle: AppTextStyles.titleLarge!.copyWith(
+                color: AppColors.grey,
+                fontSize: 22.sp,
+              ),
+              border: InputBorder.none,
+            ),
+
+            style: AppTextStyles.titleLarge!.copyWith(color: AppColors.black),
+          )
+        : SizedBox(
+            width: MediaQuery.sizeOf(context).width,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(property.icon, size: 16.sp, color: AppColors.grey),
                 SizedBox(
-                  width: MediaQuery.sizeOf(context).width * 0.23,
-                  child: Text(
-                    property.name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyles.titleMedium!.copyWith(
-                      color: const Color.fromARGB(255, 127, 128, 130),
-                      fontSize: 16.sp,
-                    ),
+                  width: MediaQuery.sizeOf(context).width * 0.32,
+                  child: Row(
+                    children: [
+                      Icon(property.icon, size: 16.sp, color: AppColors.grey),
+                      SizedBox(
+                        width: MediaQuery.sizeOf(context).width * 0.23,
+                        child: Text(
+                          property.name,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.titleMedium!.copyWith(
+                            color: const Color.fromARGB(255, 127, 128, 130),
+                            fontSize: 16.sp,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
+                PropertyType(property: property, onChanged: onChanged),
               ],
             ),
-          ),
-          PropertyType(property: property, onChanged: onChanged),
-        ],
-      ),
-    );
+          );
   }
 }

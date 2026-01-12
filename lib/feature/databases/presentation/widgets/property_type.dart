@@ -28,12 +28,8 @@ class _PropertyTypeState extends State<PropertyType> {
               widget.property.type == 'rich_text' ||
               widget.property.type == 'phone_number' ||
               widget.property.type == 'email' ||
-              widget.property.type == 'created_time' ||
-              widget.property.type == 'title'
-          ? PropertyTypeText(
-              property: widget.property,
-              onChanged: widget.onChanged,
-            )
+              widget.property.type == 'created_time'
+          ? PropertyTypeText(onChanged: widget.onChanged)
           : widget.property.type == "files"
           ? PropertyTypeFile(onChanged: widget.onChanged)
           : widget.property.type == 'select' || widget.property.type == "status"

@@ -6,8 +6,7 @@ import 'package:quicknotion/config/themes/app_text_style.dart';
 import 'package:quicknotion/feature/databases/domain/entities/property_entity.dart';
 
 class PropertyTypeText extends StatefulWidget {
-  const PropertyTypeText({super.key, required this.property, this.onChanged});
-  final PropertyEntity property;
+  const PropertyTypeText({super.key, this.onChanged});
   final ValueChanged<dynamic>? onChanged;
 
   @override
