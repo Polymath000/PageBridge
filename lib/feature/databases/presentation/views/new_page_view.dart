@@ -47,7 +47,9 @@ class NewPageView extends StatelessWidget {
                         context: context,
                       );
                     });
-                  } else if (state is NewPageLoading) {
+                  } else
+                  // if (state is NewPageLoading)
+                  {
                     return CustomLoadingIndecator();
                   }
                   return NewPageViewBody(database: database);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quicknotion/config/routes/on_generate_routes.dart';
+import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
 import 'package:quicknotion/core/helpers/custom_show_snack_bar.dart';
 import 'package:quicknotion/core/utls/custom_loading_indecator.dart';
@@ -28,6 +29,11 @@ class _TokenFormBodyState extends State<TokenFormBody> {
         if (state is AddTokenSuccess) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             AppRoutes.homeView(context);
+            customShowSnackBar(
+              message: "Welcome 😊",
+              context: context,
+              backgroundColor: AppColors.green,
+            );
           });
         }
       },
