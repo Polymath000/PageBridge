@@ -24,16 +24,22 @@
       "name" : "Debug",
       "request" : "launch",
       "type" : "dart",
+      "program": "lib/main.dart",
+      "args": []
     },
     {
       "name" : "Release",
       "request" : "launch",
       "type" : "dart",
+      "program": "lib/main.dart",
+      "args": ["--release"]
     },
     {
       "name" : "Profile",
       "request" : "launch",
       "type" : "dart",
+      "program": "lib/main.dart",
+      "args": ["--profile"]
     },
     {
       "name" : "Pixel",
