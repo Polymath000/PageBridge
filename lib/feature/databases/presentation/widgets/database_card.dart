@@ -6,6 +6,7 @@ import 'package:quicknotion/config/themes/app_text_style.dart';
 import 'package:quicknotion/core/utls/app_icons.dart';
 import 'package:quicknotion/core/utls/app_images.dart';
 import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DatabaseCard extends StatelessWidget {
   const DatabaseCard({super.key, required this.database});
@@ -19,8 +20,7 @@ class DatabaseCard extends StatelessWidget {
             AppRoutes.newPageView(context, database: database);
           },
           child: Card(
-            elevation: 1.5,
-            margin: const EdgeInsets.only(bottom: 16.0),
+            margin: const EdgeInsets.only(bottom: 16.0, right: 0),
             color: AppColors.pickledBluewood,
             child: Padding(
               padding: const EdgeInsets.symmetric(
@@ -28,24 +28,26 @@ class DatabaseCard extends StatelessWidget {
                 vertical: 16,
               ),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   (database.icon?.emoji?.isEmpty ?? true)
                       ? SizedBox(
-                          height: 16,
+                          height: 16.h,
                           child: Image(
                             image: AssetImage(Assets.assetsImagesDatabaseicon),
                           ),
                         )
                       : Text(database.icon?.emoji ?? ""),
-                  const SizedBox(width: 8),
+                  // const SizedBox(width: 8),
                   SizedBox(
-                    width: MediaQuery.sizeOf(context).width * 0.75,
+                    width: MediaQuery.sizeOf(context).width * 0.7,
                     child: Text(
                       database.title,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.titleLarge!.copyWith(
                         color: AppColors.white,
+                        fontSize: 20.sp,
                       ),
                     ),
                   ),

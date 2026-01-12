@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
 import 'package:quicknotion/feature/databases/domain/entities/property_entity.dart';
@@ -14,14 +15,13 @@ class PropertyWidget extends StatelessWidget {
     return SizedBox(
       width: MediaQuery.sizeOf(context).width,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
             width: MediaQuery.sizeOf(context).width * 0.32,
             child: Row(
               children: [
-                Icon(property.icon, size: 16, color: AppColors.grey),
-                SizedBox(width: 8),
+                Icon(property.icon, size: 16.sp, color: AppColors.grey),
                 SizedBox(
                   width: MediaQuery.sizeOf(context).width * 0.23,
                   child: Text(
@@ -30,17 +30,14 @@ class PropertyWidget extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyles.titleMedium!.copyWith(
                       color: const Color.fromARGB(255, 127, 128, 130),
+                      fontSize: 16.sp,
                     ),
                   ),
                 ),
               ],
             ),
           ),
-          SizedBox(width: 8),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: PropertyType(property: property, onChanged: onChanged),
-          ),
+          PropertyType(property: property, onChanged: onChanged),
         ],
       ),
     );

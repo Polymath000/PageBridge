@@ -10,6 +10,7 @@ class NewPageView extends StatelessWidget {
   const NewPageView({super.key, required this.database});
   final DatabaseEntity database;
   static const String routeName = 'new_page_view';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

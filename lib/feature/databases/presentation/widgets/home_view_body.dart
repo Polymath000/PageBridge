@@ -6,7 +6,7 @@ import 'package:quicknotion/core/database/cache/secure_storage.dart';
 import 'package:quicknotion/core/utls/error_widget.dart';
 import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
 import 'package:quicknotion/feature/databases/presentation/controllers/add_token_cubit/add_token_cubit.dart';
-import 'package:quicknotion/feature/databases/presentation/views/database_card.dart';
+import 'package:quicknotion/feature/databases/presentation/widgets/database_card.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class HomeViewBody extends StatefulWidget {

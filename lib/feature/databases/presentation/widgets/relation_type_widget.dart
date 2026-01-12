@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:multi_dropdown/multi_dropdown.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/feature/databases/domain/entities/property_entity.dart';
@@ -47,7 +48,10 @@ class _RelationTypeWidgetState extends State<RelationTypeWidget> {
               ),
               fieldDecoration: FieldDecoration(
                 hintText: widget.property.name,
-                hintStyle: const TextStyle(color: AppColors.darkGrey),
+                hintStyle: TextStyle(
+                  color: AppColors.darkGrey,
+                  fontSize: 14.sp,
+                ),
                 showClearIcon: false,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),

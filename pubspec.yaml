@@ -17,6 +17,7 @@ dependencies:
   flutter_animate_on_scroll: ^0.3.0
   flutter_bloc: ^9.1.1
   flutter_getit: ^3.0.1
+  flutter_screenutil: ^5.9.3
   flutter_secure_storage: ^9.2.4
   font_awesome_flutter: ^10.12.0
   get_it: ^7.7.0

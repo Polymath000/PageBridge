@@ -1,11 +1,12 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
 import 'package:quicknotion/core/helpers/custom_show_snack_bar.dart';
 
 class PropertyTypeFile extends StatefulWidget {
-  const PropertyTypeFile({super.key,this.onChanged});
+  const PropertyTypeFile({super.key, this.onChanged});
   final ValueChanged<dynamic>? onChanged;
 
   @override
@@ -22,7 +23,7 @@ class _PropertyTypeFileState extends State<PropertyTypeFile> {
         FilePickerResult? result = await FilePicker.platform.pickFiles(
           allowMultiple: true,
           type: FileType.any,
-          withData: true
+          withData: true,
         );
         if (result != null) {
           for (var va in result.files) {
@@ -74,6 +75,7 @@ class _PropertyTypeFileState extends State<PropertyTypeFile> {
                 'Empty',
                 style: AppTextStyles.titleMedium!.copyWith(
                   color: AppColors.grey,
+                  fontSize: 16.sp,
                 ),
               ),
       ),

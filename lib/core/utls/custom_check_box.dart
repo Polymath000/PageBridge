@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
 
 class CustomCheckBox extends StatefulWidget {
@@ -42,7 +43,7 @@ class _CustomCheckBoxState extends State<CustomCheckBox> {
           child: Icon(
             isButtonPressed ? Icons.check_box : Icons.check_box_outline_blank,
             color: isButtonPressed ? AppColors.darkBlue : AppColors.grey,
-            size: 24,
+            size: 22.sp,
             fontWeight: FontWeight.w100,
             weight: 1,
           ),

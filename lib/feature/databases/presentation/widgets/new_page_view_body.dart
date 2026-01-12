@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
 import 'package:quicknotion/core/helpers/custom_button.dart';
@@ -20,7 +21,7 @@ class NewPageViewBody extends StatelessWidget {
             onTap: () => Navigator.pop(context),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Icon(AppIcons.angleRight),
+              child: Icon(AppIcons.angleRight, size: 18.sp),
             ),
           ),
           SizedBox(height: 8),
@@ -30,6 +31,7 @@ class NewPageViewBody extends StatelessWidget {
               hintText: 'New Page',
               hintStyle: AppTextStyles.titleLarge!.copyWith(
                 color: AppColors.grey,
+                fontSize: 22.sp,
               ),
               border: InputBorder.none,
             ),

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
 import 'package:quicknotion/feature/databases/domain/entities/property_entity.dart';
@@ -25,9 +26,15 @@ class _PropertyTypeTextState extends State<PropertyTypeText> {
       decoration: InputDecoration(
         border: InputBorder.none,
         hintText: "Empty",
-        hintStyle: AppTextStyles.titleMedium!.copyWith(color: AppColors.grey),
+        hintStyle: AppTextStyles.titleMedium!.copyWith(
+          color: AppColors.grey,
+          fontSize: 16.sp,
+        ),
       ),
-      style: AppTextStyles.titleMedium!.copyWith(color: AppColors.black),
+      style: AppTextStyles.titleMedium!.copyWith(
+        color: AppColors.black,
+        fontSize: 16.sp,
+      ),
     );
   }
 }
