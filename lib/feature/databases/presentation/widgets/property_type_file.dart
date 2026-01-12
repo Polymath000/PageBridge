@@ -62,7 +62,7 @@ class _PropertyTypeFileState extends State<PropertyTypeFile> {
                     child: ColoredBox(
                       color: AppColors.grey,
                       child: Text(
-                        " " + selectedFile![index].name + " ",
+                        " ${selectedFile![index].name} ",
                         style: AppTextStyles.titleMedium!.copyWith(
                           color: AppColors.black,
                         ),

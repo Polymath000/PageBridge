@@ -18,6 +18,7 @@ class PropertyType extends StatefulWidget {
 }
 
 class _PropertyTypeState extends State<PropertyType> {
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.sizeOf(context).width * 0.55,

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
-import 'package:quicknotion/feature/databases/domain/entities/property_entity.dart';
 
 class PropertyTypeText extends StatefulWidget {
   const PropertyTypeText({super.key, this.onChanged});

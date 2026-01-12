@@ -10,7 +10,7 @@ class PropertyModel extends PropertyEntity {
     List<SelectOptionModel>? super.selectOptions,
     super.formulaExpression,
     super.relationDatabaseId,
-    IconData? super.icon,
+    super.icon,
     super.value,
   });
 

@@ -30,7 +30,7 @@ class PropertyTypeSelectOneItem extends StatelessWidget {
             fontSize: 16.sp,
           ),
         ),
-        value:
+        initialValue:
             widget.property.type == "status" &&
                 widget.property.selectOptions != null &&
                 widget.property.selectOptions!.isNotEmpty
