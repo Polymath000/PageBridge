@@ -29,7 +29,9 @@ class _SubmitButtonState extends State<SubmitButton> {
           if (widget.formKey.currentState!.validate()) {
             widget.formKey.currentState!.save();
             widget.autovalidateMode = AutovalidateMode.disabled;
-            BlocProvider.of<AddTokenCubit>(context).addToken(token: widget.token);
+            BlocProvider.of<AddTokenCubit>(
+              context,
+            ).addToken(token: widget.token);
           } else {
             setState(() {
               widget.autovalidateMode = AutovalidateMode.always;
