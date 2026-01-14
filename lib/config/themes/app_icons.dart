@@ -28,4 +28,5 @@ class AppIcons {
   static final IconData relationArrow = Icons.arrow_outward;
   static final IconData darkMode = Icons.dark_mode_rounded;
   static final IconData lightMode = Icons.light_mode_rounded;
+  static final IconData search = FontAwesomeIcons.magnifyingGlass;
 }

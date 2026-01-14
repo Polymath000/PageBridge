@@ -6,19 +6,18 @@ import 'package:quicknotion/core/utls/error_widget.dart';
 import 'package:quicknotion/feature/databases/data/data_source/database_remote_data_source.dart';
 import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
 import 'package:quicknotion/feature/databases/presentation/controllers/add_token_cubit/add_token_cubit.dart';
+import 'package:quicknotion/feature/databases/presentation/widgets/custom_skeletonizer_database.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/database_card.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class HomeViewBody extends StatefulWidget {
-  const HomeViewBody({super.key});
+  final ScrollController? controller;
+  const HomeViewBody({super.key, this.controller});
 
   @override
   State<HomeViewBody> createState() => _HomeViewBodyState();
 }
 
 class _HomeViewBodyState extends State<HomeViewBody> {
-  final ScrollController _scrollController = ScrollController();
-
   final List<DatabaseEntity> databases = [];
   bool isLoading = false;
 
@@ -26,15 +25,19 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   void initState() {
     super.initState();
     _getDatabases();
-    _scrollController.addListener(_onScroll);
+    widget.controller?.addListener(_onScroll);
   }
 
   void _onScroll() {
-    if (!_scrollController.hasClients || isLoading || !hasMoreFetchDatabases)
+    final controller = widget.controller;
+    if (controller == null ||
+        !controller.hasClients ||
+        isLoading ||
+        !hasMoreFetchDatabases)
       return;
 
-    final maxScroll = _scrollController.position.maxScrollExtent;
-    final current = _scrollController.position.pixels;
+    final maxScroll = controller.position.maxScrollExtent;
+    final current = controller.position.pixels;
 
     if (current >= maxScroll * 0.8) {
       _getDatabases();
@@ -48,6 +51,12 @@ class _HomeViewBodyState extends State<HomeViewBody> {
 
     final token = await SecureStorage.readData(key: tokenKey);
     context.read<AddTokenCubit>().addToken(token: token ?? "");
+  }
+
+  @override
+  void dispose() {
+    widget.controller?.removeListener(_onScroll);
+    super.dispose();
   }
 
   @override
@@ -67,53 +76,36 @@ class _HomeViewBodyState extends State<HomeViewBody> {
       },
       builder: (context, state) {
         if (state is AddTokenFailure) {
-          return CustomErrorWidget(errorMessage: state.message);
+          return SliverToBoxAdapter(
+            child: CustomErrorWidget(errorMessage: state.message),
+          );
         }
 
         if (databases.isEmpty && isLoading) {
-          return SizedBox(
-            height: MediaQuery.sizeOf(context).height,
-            child: ListView.builder(
-              itemCount: (MediaQuery.sizeOf(context).height * 0.011).toInt(),
-              itemBuilder: (_, __) => SizedBox(
-                width: double.infinity,
-                child: Skeletonizer(
-                  enabled: true,
-                  child: DatabaseCard(
-                    database: DatabaseEntity(
-                      id: 'dummy',
-                      title: 'Loading...',
-                      properties: [],
-                    ),
-                  ),
+          return SliverToBoxAdapter(
+            child: SizedBox(
+              height: MediaQuery.sizeOf(context).height,
+              child: Column(
+                children: List.generate(
+                  (MediaQuery.sizeOf(context).height * 0.009).toInt(),
+                  (index) => CustomSkeletonizerDatabase(),
                 ),
               ),
             ),
           );
         }
-        return SizedBox(
-          height: MediaQuery.sizeOf(context).height,
-          child: ListView.builder(
-            controller: _scrollController,
-            itemCount: databases.length + (isLoading ? 5 : 0),
-            itemBuilder: (context, index) {
+
+        final total = databases.length + (isLoading ? 5 : 0);
+
+        return SliverPadding(
+          padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 8.0),
+          sliver: SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
               if (index < databases.length) {
                 return DatabaseCard(database: databases[index]);
               }
-              return SizedBox(
-                width: double.infinity,
-                child: Skeletonizer(
-                  enabled: true,
-                  child: DatabaseCard(
-                    database: DatabaseEntity(
-                      id: 'dummy',
-                      title: 'Loading...',
-                      properties: [],
-                    ),
-                  ),
-                ),
-              );
-            },
+              return const CustomSkeletonizerDatabase();
+            }, childCount: total),
           ),
         );
       },
