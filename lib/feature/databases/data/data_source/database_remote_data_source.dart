@@ -5,6 +5,9 @@ import 'package:quicknotion/core/database/cache/secure_storage.dart';
 import 'package:quicknotion/feature/databases/data/model/database_model.dart';
 import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
 
+String? startCursorFetchDatabases;
+bool hasMoreFetchDatabases = false;
+
 abstract class DatabaseRemoteDataSource {
   Future<List<DatabaseEntity>> returnTheDatabases(String token);
 }
@@ -14,11 +17,15 @@ class DatabaseRemoteDataSourceImpl implements DatabaseRemoteDataSource {
   DatabaseRemoteDataSourceImpl(this.dioConsumer);
   @override
   Future<List<DatabaseEntity>> returnTheDatabases(String token) async {
+    int pageSize = 18;
     var data = await dioConsumer.post(
       EndPoint.search,
       options: headers(token),
       data: {
         "filter": {"value": "database", "property": "object"},
+        'page_size': pageSize,
+        if (startCursorFetchDatabases != null || hasMoreFetchDatabases)
+          'start_cursor': startCursorFetchDatabases,
       },
     );
     List<DatabaseEntity> databases = [];
@@ -26,6 +33,8 @@ class DatabaseRemoteDataSourceImpl implements DatabaseRemoteDataSource {
       databases = await getDatabaseList(data);
       SecureStorage.writeData(key: tokenKey, value: token);
     }
+    hasMoreFetchDatabases = data.data["has_more"];
+    startCursorFetchDatabases = data.data["next_cursor"];
     return databases;
   }
 

@@ -38,7 +38,6 @@ class DatabaseCard extends StatelessWidget {
                           ),
                         )
                       : Text(database.icon?.emoji ?? ""),
-                  // const SizedBox(width: 8),
                   SizedBox(
                     width: MediaQuery.sizeOf(context).width * 0.7,
                     child: Text(

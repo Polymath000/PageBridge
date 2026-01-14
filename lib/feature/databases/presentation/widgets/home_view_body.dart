@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/core/constants/constants.dart';
 import 'package:quicknotion/core/database/cache/secure_storage.dart';
 import 'package:quicknotion/core/utls/error_widget.dart';
+import 'package:quicknotion/feature/databases/data/data_source/database_remote_data_source.dart';
 import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
 import 'package:quicknotion/feature/databases/presentation/controllers/add_token_cubit/add_token_cubit.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/database_card.dart';
@@ -17,21 +17,36 @@ class HomeViewBody extends StatefulWidget {
 }
 
 class _HomeViewBodyState extends State<HomeViewBody> {
-  bool _isFetched = false;
-  late List<DatabaseEntity> databases = [];
-  bool isLoading = true;
+  final ScrollController _scrollController = ScrollController();
+
+  final List<DatabaseEntity> databases = [];
+  bool isLoading = false;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (!_isFetched) {
+  void initState() {
+    super.initState();
+    _getDatabases();
+    _scrollController.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    if (!_scrollController.hasClients || isLoading || !hasMoreFetchDatabases)
+      return;
+
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final current = _scrollController.position.pixels;
+
+    if (current >= maxScroll * 0.8) {
       _getDatabases();
-      _isFetched = true;
     }
   }
 
-  void _getDatabases() async {
-    final String? token = await SecureStorage.readData(key: tokenKey);
+  Future<void> _getDatabases() async {
+    if (isLoading) return;
+
+    setState(() => isLoading = true);
+
+    final token = await SecureStorage.readData(key: tokenKey);
     context.read<AddTokenCubit>().addToken(token: token ?? "");
   }
 
@@ -40,42 +55,54 @@ class _HomeViewBodyState extends State<HomeViewBody> {
     return BlocConsumer<AddTokenCubit, AddTokenState>(
       listener: (context, state) {
         if (state is AddTokenSuccess) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            setState(() {
-              isLoading = false;
-              databases = state.databases;
-            });
+          setState(() {
+            databases.addAll(state.databases);
+            isLoading = false;
           });
+        }
+
+        if (state is AddTokenFailure) {
+          setState(() => isLoading = false);
         }
       },
       builder: (context, state) {
-        if (state is AddTokenLoading) {
-          isLoading = true;
-        } else if (state is AddTokenFailure) {
-          isLoading = false;
+        if (state is AddTokenFailure) {
           return CustomErrorWidget(errorMessage: state.message);
         }
-        return Skeletonizer(
-          enabled: isLoading,
-          containersColor: AppColors.darkSurface,
-          switchAnimationConfig: SwitchAnimationConfig(
-            switchOutCurve: Curves.elasticIn,
-            switchInCurve: Curves.elasticInOut,
-          ),
-          child: Column(
-            children:
-                (isLoading
-                        ? List.generate(
-                            5,
-                            (index) => const DatabaseEntity(
-                              id: 'dummy',
-                              title: "Loading Database Title",
-                              properties: [],
-                            ),
-                          )
-                        : databases)
-                    .map((e) => DatabaseCard(database: e))
-                    .toList(),
+
+        if (databases.isEmpty && isLoading) {
+          return SizedBox(
+            height: MediaQuery.sizeOf(context).height,
+            child: ListView.builder(
+              itemCount: (MediaQuery.sizeOf(context).height * 0.011).toInt(),
+              itemBuilder: (_, __) => Skeletonizer(
+                enabled: true,
+                child: DatabaseCard(
+                  database: DatabaseEntity(
+                    id: 'dummy',
+                    title: 'Loading...',
+                    properties: [],
+                  ),
+                ),
+              ),
+            ),
+          );
+        }
+
+        return SizedBox(
+          height: MediaQuery.sizeOf(context).height,
+          child: ListView.builder(
+            controller: _scrollController,
+            itemCount: databases.length + (isLoading ? 1 : 0),
+            itemBuilder: (context, index) {
+              if (index < databases.length) {
+                return DatabaseCard(database: databases[index]);
+              }
+              return const Padding(
+                padding: EdgeInsets.all(100),
+                child: Center(child: CircularProgressIndicator()),
+              );
+            },
           ),
         );
       },

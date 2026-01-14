@@ -47,7 +47,7 @@
       "type": "dart",
       "deviceId": "emulator-5554"
     },
-        {
+    {
       "name" : "smallDevice",
       "request": "launch",  
       "type": "dart",
