@@ -25,7 +25,9 @@ class _PropertyTypeTextState extends State<PropertyTypeText> {
         border: InputBorder.none,
         hintText: "Empty",
         hintStyle: AppTextStyles.titleMedium!.copyWith(
-          color: AppColors.grey,
+          color: Theme.of(context).brightness == Brightness.light
+              ? AppColors.grey
+              : AppColors.white,
           fontSize: 16.sp,
         ),
       ),

@@ -60,7 +60,9 @@ class _PropertyTypeFileState extends State<PropertyTypeFile> {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: ColoredBox(
-                      color: AppColors.grey,
+                      color: Theme.of(context).brightness == Brightness.light
+                          ? AppColors.grey
+                          : AppColors.white,
                       child: Text(
                         " ${selectedFile![index].name} ",
                         style: AppTextStyles.titleMedium!.copyWith(
@@ -74,7 +76,9 @@ class _PropertyTypeFileState extends State<PropertyTypeFile> {
             : Text(
                 'Empty',
                 style: AppTextStyles.titleMedium!.copyWith(
-                  color: AppColors.grey,
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? AppColors.grey
+                      : AppColors.white,
                   fontSize: 16.sp,
                 ),
               ),

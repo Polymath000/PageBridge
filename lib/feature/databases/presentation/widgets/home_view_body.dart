@@ -75,32 +75,43 @@ class _HomeViewBodyState extends State<HomeViewBody> {
             height: MediaQuery.sizeOf(context).height,
             child: ListView.builder(
               itemCount: (MediaQuery.sizeOf(context).height * 0.011).toInt(),
-              itemBuilder: (_, __) => Skeletonizer(
-                enabled: true,
-                child: DatabaseCard(
-                  database: DatabaseEntity(
-                    id: 'dummy',
-                    title: 'Loading...',
-                    properties: [],
+              itemBuilder: (_, __) => SizedBox(
+                width: double.infinity,
+                child: Skeletonizer(
+                  enabled: true,
+                  child: DatabaseCard(
+                    database: DatabaseEntity(
+                      id: 'dummy',
+                      title: 'Loading...',
+                      properties: [],
+                    ),
                   ),
                 ),
               ),
             ),
           );
         }
-
         return SizedBox(
           height: MediaQuery.sizeOf(context).height,
           child: ListView.builder(
             controller: _scrollController,
-            itemCount: databases.length + (isLoading ? 1 : 0),
+            itemCount: databases.length + (isLoading ? 5 : 0),
             itemBuilder: (context, index) {
               if (index < databases.length) {
                 return DatabaseCard(database: databases[index]);
               }
-              return const Padding(
-                padding: EdgeInsets.all(100),
-                child: Center(child: CircularProgressIndicator()),
+              return SizedBox(
+                width: double.infinity,
+                child: Skeletonizer(
+                  enabled: true,
+                  child: DatabaseCard(
+                    database: DatabaseEntity(
+                      id: 'dummy',
+                      title: 'Loading...',
+                      properties: [],
+                    ),
+                  ),
+                ),
               );
             },
           ),

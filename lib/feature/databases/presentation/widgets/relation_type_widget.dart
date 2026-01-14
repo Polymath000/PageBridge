@@ -48,7 +48,9 @@ class _RelationTypeWidgetState extends State<RelationTypeWidget> {
               fieldDecoration: FieldDecoration(
                 hintText: widget.property.name,
                 hintStyle: TextStyle(
-                  color: AppColors.darkGrey,
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? AppColors.darkGrey
+                      : AppColors.white,
                   fontSize: 14.sp,
                 ),
                 showClearIcon: false,

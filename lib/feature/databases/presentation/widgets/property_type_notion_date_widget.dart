@@ -71,7 +71,11 @@ class _NotionDateWidgetState extends State<NotionDateWidget> {
         child: Text(
           date != null ? DateFormat('yyyy-MM-dd').format(date!) : "Empty",
           style: AppTextStyles.titleMedium!.copyWith(
-            color: date != null ? AppColors.black : AppColors.grey,
+            color: date != null
+                ? AppColors.black
+                : (Theme.of(context).brightness == Brightness.light
+                      ? AppColors.grey
+                      : AppColors.white),
             fontSize: 16.sp,
           ),
         ),

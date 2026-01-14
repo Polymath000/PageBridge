@@ -4,6 +4,7 @@ import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/core/constants/constants.dart';
 import 'package:quicknotion/core/database/cache/secure_storage.dart';
 import 'package:quicknotion/core/utls/app_images.dart';
+import 'package:quicknotion/core/utls/custom_loading_indecator.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -35,6 +36,7 @@ class _SplashViewState extends State<SplashView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.white,
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -56,7 +58,8 @@ class _SplashViewState extends State<SplashView> {
                 height: 200,
               ),
               const SizedBox(height: 40),
-              CircularProgressIndicator(color: AppColors.spaceBlack),
+
+              CustomLoadingIndecator(height: 40),
             ],
           ),
         ),

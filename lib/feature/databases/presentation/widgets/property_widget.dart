@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
+import 'package:quicknotion/core/utls/get_icon_depends_on_property_type.dart';
 import 'package:quicknotion/feature/databases/domain/entities/property_entity.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/property_type.dart';
 
@@ -19,12 +20,13 @@ class PropertyWidget extends StatelessWidget {
             decoration: InputDecoration(
               hintText: 'New Page',
               hintStyle: AppTextStyles.titleLarge!.copyWith(
-                color: AppColors.grey,
+                color: Theme.of(context).brightness == Brightness.light
+                    ? AppColors.grey
+                    : AppColors.white,
                 fontSize: 22.sp,
               ),
               border: InputBorder.none,
             ),
-
             style: AppTextStyles.titleLarge!.copyWith(color: AppColors.black),
           )
         : SizedBox(
@@ -36,7 +38,12 @@ class PropertyWidget extends StatelessWidget {
                   width: MediaQuery.sizeOf(context).width * 0.32,
                   child: Row(
                     children: [
-                      Icon(property.icon, size: 16.sp, color: AppColors.grey),
+                      Icon(
+                        getIconDependsOnPropertyType(property.type),
+                        size: 16.sp,
+                        color: AppColors.grey,
+                      ),
+                      SizedBox(width: 8),
                       SizedBox(
                         width: MediaQuery.sizeOf(context).width * 0.23,
                         child: Text(
@@ -44,7 +51,7 @@ class PropertyWidget extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.titleMedium!.copyWith(
-                            color: const Color.fromARGB(255, 127, 128, 130),
+                            color: AppColors.grey,
                             fontSize: 16.sp,
                           ),
                         ),

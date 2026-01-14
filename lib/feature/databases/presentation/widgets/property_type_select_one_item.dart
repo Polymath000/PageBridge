@@ -12,66 +12,75 @@ class PropertyTypeSelectOneItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: DropdownButtonFormField(
-        isExpanded: true,
-        enableFeedback: true,
-        padding: EdgeInsets.zero,
-        style: AppTextStyles.titleMedium!.copyWith(
-          color: AppColors.grey,
-          fontSize: 16.sp,
-        ),
-        iconSize: 0,
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          hintText: "Empty",
-          hintStyle: AppTextStyles.titleMedium!.copyWith(
+    return Column(
+      children: [
+        DropdownButtonFormField(
+          isExpanded: true,
+          enableFeedback: true,
+          padding: EdgeInsets.zero,
+          style: AppTextStyles.titleMedium!.copyWith(
             color: AppColors.grey,
             fontSize: 16.sp,
           ),
-        ),
-        initialValue:
-            widget.property.type == "status" &&
-                widget.property.selectOptions != null &&
-                widget.property.selectOptions!.isNotEmpty
-            ? widget.property.selectOptions!.first.name
-            : null,
-        onChanged: widget.onChanged,
-        items: widget.property.selectOptions!.isEmpty
-            ? [
-                DropdownMenuItem(
-                  value: "Empty",
-                  child: Text(
-                    "Empty",
-                    style: AppTextStyles.titleMedium!.copyWith(
-                      color: AppColors.white,
-                      fontSize: 16.sp,
+          dropdownColor: Theme.of(context).brightness == Brightness.light
+              ? AppColors.darkGrey
+              : AppColors.grey,
+          iconSize: 0,
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            hintText: "Empty",
+            hintStyle: AppTextStyles.titleMedium!.copyWith(
+              color: Theme.of(context).brightness == Brightness.light
+                  ? AppColors.grey
+                  : AppColors.white,
+              fontSize: 16.sp,
+            ),
+          ),
+          initialValue:
+              widget.property.type == "status" &&
+                  widget.property.selectOptions != null &&
+                  widget.property.selectOptions!.isNotEmpty
+              ? widget.property.selectOptions!.first.name
+              : null,
+          onChanged: widget.onChanged,
+          items: widget.property.selectOptions!.isEmpty
+              ? [
+                  DropdownMenuItem(
+                    value: "Empty",
+                    child: Text(
+                      "Empty",
+                      style: AppTextStyles.titleMedium!.copyWith(
+                        color: Theme.of(context).brightness == Brightness.light
+                            ? AppColors.grey
+                            : AppColors.white,
+                        fontSize: 16.sp,
+                      ),
                     ),
                   ),
-                ),
-              ]
-            : (widget.property.selectOptions ?? [])
-                  .map(
-                    (e) => DropdownMenuItem(
-                      value: e.name,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 6),
-                        decoration: BoxDecoration(
-                          color: getColor(e.color),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Text(
-                          e.name,
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            color: AppColors.white,
+                ]
+              : (widget.property.selectOptions ?? [])
+                    .map(
+                      (e) => DropdownMenuItem(
+                        value: e.name,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 6),
+                          decoration: BoxDecoration(
+                            color: getColor(e.color),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Text(
+                            e.name,
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              color: AppColors.white,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  )
-                  .toList(),
-      ),
+                    )
+                    .toList(),
+        ),
+      ],
     );
   }
 }

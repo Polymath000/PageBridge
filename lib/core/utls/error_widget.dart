@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
-import 'package:quicknotion/core/utls/app_icons.dart';
+import 'package:quicknotion/config/themes/app_icons.dart';
 
 class CustomErrorWidget extends StatelessWidget {
   const CustomErrorWidget({super.key, required this.errorMessage});

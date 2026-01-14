@@ -7,7 +7,7 @@ class PropertyEntity {
   final List<SelectOptionEntity>? selectOptions;
   final String? formulaExpression;
   final String? relationDatabaseId;
-  final IconData? icon;
+  final String? icon;
   final dynamic value;
 
   const PropertyEntity({
@@ -21,7 +21,7 @@ class PropertyEntity {
     this.value,
   });
 
-  copyWith({required IconData icon}) {
+  copyWith({required String icon}) {
     return PropertyEntity(
       name: name,
       type: type,

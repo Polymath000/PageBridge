@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quicknotion/core/utls/app_icons.dart';
+import 'package:quicknotion/config/themes/app_icons.dart';
 
 IconData getIconDependsOnPropertyType(String type) {
   switch (type) {
@@ -28,6 +28,8 @@ IconData getIconDependsOnPropertyType(String type) {
       return AppIcons.files;
     case "date":
       return AppIcons.calender;
+    case "relation":
+      return AppIcons.relationArrow;
     default:
       return AppIcons.save;
   }

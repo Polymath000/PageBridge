@@ -26,4 +26,6 @@ class AppIcons {
   static final IconData calender = FontAwesomeIcons.calendarWeek;
   static final IconData angleRight = FontAwesomeIcons.angleLeft;
   static final IconData relationArrow = Icons.arrow_outward;
+  static final IconData darkMode = Icons.dark_mode_rounded;
+  static final IconData lightMode = Icons.light_mode_rounded;
 }

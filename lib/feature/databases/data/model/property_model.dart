@@ -31,7 +31,7 @@ class PropertyModel extends PropertyEntity {
     List<SelectOptionModel>? options;
     String? expression;
     String? relatedDbId;
-    IconData? icon;
+    String? icon;
 
     final config = json[type];
 

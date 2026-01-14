@@ -115,13 +115,19 @@ class _PropertyTypeMultiSelectState extends State<PropertyTypeMultiSelect> {
         decoration: InputDecoration(
           border: InputBorder.none,
           hintText: "Empty",
-          hintStyle: AppTextStyles.titleMedium!.copyWith(color: AppColors.grey),
+          hintStyle: AppTextStyles.titleMedium!.copyWith(
+            color: Theme.of(context).brightness == Brightness.light
+                ? AppColors.grey
+                : AppColors.white,
+          ),
         ),
         child: selectedMultiSelectValues.isEmpty
             ? Text(
                 "Empty",
                 style: AppTextStyles.titleMedium!.copyWith(
-                  color: AppColors.grey,
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? AppColors.grey
+                      : AppColors.white,
                   fontSize: 16.sp,
                 ),
               )

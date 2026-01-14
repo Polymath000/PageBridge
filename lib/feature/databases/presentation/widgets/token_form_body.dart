@@ -56,7 +56,9 @@ class _TokenFormBodyState extends State<TokenFormBody> {
                 'Enter the Token',
                 style: AppTextStyles.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: colorScheme.onSurface,
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? colorScheme.onSurface
+                      : AppColors.white,
                 ),
               ),
               const SizedBox(height: 24),
