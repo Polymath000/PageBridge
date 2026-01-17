@@ -11,8 +11,8 @@ import 'package:quicknotion/feature/databases/presentation/widgets/database_card
 
 class HomeViewBody extends StatefulWidget {
   final ScrollController? controller;
-  HomeViewBody({super.key, this.controller, required this.searchIsEmpty});
-  bool searchIsEmpty;
+  final String? currentQuery;
+  HomeViewBody({super.key, this.controller, this.currentQuery});
 
   @override
   State<HomeViewBody> createState() => _HomeViewBodyState();
@@ -21,7 +21,10 @@ class HomeViewBody extends StatefulWidget {
 class _HomeViewBodyState extends State<HomeViewBody> {
   final List<DatabaseEntity> databases = [];
   bool isLoading = false;
-  bool isSearchWorked = false;
+  String? nextCursor;
+  bool hasMore = false;
+  bool isPaginating = false;
+
   @override
   void initState() {
     super.initState();
@@ -29,25 +32,38 @@ class _HomeViewBodyState extends State<HomeViewBody> {
     widget.controller?.addListener(_onScroll);
   }
 
-  void _onScroll() {
-    final controller = widget.controller;
-    if (controller == null ||
-        !controller.hasClients ||
-        isLoading ||
-        !hasMoreFetchDatabases)
-      return;
-    final maxScroll = controller.position.maxScrollExtent;
-    final current = controller.position.pixels;
-    if (current >= maxScroll * 0.8) {
+  @override
+  void didUpdateWidget(covariant HomeViewBody oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.currentQuery != widget.currentQuery) {
       _getDatabases();
     }
   }
 
-  Future<void> _getDatabases() async {
+  void _onScroll() {
+    final controller = widget.controller;
+    if (controller == null || !controller.hasClients || isLoading || !hasMore) {
+      return;
+    }
+    final maxScroll = controller.position.maxScrollExtent;
+    final current = controller.position.pixels;
+    if (current >= maxScroll * 0.8) {
+      _getDatabases(isPaginating: true);
+    }
+  }
+
+  Future<void> _getDatabases({bool isPaginating = false}) async {
     if (isLoading) return;
-    setState(() => isLoading = true);
+    setState(() {
+      isLoading = true;
+      this.isPaginating = isPaginating;
+    });
     final token = await SecureStorage.readData(key: tokenKey);
-    context.read<AddTokenCubit>().addToken(token: token ?? "");
+    context.read<AddTokenCubit>().addToken(
+      token: token ?? "",
+      query: widget.currentQuery ?? "",
+      startCursor: isPaginating ? nextCursor : null,
+    );
   }
 
   @override
@@ -69,29 +85,33 @@ class _HomeViewBodyState extends State<HomeViewBody> {
 
         if (state is AddTokenSuccess) {
           setState(() {
-            if (isSearchWorked) {
+            if (!isPaginating) {
               databases.clear();
-              setState(() {
-                isSearchWorked = true;
-              });
             }
-
             databases.addAll(state.databases);
+            hasMore = state.hasMore;
+            nextCursor = state.nextCursor;
             isLoading = false;
+            isPaginating = false;
           });
         }
         if (state is AddTokenSearchSuccess) {
           setState(() {
-            setState(() {
-              isSearchWorked = true;
-            });
-            databases.clear();
+            if (!isPaginating) {
+              databases.clear();
+            }
             databases.addAll(state.databases);
+            hasMore = state.hasMore;
+            nextCursor = state.nextCursor;
             isLoading = false;
+            isPaginating = false;
           });
         }
         if (state is AddTokenFailure) {
-          setState(() => isLoading = false);
+          setState(() {
+            isLoading = false;
+            isPaginating = false;
+          });
         }
       },
       builder: (context, state) {

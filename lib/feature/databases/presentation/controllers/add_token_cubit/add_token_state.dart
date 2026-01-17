@@ -7,14 +7,26 @@ final class AddTokenInitial extends AddTokenState {}
 
 final class AddTokenLoading extends AddTokenState {}
 
-final class AddTokenSuccess extends AddTokenState {
+class AddTokenSuccess extends AddTokenState {
   final List<DatabaseEntity> databases;
-  AddTokenSuccess({required this.databases});
+  final bool hasMore;
+  final String? nextCursor;
+
+  AddTokenSuccess(
+      {required this.databases,
+      required this.hasMore,
+      required this.nextCursor});
 }
 
-final class AddTokenSearchSuccess extends AddTokenState {
+class AddTokenSearchSuccess extends AddTokenState {
   final List<DatabaseEntity> databases;
-  AddTokenSearchSuccess({required this.databases});
+  final bool hasMore;
+  final String? nextCursor;
+
+  AddTokenSearchSuccess(
+      {required this.databases,
+      required this.hasMore,
+      required this.nextCursor});
 }
 
 final class AddTokenFailure extends AddTokenState {
