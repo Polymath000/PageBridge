@@ -1,16 +1,19 @@
 import 'package:dio/dio.dart';
-import 'package:quicknotion/core/database/api/api_consumer.dart' show ApiConsumer;
+import 'package:quicknotion/core/database/api/api_consumer.dart'
+    show ApiConsumer;
 import 'package:quicknotion/core/database/api/end_ponits.dart';
 import 'package:quicknotion/core/errors/expentions.dart';
 import 'package:quicknotion/core/network/interceptors.dart';
+
 class DioConsumer extends ApiConsumer {
   final Dio dio;
 
   DioConsumer({required this.dio}) {
+    // ignore: avoid_single_cascade_in_expression_statements
     dio..interceptors.addAll([LoggerInterceptor()]);
     dio.options.baseUrl = EndPoint.baseUrl;
   }
-  
+
   //!POST
   @override
   Future<Response> post(
@@ -27,7 +30,7 @@ class DioConsumer extends ApiConsumer {
             ? FormData.fromMap(data as Map<String, dynamic>)
             : data,
         queryParameters: queryParameters,
-        options: options
+        options: options,
       );
       return response;
     } on DioException catch (e) {

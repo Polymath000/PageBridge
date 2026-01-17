@@ -9,19 +9,23 @@ String? startCursorFetchDatabases;
 bool hasMoreFetchDatabases = false;
 
 abstract class DatabaseRemoteDataSource {
-  Future<List<DatabaseEntity>> returnTheDatabases(String token);
+  Future<List<DatabaseEntity>> returnTheDatabases(String token, String? query);
 }
 
 class DatabaseRemoteDataSourceImpl implements DatabaseRemoteDataSource {
   DioConsumer dioConsumer;
   DatabaseRemoteDataSourceImpl(this.dioConsumer);
   @override
-  Future<List<DatabaseEntity>> returnTheDatabases(String token) async {
+  Future<List<DatabaseEntity>> returnTheDatabases(
+    String token,
+    String? query,
+  ) async {
     int pageSize = 18;
     var data = await dioConsumer.post(
       EndPoint.search,
       options: headers(token),
       data: {
+        if (query != null && query.isNotEmpty) "query": query,
         "filter": {"value": "database", "property": "object"},
         'page_size': pageSize,
         if (startCursorFetchDatabases != null || hasMoreFetchDatabases)

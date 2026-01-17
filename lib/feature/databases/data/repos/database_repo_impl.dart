@@ -13,11 +13,12 @@ class DatabaseRepoImpl extends DatabaseRepo {
   @override
   Future<Either<Failure, List<DatabaseEntity>>> returnTheDatabases(
     String token,
+    String query,
   ) async {
     try {
       if (await networkInfo.isConnected!) {
         List<DatabaseEntity> databases = await remoteDataSource
-            .returnTheDatabases(token);
+            .returnTheDatabases(token, query);
         return right(databases);
       } else {
         return left(NetworkFailure.error());

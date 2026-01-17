@@ -11,7 +11,8 @@ import 'package:quicknotion/feature/databases/presentation/widgets/database_card
 
 class HomeViewBody extends StatefulWidget {
   final ScrollController? controller;
-  const HomeViewBody({super.key, this.controller});
+  HomeViewBody({super.key, this.controller, required this.searchIsEmpty});
+  bool searchIsEmpty;
 
   @override
   State<HomeViewBody> createState() => _HomeViewBodyState();
@@ -20,7 +21,7 @@ class HomeViewBody extends StatefulWidget {
 class _HomeViewBodyState extends State<HomeViewBody> {
   final List<DatabaseEntity> databases = [];
   bool isLoading = false;
-
+  bool isSearchWorked = false;
   @override
   void initState() {
     super.initState();
@@ -35,10 +36,8 @@ class _HomeViewBodyState extends State<HomeViewBody> {
         isLoading ||
         !hasMoreFetchDatabases)
       return;
-
     final maxScroll = controller.position.maxScrollExtent;
     final current = controller.position.pixels;
-
     if (current >= maxScroll * 0.8) {
       _getDatabases();
     }
@@ -46,9 +45,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
 
   Future<void> _getDatabases() async {
     if (isLoading) return;
-
     setState(() => isLoading = true);
-
     final token = await SecureStorage.readData(key: tokenKey);
     context.read<AddTokenCubit>().addToken(token: token ?? "");
   }
@@ -63,13 +60,36 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   Widget build(BuildContext context) {
     return BlocConsumer<AddTokenCubit, AddTokenState>(
       listener: (context, state) {
+        if (state is AddTokenLoading) {
+          setState(() {
+            isLoading = true;
+          });
+          return;
+        }
+
         if (state is AddTokenSuccess) {
           setState(() {
+            if (isSearchWorked) {
+              databases.clear();
+              setState(() {
+                isSearchWorked = true;
+              });
+            }
+
             databases.addAll(state.databases);
             isLoading = false;
           });
         }
-
+        if (state is AddTokenSearchSuccess) {
+          setState(() {
+            setState(() {
+              isSearchWorked = true;
+            });
+            databases.clear();
+            databases.addAll(state.databases);
+            isLoading = false;
+          });
+        }
         if (state is AddTokenFailure) {
           setState(() => isLoading = false);
         }

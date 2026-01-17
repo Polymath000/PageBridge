@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quicknotion/config/themes/app_icons.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
+import 'package:quicknotion/core/constants/constants.dart';
+import 'package:quicknotion/core/database/cache/secure_storage.dart';
 import 'package:quicknotion/core/utls/setup_service_locator_getit.dart';
 import 'package:quicknotion/feature/databases/data/repos/database_repo_impl.dart';
 import 'package:quicknotion/feature/databases/presentation/controllers/add_token_cubit/add_token_cubit.dart';
@@ -19,6 +21,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final ScrollController _scrollController = ScrollController();
+  bool searchIsEmpty = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,9 +35,7 @@ class _HomeViewState extends State<HomeView> {
               controller: _scrollController,
               slivers: [
                 HomeAppBar(),
-
                 SliverToBoxAdapter(child: SizedBox(height: 12)),
-
                 SliverToBoxAdapter(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4.0),
@@ -70,7 +71,6 @@ class _HomeViewState extends State<HomeView> {
                                   : AppColors.white,
                             ),
                           ),
-
                           SizedBox(width: 8),
                           Builder(
                             builder: (context) {
@@ -81,16 +81,21 @@ class _HomeViewState extends State<HomeView> {
                                     hintStyle: AppTextStyles.titleMedium
                                         ?.copyWith(color: AppColors.grey),
                                   ),
-                                  onSubmitted: (value) {
-                                    // print("test");
-                                  },
-                                  onChanged: (q) async {
-                                    // final token = await SecureStorage.readData(
-                                    //   key: tokenKey,
-                                    // );
-                                    // context.read<AddTokenCubit>().addToken(
-                                    //   token: token ?? "",
-                                    // );
+                                  onChanged: (value) async {
+                                    final token= await SecureStorage.readData(
+                                      key: tokenKey,
+                                    );
+                                    context.read<AddTokenCubit>().addToken(
+                                      token: token ?? "",
+                                      query: value,
+                                    );
+                                    setState(() {
+                                      if (value.isEmpty) {
+                                        searchIsEmpty = false;
+                                      } else {
+                                        searchIsEmpty = true;
+                                      }
+                                    });
                                   },
                                 ),
                               );
@@ -102,7 +107,11 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),
                 SliverToBoxAdapter(child: SizedBox(height: 4)),
-                HomeViewBody(controller: _scrollController),
+
+                HomeViewBody(
+                  controller: _scrollController,
+                  searchIsEmpty: searchIsEmpty,
+                ),
               ],
             ),
           ),

@@ -8,12 +8,16 @@ part 'add_token_state.dart';
 class AddTokenCubit extends Cubit<AddTokenState> {
   AddTokenCubit({required this.databaseRepo}) : super(AddTokenInitial());
   final DatabaseRepoImpl databaseRepo;
-  Future<void> addToken({required String token}) async {
+  Future<void> addToken({required String token, String query = ""}) async {
     emit(AddTokenLoading());
-    final result = await databaseRepo.returnTheDatabases(token);
+    final result = await databaseRepo.returnTheDatabases(token, query);
     result.fold(
-      (failure) => emit(AddTokenFailure(message: failure.message)),
-      (databases) => emit(AddTokenSuccess(databases: databases)),
+      (failure) async {
+        emit(AddTokenFailure(message: failure.message));
+      },
+      (databases) => query.isEmpty
+          ? emit(AddTokenSuccess(databases: databases))
+          : emit(AddTokenSearchSuccess(databases: databases)),
     );
   }
 }

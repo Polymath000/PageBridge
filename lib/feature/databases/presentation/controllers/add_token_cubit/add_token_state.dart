@@ -12,6 +12,11 @@ final class AddTokenSuccess extends AddTokenState {
   AddTokenSuccess({required this.databases});
 }
 
+final class AddTokenSearchSuccess extends AddTokenState {
+  final List<DatabaseEntity> databases;
+  AddTokenSearchSuccess({required this.databases});
+}
+
 final class AddTokenFailure extends AddTokenState {
   final String message;
   AddTokenFailure({required this.message});

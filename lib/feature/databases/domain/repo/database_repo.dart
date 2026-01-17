@@ -5,5 +5,6 @@ import 'package:quicknotion/feature/databases/domain/entities/database_entity.da
 abstract class DatabaseRepo {
   Future<Either<Failure, List<DatabaseEntity>>> returnTheDatabases(
     String token,
+    String query
   );
 }
