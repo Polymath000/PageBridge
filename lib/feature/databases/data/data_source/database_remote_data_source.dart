@@ -7,7 +7,10 @@ import 'package:quicknotion/feature/databases/domain/entities/database_entity.da
 
 abstract class DatabaseRemoteDataSource {
   Future<Map<String, dynamic>> returnTheDatabases(
-      String token, String? query, String? startCursor);
+    String token,
+    String? query,
+    String? startCursor,
+  );
 }
 
 class DatabaseRemoteDataSourceImpl implements DatabaseRemoteDataSource {
@@ -19,14 +22,13 @@ class DatabaseRemoteDataSourceImpl implements DatabaseRemoteDataSource {
     String? query,
     String? startCursor,
   ) async {
-    int pageSize = 18;
     var data = await dioConsumer.post(
       EndPoint.search,
       options: headers(token),
       data: {
         if (query != null && query.isNotEmpty) "query": query,
         "filter": {"value": "database", "property": "object"},
-        'page_size': pageSize,
+        'page_size': pageSizeOfTheAPI,
         if (startCursor != null) 'start_cursor': startCursor,
       },
     );

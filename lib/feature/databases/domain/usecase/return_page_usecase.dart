@@ -1,0 +1,38 @@
+import 'package:dartz/dartz.dart';
+import 'package:quicknotion/core/errors/failure.dart';
+import 'package:quicknotion/feature/databases/domain/entities/page_entity.dart';
+import 'package:quicknotion/feature/databases/domain/repo/return_pages_repo.dart';
+
+class ReturnPageUsecase {
+  final ReturnPagesRepo returnPagesRepo;
+  ReturnPageUsecase({required this.returnPagesRepo});
+
+  Either<Failure, List<PageEntity>> call(
+    String token,
+    String query,
+    String? startCursor,
+    String databaseId,
+  ) {
+    dynamic result = returnPagesRepo.raturnPages(
+      token,
+      query,
+      startCursor,
+      databaseId,
+    );
+    return result.fold(
+      (failure) {
+        return result;
+      },
+      (data) {
+        List<PageEntity> res = result;
+        List<PageEntity> pages = [];
+        for (var page in res) {
+          if (page.databaseId == databaseId) {
+            pages.add(page);
+          }
+        }
+        return pages;
+      },
+    );
+  }
+}

@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:quicknotion/feature/databases/domain/entities/property_entity.dart';
-import 'package:flutter/widgets.dart';
 
 class PropertyModel extends PropertyEntity {
   const PropertyModel({
