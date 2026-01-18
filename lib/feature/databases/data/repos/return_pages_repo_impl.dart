@@ -28,7 +28,7 @@ class ReturnPagesRepoImpl extends ReturnPagesRepo {
           token,
           query,
           startCursor,
-          startCursor!,
+          databaseId,
         );
         return right(pagesData);
       } else {

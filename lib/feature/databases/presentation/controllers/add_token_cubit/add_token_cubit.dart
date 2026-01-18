@@ -13,6 +13,7 @@ class AddTokenCubit extends Cubit<AddTokenState> {
     emit(AddTokenLoading());
     final result =
         await databaseRepo.returnTheDatabases(token, query, startCursor);
+    
     result.fold(
       (failure) async {
         emit(AddTokenFailure(message: failure.message));

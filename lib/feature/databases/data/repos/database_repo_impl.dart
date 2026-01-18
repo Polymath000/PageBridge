@@ -18,7 +18,10 @@ class DatabaseRepoImpl extends DatabaseRepo {
     try {
       if (await networkInfo.isConnected!) {
         final databasesData = await remoteDataSource.returnTheDatabases(
-            token, query, startCursor);
+          token,
+          query,
+          startCursor,
+        );
         return right(databasesData);
       } else {
         return left(NetworkFailure.error());
