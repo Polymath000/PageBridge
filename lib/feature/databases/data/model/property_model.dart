@@ -53,7 +53,7 @@ class PropertyModel extends PropertyEntity {
 
     return PropertyModel(
       name: name,
-      type: type,
+      type: type??"Text",
       canEdit: isEditable,
       selectOptions: options,
       formulaExpression: expression,

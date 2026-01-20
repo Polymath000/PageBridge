@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart';
 import 'package:quicknotion/core/utls/custom_check_box.dart';
+import 'package:quicknotion/core/utls/setup_service_locator_getit.dart';
+import 'package:quicknotion/feature/databases/data/repos/return_pages_repo_impl.dart';
 import 'package:quicknotion/feature/databases/domain/entities/property_entity.dart';
+import 'package:quicknotion/feature/databases/presentation/controllers/return_pages_cubit/return_pages_cubit.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/property_type_notion_date_widget.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/property_type_multi_select.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/property_type_select_one_item.dart';
@@ -45,7 +50,11 @@ class _PropertyTypeState extends State<PropertyType> {
           : widget.property.type == "date"
           ? NotionDateWidget(propertyType: widget)
           : widget.property.type == "relation"
-          ? RelationTypeWidget(property: widget.property)
+          ? BlocProvider(
+              create: (context) =>
+                  ReturnPagesCubit(repoImpl: getit.get<ReturnPagesRepoImpl>()),
+              child: RelationTypeWidget(property: widget.property),
+            )
           : Container(),
     );
   }

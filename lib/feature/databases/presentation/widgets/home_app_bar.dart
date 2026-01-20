@@ -88,7 +88,10 @@ class _HomeAppBarState extends State<HomeAppBar> {
               icon: const Icon(Icons.refresh),
               onPressed: () async {
                 final token = await SecureStorage.readData(key: tokenKey);
-                context.read<AddTokenCubit>().addToken(token: token ?? "", query: widget.query);
+                context.read<AddTokenCubit>().addToken(
+                  token: token ?? "",
+                  query: widget.query,
+                );
               },
             ),
           IconButton(

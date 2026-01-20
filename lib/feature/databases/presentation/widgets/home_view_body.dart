@@ -154,7 +154,13 @@ class _HomeViewBodyState extends State<HomeViewBody> {
           padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 8.0),
           sliver: SliverList(
             delegate: SliverChildBuilderDelegate((context, index) {
-              if (index < databases.length) {
+              if (databases.isEmpty) {
+                return Center(
+                  child: CustomErrorWidget(
+                    errorMessage: "There are no databases found.",
+                  ),
+                );
+              } else if (index < databases.length) {
                 return DatabaseCard(database: databases[index]);
               }
               return const CustomSkeletonizerDatabase();

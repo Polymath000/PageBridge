@@ -21,7 +21,6 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final ScrollController _scrollController = ScrollController();
-  bool searchIsEmpty = true;
   String _currentSearchQuery = "";
   @override
   Widget build(BuildContext context) {
@@ -84,7 +83,6 @@ class _HomeViewState extends State<HomeView> {
                                   ),
                                   onChanged: (value) {
                                     setState(() {
-                                      searchIsEmpty = value.isEmpty;
                                       _currentSearchQuery = value;
                                     });
                                   },
@@ -98,7 +96,6 @@ class _HomeViewState extends State<HomeView> {
                   ),
                 ),
                 SliverToBoxAdapter(child: SizedBox(height: 4)),
-
                 HomeViewBody(
                   dataFromToken: widget.data,
                   controller: _scrollController,

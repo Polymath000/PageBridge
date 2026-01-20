@@ -7,7 +7,6 @@ part 'theme_mode_state.dart';
 
 class ThemeModeCubit extends Cubit<ThemeModeState> {
   ThemeModeCubit() : super(const ThemeModeInitial()) {
-    // Initialize cubit state from stored preference if available
     final stored = SharedPreferencesSingleton.getString('themeMode');
     if (stored != null) {
       final mode = ThemeMode.values.firstWhere(

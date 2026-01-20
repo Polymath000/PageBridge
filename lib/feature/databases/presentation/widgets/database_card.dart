@@ -15,7 +15,7 @@ class DatabaseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      child: FadeIn(
+      child: FadeInDown(
         config: BaseAnimationConfig(
           child: GestureDetector(
             onTap: () {
