@@ -1,7 +1,9 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quicknotion/config/themes/app_icons.dart';
+
 import 'package:quicknotion/config/themes/app_colors.dart';
+import 'package:quicknotion/config/themes/app_icons.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
 import 'package:quicknotion/core/utls/setup_service_locator_getit.dart';
 import 'package:quicknotion/feature/databases/data/repos/database_repo_impl.dart';
@@ -10,9 +12,9 @@ import 'package:quicknotion/feature/databases/presentation/widgets/home_app_bar.
 import 'package:quicknotion/feature/databases/presentation/widgets/home_view_body.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({super.key});
+  const HomeView({super.key, required this.data});
   static const String routeName = 'home';
-
+  final Map<String, dynamic> data;
   @override
   State<HomeView> createState() => _HomeViewState();
 }
@@ -98,6 +100,7 @@ class _HomeViewState extends State<HomeView> {
                 SliverToBoxAdapter(child: SizedBox(height: 4)),
 
                 HomeViewBody(
+                  dataFromToken: widget.data,
                   controller: _scrollController,
                   currentQuery: _currentSearchQuery,
                 ),

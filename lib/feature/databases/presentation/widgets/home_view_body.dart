@@ -9,16 +9,22 @@ import 'package:quicknotion/feature/databases/presentation/widgets/custom_skelet
 import 'package:quicknotion/feature/databases/presentation/widgets/database_card.dart';
 
 class HomeViewBody extends StatefulWidget {
+  final Map<String, dynamic> dataFromToken;
   final ScrollController? controller;
   final String? currentQuery;
-  HomeViewBody({super.key, this.controller, this.currentQuery});
+  HomeViewBody({
+    super.key,
+    this.controller,
+    this.currentQuery,
+    required this.dataFromToken,
+  });
 
   @override
   State<HomeViewBody> createState() => _HomeViewBodyState();
 }
 
 class _HomeViewBodyState extends State<HomeViewBody> {
-  final List<DatabaseEntity> databases = [];
+  List<DatabaseEntity> databases = [];
   bool isLoading = false;
   String? nextCursor;
   bool hasMore = false;
@@ -27,7 +33,15 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   @override
   void initState() {
     super.initState();
-    _getDatabases();
+    if (widget.dataFromToken.isEmpty) {
+      _getDatabases();
+    } else {
+      databases.addAll(widget.dataFromToken["databases"]);
+      hasMore = widget.dataFromToken["hasMore"];
+      nextCursor = widget.dataFromToken["nextCursor"];
+      isLoading = false;
+      isPaginating = false;
+    }
     widget.controller?.addListener(_onScroll);
   }
 

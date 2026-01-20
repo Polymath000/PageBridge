@@ -41,15 +41,21 @@ sealed class AppRoutes {
   // _pushNamedAndRemoveAll(context, OnboardingView.routeName);
   static Future<Object?> tokenView(final BuildContext context) =>
       _pushNamedAndRemoveAll(context, TokenView.routeName);
-  static Future<Object?> homeView(final BuildContext context) =>
-      _pushNamedAndRemoveAll(context, HomeView.routeName);
+  static Future<Object?> homeView(
+    final BuildContext context, {
+    required final Map<String, dynamic> data,
+  }) => _pushNamedAndRemoveAll(context, HomeView.routeName, arguments: data);
   static Future<Object?> splashView(final BuildContext context) =>
       _pushNamedAndRemoveAll(context, SplashView.routeName);
 }
 
 Map<String, Widget Function(BuildContext, Object?)> _routes = {
   TokenView.routeName: (_, _) => const TokenView(),
-  HomeView.routeName: (_, _) => const HomeView(),
+
+  HomeView.routeName: (_, final args) {
+    final data = args! as Map<String, dynamic>;
+    return HomeView(data: data);
+  },
   SplashView.routeName: (_, _) => const SplashView(),
   // NewPageView.routeName: (_, _) => const NewPageView(),
   // OnboardingView.routeName: (_, _) => const OnboardingView(),

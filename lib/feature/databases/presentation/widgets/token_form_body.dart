@@ -5,6 +5,7 @@ import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
 import 'package:quicknotion/core/helpers/custom_show_snack_bar.dart';
 import 'package:quicknotion/core/utls/custom_loading_indecator.dart';
+import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
 import 'package:quicknotion/feature/databases/presentation/controllers/add_token_cubit/add_token_cubit.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/submit_button.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/token_text_field.dart';
@@ -20,7 +21,7 @@ class _TokenFormBodyState extends State<TokenFormBody> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   String token = "";
-
+  Map<String, dynamic> data = {};
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
@@ -28,7 +29,10 @@ class _TokenFormBodyState extends State<TokenFormBody> {
       listener: (context, state) {
         if (state is AddTokenSuccess) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            AppRoutes.homeView(context);
+            data["databases"] = state.databases;
+            data["hasMore"] = state.hasMore;
+            data["nextCursor"] = state.nextCursor;
+            AppRoutes.homeView(context, data: data);
             customShowSnackBar(
               message: "Welcome 😊",
               context: context,

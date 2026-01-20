@@ -27,7 +27,7 @@ class _SplashViewState extends State<SplashView> {
     if (!mounted) return;
     token = await SecureStorage.readData(key: tokenKey);
     if (token != null) {
-      AppRoutes.homeView(context);
+      AppRoutes.homeView(context, data: {});
     } else {
       AppRoutes.tokenView(context);
     }
