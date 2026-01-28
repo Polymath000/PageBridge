@@ -27,6 +27,7 @@ dependencies:
   intl: ^0.18.1
   loading_indicator: ^3.1.1
   logger: ^2.6.2
+  modal_progress_hud_nsn: ^0.5.1
   multi_dropdown: ^3.0.1
   open_filex: ^4.5.0
   shared_preferences: ^2.5.3
@@ -38,6 +39,7 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   flutter_test:
     sdk: flutter
+  rename_app: ^1.6.5
 
 flutter:
   uses-material-design: true

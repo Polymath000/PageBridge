@@ -24,7 +24,7 @@ class DatabaseRemoteDataSourceImpl implements DatabaseRemoteDataSource {
   ) async {
     var data = await dioConsumer.post(
       EndPoint.search,
-      options: headers(token),
+      options: headers(token:  token),
       data: {
         if (query != null && query.isNotEmpty) "query": query,
         "filter": {"value": "database", "property": "object"},

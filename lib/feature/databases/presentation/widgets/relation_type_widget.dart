@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:multi_dropdown/multi_dropdown.dart';
-import 'package:quicknotion/config/themes/app_icons.dart';
+import 'package:quicknotion/core/helpers/custom_multi_dropdown.dart';
 import 'package:quicknotion/core/constants/constants.dart';
 import 'package:quicknotion/core/database/cache/secure_storage.dart';
 import 'package:quicknotion/core/utls/error_widget.dart';
@@ -19,16 +17,14 @@ class RelationTypeWidget extends StatefulWidget {
 }
 
 class _RelationTypeWidgetState extends State<RelationTypeWidget> {
-  final controller = MultiSelectController<String>();
-  List<DropdownItem<String>> items = [];
-  String _currentSearchQuery = "";
+  List<MultiSelectItem<String>> items = [];
+  List<String> _selectedPageIds = [];
+  final TextEditingController _searchController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  List<PageEntity> pages = [];
   bool isLoading = false;
   String? nextCursor;
   bool hasMore = false;
   bool isPaginating = false;
-  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -43,178 +39,155 @@ class _RelationTypeWidgetState extends State<RelationTypeWidget> {
       this.isPaginating = isPaginating;
     });
     final token = await SecureStorage.readData(key: tokenKey);
-    List<PageEntity> pages = await context.read<ReturnPagesCubit>().returnPages(
+    context.read<ReturnPagesCubit>().returnPages(
       token: token ?? "",
-      query: _currentSearchQuery,
+      query: _searchController.text,
       startCursor: isPaginating ? nextCursor : null,
       databaseId: widget.property.relationDatabaseId ?? "",
     );
-    for (var page in pages) {
-      DropdownItem<String> value = DropdownItem(
-        label: page.title,
-        value: page.id,
-      );
-      items.add(value);
-    }
   }
 
-  // @override
-  // void didUpdateWidget(covariant RelationTypeWidget  oldWidget) {
-  //   super.didUpdateWidget(oldWidget);
-  //   if (oldWidget. != _currentSearchQuery) {
-  //     _getPages();
-  //   }
-  // }
-  void _onScroll() {
-    if (!_scrollController.hasClients || isLoading || !hasMore) {
-      return;
-    }
-    final maxScroll = _scrollController.position.maxScrollExtent;
-    final current = _scrollController.position.pixels;
-    if (current >= maxScroll * 0.8) {
-      _getPages(isPaginating: true);
-    }
+  void _onScrollEnd() {
+    if (isLoading || !hasMore) return;
+    _getPages(isPaginating: true);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final bool isDark = Theme.of(context).brightness == Brightness.dark;
-    final Color fieldBg = isDark ? const Color(0xFF2A2A2A) : Colors.white;
-    final Color borderColor = isDark
-        ? const Color(0xFF3A3A3A)
-        : const Color(0xFFDDDDDD);
-    final Color textColor = isDark ? Colors.white : Colors.black;
-    final Color hintColor = isDark
-        ? const Color(0xFFA0A0A0)
-        : const Color(0xFF777777);
-    final Color dropdownBg = isDark
-        ? const Color(0xFF2F2F2F)
-        : const Color(0xFFF5F5F5);
-    final Color selectedBg = isDark
-        ? const Color(0xFF3D3D3D)
-        : const Color(0xFFE0E0E0);
-    const Color accentColor = Color(0xFF4CAF50);
-
-    return SingleChildScrollView(
-      controller: _scrollController,
-      child: Form(
-        key: _formKey,
-        child: BlocConsumer<ReturnPagesCubit, ReturnPagesState>(
-          listener: (context, state) {
-            if (state is ReturnPagesLoading) {
-              setState(() {
-                isLoading = true;
-              });
-              return;
-            }
-
-            if (state is ReturnPagesSuccess) {
-              setState(() {
-                if (!isPaginating) {
-                  pages.clear();
-                }
-
-                pages.addAll(state.pages);
-
-                for (var page in pages) {
-                  DropdownItem<String> value = DropdownItem(
-                    label: page.title,
-                    value: page.id,
-                  );
-                  items.add(value);
-                }
-                hasMore = state.hasMore;
-                nextCursor = state.nextCursor;
-                isLoading = false;
-                isPaginating = false;
-              });
-            }
-            if (state is ReturnPagesSearchSuccess) {
-              setState(() {
-                if (!isPaginating) {
-                  pages.clear();
-                }
-                pages.addAll(state.pages);
-                hasMore = state.hasMore;
-                nextCursor = state.nextCursor;
-                isLoading = false;
-                isPaginating = false;
-              });
-            }
-            if (state is ReturnPagesFailure) {
-              setState(() {
-                isLoading = false;
-                isPaginating = false;
-              });
-            }
-          },
-          builder: (context, state) {
-            if (state is ReturnPagesFailure) {
-              return SliverToBoxAdapter(
-                child: CustomErrorWidget(errorMessage: state.message),
-              );
-            }
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 5),
-
-                MultiDropdown<String>(
-                  items: items,
-                  controller: controller,
-                  searchEnabled: true,
-                  onSearchChange: (value) {
-                    setState(() {
-                      _currentSearchQuery = value;
-                    });
-                  },
-                  chipDecoration: ChipDecoration(
-                    backgroundColor: accentColor,
-                    labelStyle: const TextStyle(color: Colors.white),
-                    wrap: true,
-                    runSpacing: 4,
-                    spacing: 6,
-                  ),
-
-                  fieldDecoration: FieldDecoration(
-                    backgroundColor: fieldBg,
-                    labelText: widget.property.name,
-                    labelStyle: TextStyle(color: textColor),
-                    hintText: "Select items",
-                    hintStyle: TextStyle(color: hintColor, fontSize: 14.sp),
-                    showClearIcon: false,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: borderColor),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: accentColor),
-                    ),
-                  ),
-
-                  dropdownItemDecoration: DropdownItemDecoration(
-                    backgroundColor: dropdownBg,
-                    selectedBackgroundColor: selectedBg,
-                    textColor: textColor,
-                    selectedIcon: Icon(AppIcons.checkbox, color: accentColor),
-                    disabledIcon: Icon(Icons.lock, color: hintColor),
-                  ),
-                ),
-
-                const SizedBox(height: 5),
-              ],
-            );
-          },
-        ),
-      ),
-    );
+  void _searchPages() {
+    if (isLoading) return;
+    _getPages();
   }
 
   @override
   void dispose() {
     _scrollController.dispose();
-    controller.removeListener(_onScroll);
+    _searchController.dispose();
     super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    const Color accentColor = Color(0xFF4CAF50);
+
+    return BlocListener<ReturnPagesCubit, ReturnPagesState>(
+      listener: (context, state) {
+        if (state is ReturnPagesLoading) {
+          setState(() {
+            isLoading = true;
+          });
+          return;
+        }
+
+        if (state is ReturnPagesSuccess || state is ReturnPagesSearchSuccess) {
+          final List<PageEntity> newPagesFromState;
+          final bool newHasMore;
+          final String? newNextCursor;
+
+          if (state is ReturnPagesSuccess) {
+            newPagesFromState = state.pages;
+            newHasMore = state.hasMore;
+            newNextCursor = state.nextCursor;
+          } else {
+            final searchState = state as ReturnPagesSearchSuccess;
+            newPagesFromState = searchState.pages;
+            newHasMore = searchState.hasMore;
+            newNextCursor = searchState.nextCursor;
+          }
+
+          setState(() {
+            final newItems = newPagesFromState
+                .map(
+                  (page) => MultiSelectItem<String>(
+                    label: page.title,
+                    value: page.id,
+                  ),
+                )
+                .toList();
+
+            if (isPaginating) {
+              items.addAll(newItems);
+            } else {
+              items = newItems;
+            }
+
+            hasMore = newHasMore;
+            nextCursor = newNextCursor;
+            isLoading = false;
+            isPaginating = false;
+          });
+        }
+
+        if (state is ReturnPagesFailure) {
+          setState(() {
+            isLoading = false;
+            isPaginating = false;
+          });
+        }
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildSearchField(),
+          const SizedBox(height: 8),
+          BlocBuilder<ReturnPagesCubit, ReturnPagesState>(
+            builder: (context, state) {
+              if (state is ReturnPagesFailure && !isPaginating) {
+                return CustomErrorWidgetRelationType(
+                  errorMessage: state.message,
+                );
+              }
+
+              var itemsWithLoader = List<MultiSelectItem<String>>.from(items);
+              if (isPaginating && hasMore) {
+                // This is a bit of a hack to show a loader at the end of the list.
+                // A better way would be to have the dropdown support a footer.
+                itemsWithLoader.add(
+                  MultiSelectItem(
+                    value: "loader" as String,
+                    label: "Loading...",
+                  ),
+                );
+              }
+
+              if (items.isEmpty && isLoading && !isPaginating) {
+                return const Center(child: CircularProgressIndicator());
+              }
+
+              return CustomMultiDropdown<String>(
+                items: itemsWithLoader,
+                selectedValues: _selectedPageIds,
+                onSelectionChanged: (values) {
+                  setState(() {
+                    _selectedPageIds = values
+                        .where((v) => v != "loader")
+                        .toList();
+                  });
+                },
+                hint: "Select items for ${widget.property.name}",
+                chipColor: accentColor,
+                scrollController: _scrollController,
+                onScrollEnd: _onScrollEnd,
+              );
+            },
+          ),
+          const SizedBox(height: 5),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSearchField() {
+    return TextField(
+      controller: _searchController,
+      decoration: InputDecoration(
+        hintText: 'Search pages...',
+        // prefixIcon: const Icon(Icons.search),
+        suffixIcon: IconButton(
+          icon: const Icon(Icons.search),
+          onPressed: _searchPages,
+        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+      ),
+      onSubmitted: (_) => _searchPages(),
+    );
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart';
 import 'package:quicknotion/core/utls/custom_check_box.dart';
 import 'package:quicknotion/core/utls/setup_service_locator_getit.dart';
 import 'package:quicknotion/feature/databases/data/repos/return_pages_repo_impl.dart';

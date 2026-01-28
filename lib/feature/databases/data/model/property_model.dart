@@ -47,13 +47,13 @@ class PropertyModel extends PropertyEntity {
       }
 
       if (type == 'relation') {
-        relatedDbId = config['database_id'];
+        relatedDbId = config['data_source_id'];
       }
     }
 
     return PropertyModel(
       name: name,
-      type: type??"Text",
+      type: type ?? "Text",
       canEdit: isEditable,
       selectOptions: options,
       formulaExpression: expression,

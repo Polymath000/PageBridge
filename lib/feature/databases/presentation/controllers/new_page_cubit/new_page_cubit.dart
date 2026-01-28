@@ -22,15 +22,21 @@ class NewPageCubit extends Cubit<NewPageState> {
     );
   }
 
-  Future<void> createNewPage({required String databaseId}) async {
+  Future<bool> createNewPage({required String databaseId}) async {
     emit(NewPageLoading());
     final result = await createNewPageRepoImpl.createNewPage(
       properties: newPageProperties,
       databaseId: databaseId,
     );
-    result.fold(
-      (failure) => emit(NewPageFailure(message: failure.message)),
-      (r) => emit(NewPageSuccess()),
+    return result.fold(
+      (failure) {
+        emit(NewPageFailure(message: failure.message));
+        return false;
+      },
+      (r) {
+        emit(NewPageSuccess());
+        return true;
+      },
     );
   }
 }

@@ -1,19 +1,18 @@
 import 'package:dio/dio.dart';
 
-sealed class EndPoint {
-  const EndPoint();
+class EndPoint {
+  EndPoint({required this.dataSourceId});
   static const String baseUrl = 'https://api.notion.com/v1';
-  // Endpoints are relative paths — DioConsumer sets the baseUrl to `baseUrl`.
-  // This endpoint needs: Token (Authorization), Notion-Version and a body.
   static const String search = '/search';
-  // This endpoint needs: Token, Notion-Version and a page body.
   static const String addNewPage = '/pages/';
+  final String dataSourceId;
+  late String returnPages = "/data_sources/$dataSourceId/query";
 }
 
-Options headers(String token) => Options(
+Options headers({required String token, String notionVersion = "2022-06-28"}) => Options(
   headers: {
     "Authorization": "Bearer $token",
-    "Notion-Version": "2022-06-28",
+    "Notion-Version": notionVersion,
     "Content-Type": "application/json",
   },
 );

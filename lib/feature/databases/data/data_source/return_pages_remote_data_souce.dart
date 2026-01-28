@@ -16,7 +16,6 @@ abstract class ReturnPagesRemoteDataSource {
 
 class ReturnPagesRemoteDataSourceImpl implements ReturnPagesRemoteDataSource {
   DioConsumer dioConsumer;
-
   ReturnPagesRemoteDataSourceImpl(this.dioConsumer);
   Future<List<PageEntity>> getPagesList(var data) async {
     List<PageEntity> pages = [];
@@ -33,17 +32,20 @@ class ReturnPagesRemoteDataSourceImpl implements ReturnPagesRemoteDataSource {
     String? startCursor,
     String databaseId,
   ) async {
+    EndPoint endPoint = EndPoint(dataSourceId: databaseId);
+
     var data = await dioConsumer.post(
-      EndPoint.search,
-      options: headers(token),
+      endPoint.returnPages,
+      options: headers(token: token, notionVersion: "2025-09-03"),
       data: {
-        "sort": {
-        "direction": "ascending",
-        "timestamp": "last_edited_time"
-        },
-        if (query.isNotEmpty) "query": query,
-        "filter": {"value": "page", "property": "object"},
         'page_size': pageSizeOfTheAPI,
+        "filter": {
+          "property": "Name",
+          "title": {"contains": query},
+        },
+        "sorts": [
+          {"timestamp": "last_edited_time", "direction": "ascending"},
+        ],
         if (startCursor != null) 'start_cursor': startCursor,
       },
     );

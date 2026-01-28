@@ -34,7 +34,7 @@ class CreateNewPageDataSourceImpl implements CreateNewPageDataSource {
         'parent': {'database_id': databaseId},
         'properties': mappedProperties,
       },
-      options: headers(token!),
+      options: headers(token: token!),
     );
   }
 }

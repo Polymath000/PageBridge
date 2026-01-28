@@ -32,3 +32,34 @@ class CustomErrorWidget extends StatelessWidget {
     );
   }
 }
+
+class CustomErrorWidgetRelationType extends StatelessWidget {
+  const CustomErrorWidgetRelationType({super.key, required this.errorMessage});
+  final String errorMessage;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 13.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 30,
+            width: MediaQuery.sizeOf(context).width * 0.55,
+            child: Text(
+              errorMessage,
+              maxLines: 1,
+              overflow: TextOverflow.visible,
+              textAlign: TextAlign.start,
+              style: AppTextStyles.titleLarge!.copyWith(
+                fontWeight: FontWeight.bold,
+                color: AppColors.lightRed,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

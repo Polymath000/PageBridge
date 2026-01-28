@@ -21,12 +21,13 @@ class PageModel extends PageEntity {
 
   factory PageModel.fromJson(Map<String, dynamic> json) {
     final titleList =
-        json['properties']?['Task']?['title'] as List<dynamic>? ?? [];
+        json['properties']?['Name']?['title'] as List<dynamic>? ?? [];
 
     final title = titleList.isNotEmpty
         ? titleList.map((e) => e['plain_text']).join()
         : 'No Title';
-
+    final dynamic properties = PropertyModel.fromJson(title, json['properties']);
+    
     return PageModel(
       id: json['id'],
       title: title,
@@ -35,7 +36,7 @@ class PageModel extends PageEntity {
       archived: json['archived'] ?? false,
       url: json['url'],
       databaseId: json['parent']?['database_id'] ?? '',
-      properties: PropertyModel.fromJson(title, json['properties']),
+      properties: properties,
     );
   }
 }
