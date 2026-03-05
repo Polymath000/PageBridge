@@ -9,6 +9,7 @@ import 'package:quicknotion/feature/databases/domain/entities/property_entity.da
 import 'package:quicknotion/feature/databases/presentation/controllers/return_pages_cubit/return_pages_cubit.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
+import 'package:quicknotion/feature/databases/presentation/widgets/relation_search_app_bar.dart';
 
 class RelationSearchView extends StatefulWidget {
   static const String routeName = 'relation_search_view';
@@ -36,6 +37,7 @@ class _RelationSearchViewState extends State<RelationSearchView> {
   String? nextCursor;
   bool hasMore = false;
   bool isPaginating = false;
+  bool _isReloading = false;
 
   @override
   void initState() {
@@ -46,22 +48,24 @@ class _RelationSearchViewState extends State<RelationSearchView> {
   }
 
   void _onScroll() {
-    if (_scrollController.position.pixels >=
-        _scrollController.position.maxScrollExtent * 0.8) {
-      if (!isLoading && hasMore) {
-        _getPages(isPaginating: true);
-      }
+    final controller = _scrollController;
+    if (controller == null || !controller.hasClients || isLoading || !hasMore) {
+      return;
+    }
+    final maxScroll = controller.position.maxScrollExtent;
+    final current = controller.position.pixels;
+    if (current >= maxScroll * 0.8) {
+      _getPages(isPaginating: true);
     }
   }
 
   Future<void> _getPages({bool isPaginating = false}) async {
-    if (isLoading && !isPaginating) return;
+    if (isLoading) return;
     setState(() {
       isLoading = true;
       this.isPaginating = isPaginating;
     });
     final token = await SecureStorage.readData(key: tokenKey);
-    if (!mounted) return;
     context.read<ReturnPagesCubit>().returnPages(
       token: token ?? "",
       query: _searchController.text,
@@ -73,7 +77,7 @@ class _RelationSearchViewState extends State<RelationSearchView> {
   @override
   void dispose() {
     _searchController.dispose();
-    _scrollController.dispose();
+    _scrollController.removeListener(_onScroll);
     super.dispose();
   }
 
@@ -81,33 +85,13 @@ class _RelationSearchViewState extends State<RelationSearchView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        title: Text(
-          "Search in ${widget.property.name}",
-          style: AppTextStyles.titleMedium!.copyWith(fontSize: 18.sp),
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, size: 20),
-          onPressed: () => Navigator.pop(context),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              widget.onSelectionConfirmed?.call(_selectedPages);
-              Navigator.pop(context, _selectedPages);
-            },
-            child: Text(
-              "Done",
-              style: AppTextStyles.titleMedium!.copyWith(
-                color: AppColors.primary,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          SizedBox(width: 8.w),
-        ],
+      appBar: relationSearchAppBar(
+        context: context,
+        getPages: _getPages,
+        isReloading: _isReloading,
+        name: widget.property.name,
+        selectedPages: _selectedPages,
+        onSelectionConfirmed: widget.onSelectionConfirmed,
       ),
       body: Column(
         children: [
@@ -141,8 +125,15 @@ class _RelationSearchViewState extends State<RelationSearchView> {
             ),
           ),
           Expanded(
-            child: BlocListener<ReturnPagesCubit, ReturnPagesState>(
+            child: BlocConsumer<ReturnPagesCubit, ReturnPagesState>(
               listener: (context, state) {
+                if (state is ReturnPagesLoading) {
+                  setState(() {
+                    _isReloading = true;
+                  });
+                  return;
+                }
+
                 if (state is ReturnPagesSuccess ||
                     state is ReturnPagesSearchSuccess) {
                   final List<PageEntity> newPagesFromState;
@@ -161,88 +152,100 @@ class _RelationSearchViewState extends State<RelationSearchView> {
                   }
 
                   setState(() {
-                    if (isPaginating) {
-                      _pages.addAll(newPagesFromState);
-                    } else {
-                      _pages = newPagesFromState;
+                    if (!isPaginating) {
+                      _pages.clear();
                     }
+                    _pages.addAll(newPagesFromState);
                     hasMore = newHasMore;
                     nextCursor = newNextCursor;
                     isLoading = false;
                     isPaginating = false;
+                    _isReloading = false;
                   });
-                } else if (state is ReturnPagesFailure) {
+                }
+                if (state is ReturnPagesFailure) {
                   setState(() {
                     isLoading = false;
                     isPaginating = false;
+                    _isReloading = false;
                   });
                 }
               },
-              child: _pages.isEmpty && isLoading && !isPaginating
-                  ? const CustomLoadingIndecator(height: 50)
-                  : _pages.isEmpty && !isLoading
-                  ? _buildEmptyState()
-                  : ListView.builder(
-                      controller: _scrollController,
-                      itemCount: _pages.length + (hasMore ? 1 : 0),
-                      padding: EdgeInsets.symmetric(horizontal: 12.w),
-                      itemBuilder: (context, index) {
-                        if (index == _pages.length) {
-                          return Padding(
-                            padding: EdgeInsets.symmetric(vertical: 20.h),
-                            child: Center(
-                              child: CircularProgressIndicator(
-                                color: AppColors.primary,
-                              ),
-                            ),
-                          );
-                        }
-                        final page = _pages[index];
-                        final isSelected = _selectedPages.any(
-                          (p) => p.id == page.id,
-                        );
-                        return Container(
-                          margin: EdgeInsets.only(bottom: 8.h),
-                          decoration: BoxDecoration(
-                            color: isSelected
-                                ? AppColors.primary.withValues(alpha: 0.1)
-                                : Colors.transparent,
-                            borderRadius: BorderRadius.circular(12.r),
+              builder: (context, state) {
+                if (state is ReturnPagesFailure) {
+                  return Center(child: Text('Error: ${state.message}'));
+                }
+
+                if (_pages.isEmpty && isLoading) {
+                  return const CustomLoadingIndecator(height: 50);
+                }
+
+                if (_pages.isEmpty && !isLoading) {
+                  return _buildEmptyState();
+                }
+
+                final total = _pages.length + (isLoading ? 1 : 0);
+
+                return ListView.builder(
+                  controller: _scrollController,
+                  itemCount: total,
+                  padding: EdgeInsets.symmetric(horizontal: 12.w),
+                  itemBuilder: (context, index) {
+                    if (index == _pages.length) {
+                      return Padding(
+                        padding: EdgeInsets.symmetric(vertical: 20.h),
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.primary,
                           ),
-                          child: CheckboxListTile(
-                            title: Text(
-                              page.title,
-                              style: AppTextStyles.titleMedium!.copyWith(
-                                fontSize: 15.sp,
-                                color: isSelected ? AppColors.primary : null,
-                              ),
-                            ),
-                            value: isSelected,
-                            activeColor: AppColors.primary,
-                            checkColor: Colors.white,
-                            controlAffinity: ListTileControlAffinity.trailing,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.r),
-                            ),
-                            onChanged: (bool? value) {
-                              setState(() {
-                                if (value == true) {
-                                  if (!_selectedPages.any(
-                                    (p) => p.id == page.id,
-                                  )) {
-                                    _selectedPages.add(page);
-                                  }
-                                } else {
-                                  _selectedPages.removeWhere(
-                                    (p) => p.id == page.id,
-                                  );
-                                }
-                              });
-                            },
+                        ),
+                      );
+                    }
+                    final page = _pages[index];
+                    final isSelected = _selectedPages.any(
+                      (p) => p.id == page.id,
+                    );
+                    return Container(
+                      margin: EdgeInsets.only(bottom: 8.h),
+                      decoration: BoxDecoration(
+                        color: isSelected
+                            ? AppColors.primary.withValues(alpha: 0.1)
+                            : Colors.transparent,
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                      child: CheckboxListTile(
+                        title: Text(
+                          page.title,
+                          style: AppTextStyles.titleMedium!.copyWith(
+                            fontSize: 15.sp,
+                            color: isSelected ? AppColors.primary : null,
                           ),
-                        );
-                      },
-                    ),
+                        ),
+                        value: isSelected,
+                        activeColor: AppColors.primary,
+                        checkColor: Colors.white,
+                        controlAffinity: ListTileControlAffinity.trailing,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
+                        onChanged: (bool? value) {
+                          setState(() {
+                            if (value == true) {
+                              if (!_selectedPages.any((p) => p.id == page.id)) {
+                                _selectedPages.add(page);
+                              }
+                            } else {
+                              _selectedPages.removeWhere(
+                                (p) => p.id == page.id,
+                              );
+                            }
+                          });
+                        },
+                      ),
+                    );
+                  },
+                );
+              },
             ),
           ),
         ],
