@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quicknotion/core/constants/constants.dart';
 import 'package:quicknotion/core/database/cache/secure_storage.dart';
+import 'package:quicknotion/core/helpers/custom_search_text_field.dart';
 import 'package:quicknotion/core/utls/custom_loading_indecator.dart';
 import 'package:quicknotion/feature/databases/domain/entities/page_entity.dart';
 import 'package:quicknotion/feature/databases/domain/entities/property_entity.dart';
@@ -31,7 +32,7 @@ class RelationSearchView extends StatefulWidget {
 class _RelationSearchViewState extends State<RelationSearchView> {
   final TextEditingController _searchController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  List<PageEntity> _pages = [];
+  final List<PageEntity> _pages = [];
   List<PageEntity> _selectedPages = [];
   bool isLoading = false;
   String? nextCursor;
@@ -54,9 +55,18 @@ class _RelationSearchViewState extends State<RelationSearchView> {
     }
     final maxScroll = controller.position.maxScrollExtent;
     final current = controller.position.pixels;
-    if (current >= maxScroll * 0.8) {
+    if (current >= maxScroll * 0.75) {
       _getPages(isPaginating: true);
     }
+  }
+
+  Future<void> _onSearchChanged() async {
+    setState(() {
+      _pages.clear();
+      nextCursor = null;
+      hasMore = false;
+    });
+    await _getPages();
   }
 
   Future<void> _getPages({bool isPaginating = false}) async {
@@ -84,7 +94,6 @@ class _RelationSearchViewState extends State<RelationSearchView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: relationSearchAppBar(
         context: context,
         getPages: _getPages,
@@ -95,34 +104,10 @@ class _RelationSearchViewState extends State<RelationSearchView> {
       ),
       body: Column(
         children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-            child: TextField(
-              controller: _searchController,
-              onChanged: (_) => _getPages(),
-              decoration: InputDecoration(
-                hintText: 'Search pages...',
-                filled: true,
-                fillColor: Theme.of(context).brightness == Brightness.dark
-                    ? AppColors.darkSurface
-                    : AppColors.lightSurface,
-                prefixIcon: const Icon(Icons.search, color: AppColors.grey),
-                suffixIcon: _searchController.text.isNotEmpty
-                    ? IconButton(
-                        icon: const Icon(Icons.clear, color: AppColors.grey),
-                        onPressed: () {
-                          _searchController.clear();
-                          _getPages();
-                        },
-                      )
-                    : null,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12.r),
-                  borderSide: BorderSide.none,
-                ),
-                contentPadding: EdgeInsets.symmetric(vertical: 14.h),
-              ),
-            ),
+          CustomSearchTextField(
+            getPages: _onSearchChanged,
+            searchController: _searchController,
+            hintText: 'Search pages...',
           ),
           Expanded(
             child: BlocConsumer<ReturnPagesCubit, ReturnPagesState>(

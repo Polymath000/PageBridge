@@ -9,8 +9,8 @@ import 'package:quicknotion/feature/databases/presentation/controllers/add_token
 import 'package:quicknotion/feature/databases/presentation/controllers/theme_mode_cubit/theme_mode_cubit.dart';
 
 class HomeAppBar extends StatefulWidget {
-  HomeAppBar({super.key, required this.query});
-  String query;
+  const HomeAppBar({super.key, required this.query});
+  final String query;
   @override
   State<HomeAppBar> createState() => _HomeAppBarState();
 }
@@ -41,7 +41,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
         pinned: false,
         automaticallyImplyLeading: false,
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(bottom: Radius.circular(16)),
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(24)),
         ),
         clipBehavior: Clip.antiAlias,
         backgroundColor: AppColors.darkGrey,
@@ -50,15 +50,12 @@ class _HomeAppBarState extends State<HomeAppBar> {
           titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
           title: Text(
             'Databases',
-            style: AppTextStyles.titleLarge?.copyWith(
-              color: AppColors.white,
-              fontSize: 20,
-            ),
+            style: AppTextStyles.titleLarge?.copyWith(color: AppColors.white),
           ),
           background: Container(
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.vertical(
-                bottom: Radius.circular(16),
+                bottom: Radius.circular(24),
               ),
               gradient: LinearGradient(
                 colors: [
@@ -95,7 +92,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
               },
             ),
           IconButton(
-            tooltip: 'Toggle theme',
+            tooltip: 'Theme',
             icon: Theme.of(context).brightness == Brightness.light
                 ? Icon(AppIcons.darkMode)
                 : Icon(AppIcons.lightMode),

@@ -1,173 +1,62 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quicknotion/core/constants/constants.dart';
-import 'package:quicknotion/core/database/cache/secure_storage.dart';
-import 'package:quicknotion/core/utls/error_widget.dart';
-import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
-import 'package:quicknotion/feature/databases/presentation/controllers/add_token_cubit/add_token_cubit.dart';
-import 'package:quicknotion/feature/databases/presentation/widgets/custom_skeletonizer_database.dart';
-import 'package:quicknotion/feature/databases/presentation/widgets/database_card.dart';
+import 'package:quicknotion/core/helpers/custom_search_text_field.dart';
+import 'package:quicknotion/feature/databases/presentation/widgets/databases_list.dart';
 
 class HomeViewBody extends StatefulWidget {
-  final Map<String, dynamic> dataFromToken;
-  final ScrollController? controller;
-  final String? currentQuery;
-  HomeViewBody({
+  const HomeViewBody({
     super.key,
-    this.controller,
-    this.currentQuery,
-    required this.dataFromToken,
+    required this.data,
+    required this.scrollController,
   });
-
+  final Map<String, dynamic> data;
+  final ScrollController scrollController;
   @override
   State<HomeViewBody> createState() => _HomeViewBodyState();
 }
 
 class _HomeViewBodyState extends State<HomeViewBody> {
-  List<DatabaseEntity> databases = [];
-  bool isLoading = false;
-  String? nextCursor;
-  bool hasMore = false;
-  bool isPaginating = false;
-
-  @override
-  void initState() {
-    super.initState();
-    if (widget.dataFromToken.isEmpty) {
-      _getDatabases();
-    } else {
-      databases.addAll(widget.dataFromToken["databases"]);
-      hasMore = widget.dataFromToken["hasMore"];
-      nextCursor = widget.dataFromToken["nextCursor"];
-      isLoading = false;
-      isPaginating = false;
-    }
-    widget.controller?.addListener(_onScroll);
-  }
-
-  @override
-  void didUpdateWidget(covariant HomeViewBody oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.currentQuery != widget.currentQuery) {
-      _getDatabases();
-    }
-  }
-
-  void _onScroll() {
-    final controller = widget.controller;
-    if (controller == null || !controller.hasClients || isLoading || !hasMore) {
-      return;
-    }
-    final maxScroll = controller.position.maxScrollExtent;
-    final current = controller.position.pixels;
-    if (current >= maxScroll * 0.8) {
-      _getDatabases(isPaginating: true);
-    }
-  }
-
-  Future<void> _getDatabases({bool isPaginating = false}) async {
-    if (isLoading) return;
-    setState(() {
-      isLoading = true;
-      this.isPaginating = isPaginating;
+  Future<void> _onSearchChanged() async {
+    _searchController.addListener(() {
+      _searchQueryNotifier.value = _searchController.text;
     });
-    final token = await SecureStorage.readData(key: tokenKey);
-    context.read<AddTokenCubit>().addToken(
-      token: token ?? "",
-      query: widget.currentQuery ?? "",
-      startCursor: isPaginating ? nextCursor : null,
-    );
   }
+
+  final ValueNotifier<String> _searchQueryNotifier = ValueNotifier<String>("");
 
   @override
   void dispose() {
-    widget.controller?.removeListener(_onScroll);
+    _searchController.dispose();
     super.dispose();
   }
 
+  final TextEditingController _searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AddTokenCubit, AddTokenState>(
-      listener: (context, state) {
-        if (state is AddTokenLoading) {
-          setState(() {
-            isLoading = true;
-          });
-          return;
-        }
-
-        if (state is AddTokenSuccess) {
-          setState(() {
-            if (!isPaginating) {
-              databases.clear();
-            }
-            databases.addAll(state.databases);
-            hasMore = state.hasMore;
-            nextCursor = state.nextCursor;
-            isLoading = false;
-            isPaginating = false;
-          });
-        }
-        if (state is AddTokenSearchSuccess) {
-          setState(() {
-            if (!isPaginating) {
-              databases.clear();
-            }
-            databases.addAll(state.databases);
-            hasMore = state.hasMore;
-            nextCursor = state.nextCursor;
-            isLoading = false;
-            isPaginating = false;
-          });
-        }
-        if (state is AddTokenFailure) {
-          setState(() {
-            isLoading = false;
-            isPaginating = false;
-          });
-        }
-      },
-      builder: (context, state) {
-        if (state is AddTokenFailure) {
-          return SliverToBoxAdapter(
-            child: CustomErrorWidget(errorMessage: state.message),
-          );
-        }
-
-        if (databases.isEmpty && isLoading) {
-          return SliverToBoxAdapter(
-            child: SizedBox(
-              height: MediaQuery.sizeOf(context).height,
-              child: Column(
-                children: List.generate(
-                  (MediaQuery.sizeOf(context).height * 0.009).toInt(),
-                  (index) => CustomSkeletonizerDatabase(),
-                ),
-              ),
+    return SliverPadding(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 16),
+      sliver: SliverMainAxisGroup(
+        slivers: [
+          SliverToBoxAdapter(
+            child: CustomSearchTextField(
+              getPages: _onSearchChanged,
+              hintText: "Search Databases",
+              searchController: _searchController,
             ),
-          );
-        }
-
-        final total = databases.length + (isLoading ? 5 : 0);
-
-        return SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 8.0),
-          sliver: SliverList(
-            delegate: SliverChildBuilderDelegate((context, index) {
-              if (databases.isEmpty) {
-                return Center(
-                  child: CustomErrorWidget(
-                    errorMessage: "There are no databases found.",
-                  ),
-                );
-              } else if (index < databases.length) {
-                return DatabaseCard(database: databases[index]);
-              }
-              return const CustomSkeletonizerDatabase();
-            }, childCount: total),
           ),
-        );
-      },
+          const SliverToBoxAdapter(child: SizedBox(height: 6)),
+          ValueListenableBuilder<String>(
+            valueListenable: _searchQueryNotifier,
+            builder: (context, value, _) {
+              return DatabasesList(
+                dataFromToken: widget.data,
+                controller: widget.scrollController,
+                currentQuery: value,
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }
