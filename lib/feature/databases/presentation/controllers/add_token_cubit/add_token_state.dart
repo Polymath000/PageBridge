@@ -1,6 +1,5 @@
 part of 'add_token_cubit.dart';
 
-@immutable
 sealed class AddTokenState {}
 
 final class AddTokenInitial extends AddTokenState {}

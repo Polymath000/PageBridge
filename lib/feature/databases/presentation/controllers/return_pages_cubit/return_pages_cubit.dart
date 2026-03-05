@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 
 import 'package:quicknotion/feature/databases/data/repos/return_pages_repo_impl.dart';
 import 'package:quicknotion/feature/databases/domain/entities/page_entity.dart';

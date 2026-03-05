@@ -51,8 +51,8 @@ class _HomeViewState extends State<HomeView> {
                           BoxShadow(
                             color:
                                 Theme.of(context).brightness == Brightness.light
-                                ? AppColors.black.withOpacity(0.1)
-                                : AppColors.white.withOpacity(0.1),
+                                ? AppColors.black.withValues(alpha: 0.1)
+                                : AppColors.white.withValues(alpha: 0.1),
                             blurRadius: 10,
                             offset: Offset(0, 2),
                           ),

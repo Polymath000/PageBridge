@@ -1,6 +1,5 @@
 part of 'return_pages_cubit.dart';
 
-@immutable
 sealed class ReturnPagesState {}
 
 final class ReturnPagesInitial extends ReturnPagesState {}

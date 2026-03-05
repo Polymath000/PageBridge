@@ -7,13 +7,13 @@ import 'package:quicknotion/feature/databases/domain/entities/property_entity.da
 import 'package:quicknotion/feature/databases/presentation/controllers/return_pages_cubit/return_pages_cubit.dart';
 
 class RelationTypeWidgetBody extends StatefulWidget {
-  RelationTypeWidgetBody({
+  const RelationTypeWidgetBody({
     super.key,
     required this.property,
     required this.onChanged,
   });
   final PropertyEntity property;
-  List<DropdownItem<String>> items = [];
+  final List<DropdownItem<String>> items = const [];
   final Function(String) onChanged;
 
   @override
@@ -24,7 +24,7 @@ class _RelationTypeWidgetBodyState extends State<RelationTypeWidgetBody> {
   final _formKey = GlobalKey<FormState>();
 
   final controller = MultiSelectController<String>();
-  String _currentSearchQuery = "";
+  String currentSearchQuery = "";
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,7 @@ class _RelationTypeWidgetBodyState extends State<RelationTypeWidgetBody> {
                 searchEnabled: true,
                 onSearchChange: (value) {
                   setState(() {
-                    _currentSearchQuery = value;
+                    currentSearchQuery = value;
                     widget.onChanged(value);
                   });
                 },

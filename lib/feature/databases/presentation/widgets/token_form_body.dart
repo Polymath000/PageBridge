@@ -5,7 +5,6 @@ import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
 import 'package:quicknotion/core/helpers/custom_show_snack_bar.dart';
 import 'package:quicknotion/core/utls/custom_loading_indecator.dart';
-import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
 import 'package:quicknotion/feature/databases/presentation/controllers/add_token_cubit/add_token_cubit.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/submit_button.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/token_text_field.dart';

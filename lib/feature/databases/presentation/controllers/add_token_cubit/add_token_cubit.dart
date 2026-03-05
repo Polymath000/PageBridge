@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
 import 'package:quicknotion/feature/databases/data/repos/database_repo_impl.dart';
 import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
 
