@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quicknotion/core/helpers/custom_multi_dropdown.dart';
-import 'package:quicknotion/core/constants/constants.dart';
-import 'package:quicknotion/core/database/cache/secure_storage.dart';
-import 'package:quicknotion/core/utls/error_widget.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:quicknotion/config/routes/on_generate_routes.dart';
+import 'package:quicknotion/config/themes/app_colors.dart';
+import 'package:quicknotion/config/themes/app_text_style.dart';
 import 'package:quicknotion/feature/databases/domain/entities/page_entity.dart';
 import 'package:quicknotion/feature/databases/domain/entities/property_entity.dart';
-import 'package:quicknotion/feature/databases/presentation/controllers/return_pages_cubit/return_pages_cubit.dart';
 
 class RelationTypeWidget extends StatefulWidget {
   const RelationTypeWidget({
@@ -22,175 +20,73 @@ class RelationTypeWidget extends StatefulWidget {
 }
 
 class _RelationTypeWidgetState extends State<RelationTypeWidget> {
-  List<MultiSelectItem<String>> items = [];
-  List<String> _selectedPageIds = [];
-  final TextEditingController _searchController = TextEditingController();
-  final ScrollController _scrollController = ScrollController();
-  bool isLoading = false;
-  String? nextCursor;
-  bool hasMore = false;
-  bool isPaginating = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _getPages();
-  }
-
-  Future<void> _getPages({bool isPaginating = false}) async {
-    if (isLoading) return;
-    setState(() {
-      isLoading = true;
-      this.isPaginating = isPaginating;
-    });
-    final token = await SecureStorage.readData(key: tokenKey);
-    context.read<ReturnPagesCubit>().returnPages(
-      token: token ?? "",
-      query: _searchController.text,
-      startCursor: isPaginating ? nextCursor : null,
-      databaseId: widget.property.relationDatabaseId ?? "",
-    );
-  }
-
-  void _onScrollEnd() {
-    if (isLoading || !hasMore) return;
-    _getPages(isPaginating: true);
-  }
-
-  void _searchPages() {
-    if (isLoading) return;
-    _getPages();
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    _searchController.dispose();
-    super.dispose();
-  }
+  List<PageEntity> _selectedPages = [];
 
   @override
   Widget build(BuildContext context) {
-    const Color accentColor = Color(0xFF4CAF50);
-
-    return BlocListener<ReturnPagesCubit, ReturnPagesState>(
-      listener: (context, state) {
-        if (state is ReturnPagesLoading) {
-          setState(() {
-            isLoading = true;
-          });
-          return;
-        }
-
-        if (state is ReturnPagesSuccess || state is ReturnPagesSearchSuccess) {
-          final List<PageEntity> newPagesFromState;
-          final bool newHasMore;
-          final String? newNextCursor;
-
-          if (state is ReturnPagesSuccess) {
-            newPagesFromState = state.pages;
-            newHasMore = state.hasMore;
-            newNextCursor = state.nextCursor;
-          } else {
-            final searchState = state as ReturnPagesSearchSuccess;
-            newPagesFromState = searchState.pages;
-            newHasMore = searchState.hasMore;
-            newNextCursor = searchState.nextCursor;
-          }
-
-          setState(() {
-            final newItems = newPagesFromState
-                .map(
-                  (page) => MultiSelectItem<String>(
-                    label: page.title,
-                    value: page.id,
-                  ),
-                )
-                .toList();
-
-            if (isPaginating) {
-              items.addAll(newItems);
-            } else {
-              items = newItems;
-            }
-
-            hasMore = newHasMore;
-            nextCursor = newNextCursor;
-            isLoading = false;
-            isPaginating = false;
-          });
-        }
-
-        if (state is ReturnPagesFailure) {
-          setState(() {
-            isLoading = false;
-            isPaginating = false;
-          });
-        }
+    return GestureDetector(
+      onTap: () async {
+        await AppRoutes.relationSearchView(
+          context,
+          property: widget.property,
+          initialSelectedPages: _selectedPages,
+          onSelectionConfirmed: (selectedPages) {
+            setState(() {
+              _selectedPages = selectedPages;
+            });
+            widget.onChanged?.call(_selectedPages.map((e) => e.id).toList());
+          },
+        );
       },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildSearchField(),
-          const SizedBox(height: 8),
-          BlocBuilder<ReturnPagesCubit, ReturnPagesState>(
-            builder: (context, state) {
-              if (state is ReturnPagesFailure && !isPaginating) {
-                return CustomErrorWidgetRelationType(
-                  errorMessage: state.message,
-                );
-              }
-
-              var itemsWithLoader = List<MultiSelectItem<String>>.from(items);
-              if (isPaginating && hasMore) {
-                itemsWithLoader.add(
-                  MultiSelectItem(
-                    value: "loader" as String,
-                    label: "Loading...",
-                  ),
-                );
-              }
-
-              if (items.isEmpty && isLoading && !isPaginating) {
-                return const Center(child: CircularProgressIndicator());
-              }
-
-              return CustomMultiDropdown<String>(
-                items: itemsWithLoader,
-                selectedValues: _selectedPageIds,
-                onSelectionChanged: (values) {
-                  setState(() {
-                    widget.onChanged?.call(_selectedPageIds);
-                    _selectedPageIds = values
-                        .where((v) => v != "loader")
-                        .toList();
-                  });
-                },
-                hint: "Select items for ${widget.property.name}",
-                chipColor: accentColor,
-                scrollController: _scrollController,
-                onScrollEnd: _onScrollEnd,
-              );
-            },
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+        decoration: BoxDecoration(
+          color: Theme.of(context).brightness == Brightness.dark
+              ? const Color(0xFF2A2A2A)
+              : Colors.white,
+          border: Border.all(
+            color: Theme.of(context).brightness == Brightness.dark
+                ? const Color(0xFF3A3A3A)
+                : const Color(0xFFDDDDDD),
           ),
-          const SizedBox(height: 5),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSearchField() {
-    return TextField(
-      controller: _searchController,
-      decoration: InputDecoration(
-        hintText: 'Search pages...',
-        suffixIcon: IconButton(
-          icon: const Icon(Icons.search),
-          onPressed: _searchPages,
+          borderRadius: BorderRadius.circular(12),
         ),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+        child: _selectedPages.isEmpty
+            ? Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                child: Text(
+                  "Select items",
+                  style: AppTextStyles.titleMedium!.copyWith(
+                    color: AppColors.grey,
+                    fontSize: 14.sp,
+                  ),
+                ),
+              )
+            : Wrap(
+                spacing: 6.0,
+                runSpacing: 4.0,
+                children: _selectedPages
+                    .map(
+                      (page) => Chip(
+                        label: Text(
+                          page.title,
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        backgroundColor: AppColors.primary,
+                        onDeleted: () {
+                          setState(() {
+                            _selectedPages.removeWhere((p) => p.id == page.id);
+                            widget.onChanged?.call(
+                              _selectedPages.map((e) => e.id).toList(),
+                            );
+                          });
+                        },
+                      ),
+                    )
+                    .toList(),
+              ),
       ),
-      onSubmitted: (_) => _searchPages(),
     );
   }
 }

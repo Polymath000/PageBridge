@@ -17,9 +17,21 @@ class NewPageCubit extends Cubit<NewPageState> {
     required dynamic value,
     required String type,
   }) {
-    newPageProperties.add(
-      PropertyModel(name: key, type: type, canEdit: true, value: value),
+    final index = newPageProperties.indexWhere(
+      (element) => element.name == key,
     );
+    if (index != -1) {
+      newPageProperties[index] = PropertyModel(
+        name: key,
+        type: type,
+        canEdit: true,
+        value: value,
+      );
+    } else {
+      newPageProperties.add(
+        PropertyModel(name: key, type: type, canEdit: true, value: value),
+      );
+    }
   }
 
   Future<bool> createNewPage({required String databaseId}) async {

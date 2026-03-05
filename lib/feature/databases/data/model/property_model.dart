@@ -144,11 +144,11 @@ class PropertyModel extends PropertyEntity {
       case 'place':
       case 'created_by':
       case 'relation':
-      case 'rollup':
-      case 'people':
-      case 'button':
-      case 'last_edited_by':
-      case 'last_edited_time':
+        return {
+          'relation': (value is List)
+              ? value.map((id) => {'id': id}).toList()
+              : [],
+        };
       case 'formula':
       case 'unique_id':
       default:

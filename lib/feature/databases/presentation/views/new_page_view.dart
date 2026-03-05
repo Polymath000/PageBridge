@@ -54,7 +54,6 @@ class _NewPageBlocBuilderState extends State<NewPageBlocBuilder> {
     return BlocListener<NewPageCubit, NewPageState>(
       listener: (context, state) {
         if (state is NewPageFailure) {
-          // Still show snackbar on failure on the current page
           WidgetsBinding.instance.addPostFrameCallback((_) {
             customShowSnackBar(message: state.message, context: context);
           });
