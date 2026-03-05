@@ -20,7 +20,6 @@ class QuickNotionApp extends StatelessWidget {
       designSize: const Size(360, 690),
       minTextAdapt: true,
       splitScreenMode: true,
-      // Use builder only if you need to use library outside ScreenUtilInit context
       builder: (_, child) {
         return BlocBuilder<ThemeModeCubit, ThemeModeState>(
           builder: (context, state) {

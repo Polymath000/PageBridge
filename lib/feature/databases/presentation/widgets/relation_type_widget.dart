@@ -9,8 +9,13 @@ import 'package:quicknotion/feature/databases/domain/entities/property_entity.da
 import 'package:quicknotion/feature/databases/presentation/controllers/return_pages_cubit/return_pages_cubit.dart';
 
 class RelationTypeWidget extends StatefulWidget {
-  const RelationTypeWidget({super.key, required this.property});
+  const RelationTypeWidget({
+    super.key,
+    required this.property,
+    required this.onChanged,
+  });
   final PropertyEntity property;
+  final ValueChanged<dynamic>? onChanged;
 
   @override
   State<RelationTypeWidget> createState() => _RelationTypeWidgetState();
@@ -138,8 +143,6 @@ class _RelationTypeWidgetState extends State<RelationTypeWidget> {
 
               var itemsWithLoader = List<MultiSelectItem<String>>.from(items);
               if (isPaginating && hasMore) {
-                // This is a bit of a hack to show a loader at the end of the list.
-                // A better way would be to have the dropdown support a footer.
                 itemsWithLoader.add(
                   MultiSelectItem(
                     value: "loader" as String,
@@ -157,6 +160,7 @@ class _RelationTypeWidgetState extends State<RelationTypeWidget> {
                 selectedValues: _selectedPageIds,
                 onSelectionChanged: (values) {
                   setState(() {
+                    widget.onChanged?.call(_selectedPageIds);
                     _selectedPageIds = values
                         .where((v) => v != "loader")
                         .toList();
@@ -180,7 +184,6 @@ class _RelationTypeWidgetState extends State<RelationTypeWidget> {
       controller: _searchController,
       decoration: InputDecoration(
         hintText: 'Search pages...',
-        // prefixIcon: const Icon(Icons.search),
         suffixIcon: IconButton(
           icon: const Icon(Icons.search),
           onPressed: _searchPages,

@@ -52,7 +52,10 @@ class _PropertyTypeState extends State<PropertyType> {
           ? BlocProvider(
               create: (context) =>
                   ReturnPagesCubit(repoImpl: getit.get<ReturnPagesRepoImpl>()),
-              child: RelationTypeWidget(property: widget.property),
+              child: RelationTypeWidget(
+                property: widget.property,
+                onChanged: widget.onChanged,
+              ),
             )
           : Container(),
     );
