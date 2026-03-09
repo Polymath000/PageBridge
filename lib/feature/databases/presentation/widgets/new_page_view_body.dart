@@ -16,6 +16,7 @@ class NewPageViewBody extends StatelessWidget {
     return Form(
       child: Column(
         children: [
+          SizedBox(height: 16),
           GestureDetector(
             onTap: () => Navigator.pop(context),
             child: Align(
@@ -29,18 +30,18 @@ class NewPageViewBody extends StatelessWidget {
               property: e,
               onChanged: (value) {
                 context.read<NewPageCubit>().addProperty(
-                      key: e.name,
-                      value: value,
-                      type: e.type,
-                    );
+                  key: e.name,
+                  value: value,
+                  type: e.type,
+                );
               },
             ),
           ),
           CustomButton(
             onPressed: () async {
               final success = await context.read<NewPageCubit>().createNewPage(
-                    databaseId: database.id,
-                  );
+                databaseId: database.id,
+              );
               if (success && context.mounted) {
                 AppRoutes.pop(context, true);
               }

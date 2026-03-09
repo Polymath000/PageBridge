@@ -25,6 +25,7 @@
       "request" : "launch",
       "type" : "dart",
       "program": "lib/main.dart",
+      "toolArgs": ["--no-dds"],
       "args": []
     },
     {
@@ -32,6 +33,7 @@
       "request" : "launch",
       "type" : "dart",
       "program": "lib/main.dart",
+      "toolArgs": ["--no-dds"],
       "args": ["--release"]
     },
     {
@@ -39,18 +41,21 @@
       "request" : "launch",
       "type" : "dart",
       "program": "lib/main.dart",
+      "toolArgs": ["--no-dds"],
       "args": ["--profile"]
     },
     {
       "name" : "Pixel",
       "request": "launch",  
       "type": "dart",
+      "toolArgs": ["--no-dds"],
       "deviceId": "emulator-5554"
     },
     {
       "name" : "smallDevice",
       "request": "launch",  
       "type": "dart",
+      "toolArgs": ["--no-dds"],
       "deviceId": "emulator-5556"
     }
   ],

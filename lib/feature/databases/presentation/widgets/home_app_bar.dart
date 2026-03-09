@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/config/themes/app_icons.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
@@ -37,21 +38,24 @@ class _HomeAppBarState extends State<HomeAppBar> {
         }
       },
       child: SliverAppBar(
-        toolbarHeight: 100,
-        pinned: false,
+        toolbarHeight: 70,
+        pinned: true,
         automaticallyImplyLeading: false,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(bottom: Radius.circular(24)),
         ),
         clipBehavior: Clip.antiAlias,
         backgroundColor: AppColors.darkGrey,
-        expandedHeight: 110,
+        shadowColor: AppColors.darkGrey,
+        surfaceTintColor: AppColors.darkGrey,
+        expandedHeight: 90,
         flexibleSpace: FlexibleSpaceBar(
           titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
           title: Text(
             'Databases',
             style: AppTextStyles.titleLarge?.copyWith(color: AppColors.white),
           ),
+          expandedTitleScale: 1.2.sp,
           background: Container(
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.vertical(
