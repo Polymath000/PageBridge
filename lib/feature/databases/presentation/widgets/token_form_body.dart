@@ -20,7 +20,6 @@ class _TokenFormBodyState extends State<TokenFormBody> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   String token = "";
-  Map<String, dynamic> data = {};
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
@@ -28,10 +27,7 @@ class _TokenFormBodyState extends State<TokenFormBody> {
       listener: (context, state) {
         if (state is DatabasesSuccess) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            data["databases"] = state.databases;
-            data["hasMore"] = state.hasMore;
-            data["nextCursor"] = state.nextCursor;
-            AppRoutes.homeView(context, data: data);
+            AppRoutes.homeView(context);
             customShowSnackBar(
               message: "Welcome 😊",
               context: context,

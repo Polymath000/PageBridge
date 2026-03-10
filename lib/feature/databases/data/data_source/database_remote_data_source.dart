@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:quicknotion/core/constants/constants.dart';
 import 'package:quicknotion/core/database/api/dio_consumer.dart';
 import 'package:quicknotion/core/database/api/end_ponits.dart';
@@ -9,22 +10,28 @@ abstract class DatabaseRemoteDataSource {
   Future<Map<String, dynamic>> returnTheDatabases(
     String token,
     String? query,
-    String? startCursor,
-  );
+    String? startCursor, {
+    CancelToken? cancelToken,
+  });
 }
 
 class DatabaseRemoteDataSourceImpl implements DatabaseRemoteDataSource {
-  DioConsumer dioConsumer;
+  final DioConsumer dioConsumer;
+
   DatabaseRemoteDataSourceImpl(this.dioConsumer);
+
   @override
   Future<Map<String, dynamic>> returnTheDatabases(
     String token,
     String? query,
-    String? startCursor,
-  ) async {
+    String? startCursor, {
+    CancelToken? cancelToken,
+  }) async {
+    // FIX 1: EndPoint.search MUST be the first argument
     var data = await dioConsumer.post(
       EndPoint.search,
-      options: headers(token:  token),
+      cancelToken: cancelToken,
+      options: headers(token: token),
       data: {
         if (query != null && query.isNotEmpty) "query": query,
         "filter": {"value": "database", "property": "object"},
@@ -32,14 +39,16 @@ class DatabaseRemoteDataSourceImpl implements DatabaseRemoteDataSource {
         if (startCursor != null) 'start_cursor': startCursor,
       },
     );
+
     List<DatabaseEntity> databases = [];
     if (data.data != null && data.data['results'] != null) {
       databases = await getDatabaseList(data);
       SecureStorage.writeData(key: tokenKey, value: token);
     }
+
     return {
       'databases': databases,
-      'has_more': data.data["has_more"],
+      'has_more': data.data["has_more"] ?? false,
       'next_cursor': data.data["next_cursor"],
     };
   }

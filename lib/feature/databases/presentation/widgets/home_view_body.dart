@@ -5,12 +5,7 @@ import 'package:quicknotion/feature/databases/presentation/controllers/return_da
 import 'package:quicknotion/feature/databases/presentation/widgets/databases_list.dart';
 
 class HomeViewBody extends StatelessWidget {
-  const HomeViewBody({
-    super.key,
-    required this.data,
-    required this.scrollController,
-  });
-  final Map<String, dynamic> data;
+  const HomeViewBody({super.key, required this.scrollController});
   final ScrollController scrollController;
 
   @override
@@ -27,11 +22,8 @@ class HomeViewBody extends StatelessWidget {
               hintText: "Search Databases",
             ),
           ),
-          const SliverToBoxAdapter(child: SizedBox(height: 6)),
-          DatabasesList(
-            dataFromToken: data,
-            controller: scrollController,
-          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 16)),
+          DatabasesList(controller: scrollController),
         ],
       ),
     );

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
-import 'package:quicknotion/feature/databases/presentation/views/home_view.dart';
-import 'package:quicknotion/feature/databases/presentation/views/new_page_view.dart';
-import 'package:quicknotion/feature/onboarding&splash/presentation/views/splash_view.dart';
-import 'package:quicknotion/feature/databases/presentation/views/token_view.dart';
-import 'package:quicknotion/feature/databases/presentation/views/relation_search_view.dart';
-import 'package:quicknotion/feature/databases/domain/entities/page_entity.dart';
-import 'package:quicknotion/feature/databases/domain/entities/property_entity.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quicknotion/feature/databases/presentation/controllers/return_pages_cubit/return_pages_cubit.dart';
 import 'package:quicknotion/core/utls/setup_service_locator_getit.dart';
 import 'package:quicknotion/feature/databases/data/repos/return_pages_repo_impl.dart';
+import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
+import 'package:quicknotion/feature/databases/domain/entities/page_entity.dart';
+import 'package:quicknotion/feature/databases/domain/entities/property_entity.dart';
+import 'package:quicknotion/feature/databases/presentation/controllers/return_pages_cubit/return_pages_cubit.dart';
+import 'package:quicknotion/feature/databases/presentation/views/home_view.dart';
+import 'package:quicknotion/feature/databases/presentation/views/new_page_view.dart';
+import 'package:quicknotion/feature/databases/presentation/views/relation_search_view.dart';
+import 'package:quicknotion/feature/databases/presentation/views/token_view.dart';
+import 'package:quicknotion/feature/onboarding&splash/presentation/views/splash_view.dart';
 
 sealed class AppRoutes {
   const AppRoutes();
@@ -44,10 +44,8 @@ sealed class AppRoutes {
   }) => _pushNamed(context, NewPageView.routeName, arguments: database);
   static Future<Object?> tokenView(final BuildContext context) =>
       _pushNamedAndRemoveAll(context, TokenView.routeName);
-  static Future<Object?> homeView(
-    final BuildContext context, {
-    required final Map<String, dynamic> data,
-  }) => _pushNamedAndRemoveAll(context, HomeView.routeName, arguments: data);
+  static Future<Object?> homeView(final BuildContext context) =>
+      _pushNamedAndRemoveAll(context, HomeView.routeName);
   static Future<Object?> splashView(final BuildContext context) =>
       _pushNamedAndRemoveAll(context, SplashView.routeName);
 
@@ -70,10 +68,8 @@ sealed class AppRoutes {
 Map<String, Widget Function(BuildContext, Object?)> _routes = {
   TokenView.routeName: (_, _) => const TokenView(),
 
-  HomeView.routeName: (_, final args) {
-    final data = args! as Map<String, dynamic>;
-    return HomeView(data: data);
-  },
+  HomeView.routeName: (_, _) => HomeView(),
+
   SplashView.routeName: (_, _) => const SplashView(),
   NewPageView.routeName: (_, final args) {
     final data = args! as DatabaseEntity;
@@ -87,7 +83,8 @@ Map<String, Widget Function(BuildContext, Object?)> _routes = {
       child: RelationSearchView(
         property: data['property'] as PropertyEntity,
         initialSelectedPages: data['initialSelectedPages'] as List<PageEntity>,
-        onSelectionConfirmed: data['onSelectionConfirmed'] as ValueChanged<List<PageEntity>>?,
+        onSelectionConfirmed:
+            data['onSelectionConfirmed'] as ValueChanged<List<PageEntity>>?,
       ),
     );
   },

@@ -4,16 +4,18 @@ import 'package:quicknotion/core/errors/failure.dart';
 import 'package:quicknotion/core/network/network_info.dart';
 import 'package:quicknotion/feature/databases/data/data_source/database_remote_data_source.dart';
 import 'package:quicknotion/feature/databases/domain/repo/database_repo.dart';
-
 class DatabaseRepoImpl extends DatabaseRepo {
-  DatabaseRemoteDataSource remoteDataSource;
-  NetworkInfo networkInfo;
+  final DatabaseRemoteDataSource remoteDataSource;
+  final NetworkInfo networkInfo;
+  
   DatabaseRepoImpl({required this.remoteDataSource, required this.networkInfo});
+  
   @override
   Future<Either<Failure, Map<String, dynamic>>> returnTheDatabases(
     String token,
     String query,
-    String? startCursor,
+    String? startCursor, 
+    CancelToken? cancelToken, // Assuming your abstract DatabaseRepo uses this as positional
   ) async {
     try {
       if (await networkInfo.isConnected!) {
@@ -21,6 +23,7 @@ class DatabaseRepoImpl extends DatabaseRepo {
           token,
           query,
           startCursor,
+          cancelToken: cancelToken,
         );
         return right(databasesData);
       } else {

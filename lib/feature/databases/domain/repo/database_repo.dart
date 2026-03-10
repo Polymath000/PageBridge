@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:quicknotion/core/errors/failure.dart';
 
 abstract class DatabaseRepo {
@@ -6,5 +7,6 @@ abstract class DatabaseRepo {
     String token,
     String query,
     String? startCursor,
+    CancelToken? cancelToken,
   );
 }
