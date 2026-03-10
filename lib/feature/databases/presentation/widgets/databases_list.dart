@@ -4,7 +4,7 @@ import 'package:quicknotion/core/constants/constants.dart';
 import 'package:quicknotion/core/database/cache/secure_storage.dart';
 import 'package:quicknotion/core/utls/error_widget.dart';
 import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
-import 'package:quicknotion/feature/databases/presentation/controllers/add_token_cubit/add_token_cubit.dart';
+import 'package:quicknotion/feature/databases/presentation/controllers/return_databases_cubit/return_databases_cubit.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/custom_skeletonizer_database.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/database_card.dart';
 
@@ -77,7 +77,7 @@ class _DatabasesListState extends State<DatabasesList> {
       this.isPaginating = isPaginating;
     });
     final token = await SecureStorage.readData(key: tokenKey);
-    context.read<AddTokenCubit>().addToken(
+    context.read<DatabasesCubit>().returnDatabases(
       token: token ?? "",
       query: widget.currentQuery ?? "",
       startCursor: isPaginating ? nextCursor : null,
@@ -92,16 +92,16 @@ class _DatabasesListState extends State<DatabasesList> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AddTokenCubit, AddTokenState>(
+    return BlocConsumer<DatabasesCubit, DatabasesState>(
       listener: (context, state) {
-        if (state is AddTokenLoading) {
+        if (state is DatabasesLoading) {
           setState(() {
             isLoading = true;
           });
           return;
         }
 
-        if (state is AddTokenSuccess) {
+        if (state is DatabasesSuccess) {
           setState(() {
             if (!isPaginating) {
               databases.clear();
@@ -113,7 +113,7 @@ class _DatabasesListState extends State<DatabasesList> {
             isPaginating = false;
           });
         }
-        if (state is AddTokenSearchSuccess) {
+        if (state is DatabasesSearchSuccess) {
           setState(() {
             if (!isPaginating) {
               databases.clear();
@@ -125,7 +125,7 @@ class _DatabasesListState extends State<DatabasesList> {
             isPaginating = false;
           });
         }
-        if (state is AddTokenFailure) {
+        if (state is DatabasesFailure) {
           setState(() {
             isLoading = false;
             isPaginating = false;
@@ -133,7 +133,7 @@ class _DatabasesListState extends State<DatabasesList> {
         }
       },
       builder: (context, state) {
-        if (state is AddTokenFailure) {
+        if (state is DatabasesFailure) {
           return SliverToBoxAdapter(
             child: CustomErrorWidget(errorMessage: state.message),
           );

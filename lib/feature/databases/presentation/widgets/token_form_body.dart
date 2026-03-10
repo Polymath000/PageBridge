@@ -5,7 +5,7 @@ import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
 import 'package:quicknotion/core/helpers/custom_show_snack_bar.dart';
 import 'package:quicknotion/core/utls/custom_loading_indecator.dart';
-import 'package:quicknotion/feature/databases/presentation/controllers/add_token_cubit/add_token_cubit.dart';
+import 'package:quicknotion/feature/databases/presentation/controllers/return_databases_cubit/return_databases_cubit.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/submit_button.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/token_text_field.dart';
 
@@ -24,9 +24,9 @@ class _TokenFormBodyState extends State<TokenFormBody> {
   @override
   Widget build(BuildContext context) {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
-    return BlocConsumer<AddTokenCubit, AddTokenState>(
+    return BlocConsumer<DatabasesCubit, DatabasesState>(
       listener: (context, state) {
-        if (state is AddTokenSuccess) {
+        if (state is DatabasesSuccess) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             data["databases"] = state.databases;
             data["hasMore"] = state.hasMore;
@@ -41,9 +41,9 @@ class _TokenFormBodyState extends State<TokenFormBody> {
         }
       },
       builder: (context, state) {
-        if (state is AddTokenLoading) {
+        if (state is DatabasesLoading) {
           return CustomLoadingIndecator();
-        } else if (state is AddTokenFailure) {
+        } else if (state is DatabasesFailure) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             customShowSnackBar(message: state.message, context: context);
           });

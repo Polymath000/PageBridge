@@ -6,7 +6,7 @@ import 'package:quicknotion/config/themes/app_icons.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
 import 'package:quicknotion/core/constants/constants.dart';
 import 'package:quicknotion/core/database/cache/secure_storage.dart';
-import 'package:quicknotion/feature/databases/presentation/controllers/add_token_cubit/add_token_cubit.dart';
+import 'package:quicknotion/feature/databases/presentation/controllers/return_databases_cubit/return_databases_cubit.dart';
 import 'package:quicknotion/feature/databases/presentation/controllers/theme_mode_cubit/theme_mode_cubit.dart';
 
 class HomeAppBar extends StatefulWidget {
@@ -20,18 +20,18 @@ class _HomeAppBarState extends State<HomeAppBar> {
   bool _isReloading = false;
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AddTokenCubit, AddTokenState>(
+    return BlocListener<DatabasesCubit, DatabasesState>(
       listener: (context, state) {
-        if (state is AddTokenLoading) {
+        if (state is DatabasesLoading) {
           setState(() {
             _isReloading = true;
           });
           return;
         }
 
-        if (state is AddTokenSuccess ||
-            state is AddTokenFailure ||
-            state is AddTokenSearchSuccess) {
+        if (state is DatabasesSuccess ||
+            state is DatabasesFailure ||
+            state is DatabasesSearchSuccess) {
           setState(() {
             _isReloading = false;
           });
@@ -89,7 +89,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
               icon: const Icon(Icons.refresh),
               onPressed: () async {
                 final token = await SecureStorage.readData(key: tokenKey);
-                context.read<AddTokenCubit>().addToken(
+                context.read<DatabasesCubit>().returnDatabases(
                   token: token ?? "",
                   query: widget.query,
                 );

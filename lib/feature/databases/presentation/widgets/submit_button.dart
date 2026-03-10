@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
 import 'package:quicknotion/core/constants/borders.dart';
-import 'package:quicknotion/feature/databases/presentation/controllers/add_token_cubit/add_token_cubit.dart';
+import 'package:quicknotion/feature/databases/presentation/controllers/return_databases_cubit/return_databases_cubit.dart';
 
 class SubmitButton extends StatefulWidget {
   SubmitButton({
@@ -29,9 +29,9 @@ class _SubmitButtonState extends State<SubmitButton> {
           if (widget.formKey.currentState!.validate()) {
             widget.formKey.currentState!.save();
             widget.autovalidateMode = AutovalidateMode.disabled;
-            BlocProvider.of<AddTokenCubit>(
+            BlocProvider.of<DatabasesCubit>(
               context,
-            ).addToken(token: widget.token);
+            ).returnDatabases(token: widget.token);
           } else {
             setState(() {
               widget.autovalidateMode = AutovalidateMode.always;
