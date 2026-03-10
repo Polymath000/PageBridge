@@ -1,4 +1,6 @@
 import 'package:bloc/bloc.dart';
+import 'package:quicknotion/core/constants/constants.dart';
+import 'package:quicknotion/core/database/cache/secure_storage.dart';
 import 'package:quicknotion/feature/databases/data/repos/database_repo_impl.dart';
 import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
 
@@ -8,20 +10,21 @@ class DatabasesCubit extends Cubit<DatabasesState> {
   DatabasesCubit({required this.databaseRepo}) : super(DatabasesInitial());
   final DatabaseRepoImpl databaseRepo;
   Future<void> returnDatabases({
-    required String token,
+    String? token,
     String query = "",
     String? startCursor,
   }) async {
-    emit(DatabasesLoading());
+    emit(DatabasesLoading(query: query));
+    final tokenfromDB = await SecureStorage.readData(key: tokenKey);
     final result = await databaseRepo.returnTheDatabases(
-      token,
+      token ?? tokenfromDB!,
       query,
       startCursor,
     );
 
     result.fold(
       (failure) async {
-        emit(DatabasesFailure(message: failure.message));
+        emit(DatabasesFailure(message: failure.message, query: query));
       },
       (data) {
         final databases = data['databases'] as List<DatabaseEntity>;
@@ -33,6 +36,7 @@ class DatabasesCubit extends Cubit<DatabasesState> {
               databases: databases,
               hasMore: hasMore,
               nextCursor: nextCursor,
+              query: query,
             ),
           );
         } else {
@@ -41,6 +45,7 @@ class DatabasesCubit extends Cubit<DatabasesState> {
               databases: databases,
               hasMore: hasMore,
               nextCursor: nextCursor,
+              query: query,
             ),
           );
         }

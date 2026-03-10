@@ -5,13 +5,11 @@ import 'package:quicknotion/config/themes/app_colors.dart';
 class CustomSearchTextField extends StatefulWidget {
   const CustomSearchTextField({
     super.key,
-    required this.searchController,
     required this.getPages,
     required this.hintText,
   });
 
-  final TextEditingController searchController;
-  final Future<void> Function() getPages;
+  final void Function(String)? getPages;
   final String hintText;
 
   @override
@@ -19,28 +17,38 @@ class CustomSearchTextField extends StatefulWidget {
 }
 
 class _CustomSearchTextFieldState extends State<CustomSearchTextField> {
+  final TextEditingController searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
     final Color fillColor = isDark
-        ? AppColors.white.withOpacity(0.05)
+        ? AppColors.white.withValues(alpha: 0.05)
         : AppColors.lightGray;
 
     final Color iconColor = isDark ? AppColors.grey : AppColors.darkGrey;
     final Color textColor = isDark ? AppColors.white : AppColors.black;
 
     return ValueListenableBuilder<TextEditingValue>(
-      valueListenable: widget.searchController,
+      valueListenable: searchController,
       builder: (context, value, child) {
         return TextField(
-          controller: widget.searchController,
-          onChanged: (value) => widget.getPages(),
+          controller: searchController,
+          onChanged: (value) {
+            widget.getPages?.call(value);
+          },
           style: TextStyle(color: textColor, fontSize: 16.sp),
           decoration: InputDecoration(
             hintText: widget.hintText,
-            hintStyle: TextStyle(color: iconColor.withOpacity(0.7)),
+            hintStyle: TextStyle(color: iconColor.withValues(alpha: 0.7)),
             filled: true,
             fillColor: fillColor,
             prefixIcon: Icon(Icons.search, color: iconColor),
@@ -48,8 +56,8 @@ class _CustomSearchTextFieldState extends State<CustomSearchTextField> {
                 ? IconButton(
                     icon: Icon(Icons.clear, color: iconColor),
                     onPressed: () {
-                      widget.searchController.clear();
-                      widget.getPages();
+                      searchController.clear();
+                      widget.getPages?.call('');
                     },
                   )
                 : null,
@@ -71,7 +79,10 @@ class _CustomSearchTextFieldState extends State<CustomSearchTextField> {
                 width: 1.5,
               ),
             ),
-            contentPadding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 16.w),
+            contentPadding: EdgeInsets.symmetric(
+              vertical: 14.h,
+              horizontal: 16.w,
+            ),
           ),
         );
       },

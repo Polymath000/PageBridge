@@ -12,7 +12,7 @@ class SubmitButton extends StatefulWidget {
     required this.autovalidateMode,
     required this.token,
   });
-  String token;
+  final String token;
   GlobalKey<FormState> formKey;
   AutovalidateMode autovalidateMode;
   @override

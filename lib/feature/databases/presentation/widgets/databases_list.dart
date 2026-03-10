@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quicknotion/core/constants/constants.dart';
-import 'package:quicknotion/core/database/cache/secure_storage.dart';
 import 'package:quicknotion/core/utls/error_widget.dart';
 import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
 import 'package:quicknotion/feature/databases/presentation/controllers/return_databases_cubit/return_databases_cubit.dart';
@@ -11,11 +9,9 @@ import 'package:quicknotion/feature/databases/presentation/widgets/database_card
 class DatabasesList extends StatefulWidget {
   final Map<String, dynamic> dataFromToken;
   final ScrollController? controller;
-  final String? currentQuery;
   const DatabasesList({
     super.key,
     this.controller,
-    this.currentQuery,
     required this.dataFromToken,
   });
 
@@ -29,6 +25,7 @@ class _DatabasesListState extends State<DatabasesList> {
   String? nextCursor;
   bool hasMore = false;
   bool isPaginating = false;
+  String currentQuery = '';
 
   @override
   void initState() {
@@ -43,19 +40,6 @@ class _DatabasesListState extends State<DatabasesList> {
       isPaginating = false;
     }
     widget.controller?.addListener(_onScroll);
-  }
-
-  @override
-  void didUpdateWidget(covariant DatabasesList oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.currentQuery != widget.currentQuery) {
-      setState(() {
-        databases.clear();
-        nextCursor = null;
-        hasMore = false;
-      });
-      _getDatabases();
-    }
   }
 
   void _onScroll() {
@@ -76,10 +60,8 @@ class _DatabasesListState extends State<DatabasesList> {
       isLoading = true;
       this.isPaginating = isPaginating;
     });
-    final token = await SecureStorage.readData(key: tokenKey);
     context.read<DatabasesCubit>().returnDatabases(
-      token: token ?? "",
-      query: widget.currentQuery ?? "",
+      query: currentQuery,
       startCursor: isPaginating ? nextCursor : null,
     );
   }
@@ -97,35 +79,56 @@ class _DatabasesListState extends State<DatabasesList> {
         if (state is DatabasesLoading) {
           setState(() {
             isLoading = true;
+            if (state.query != currentQuery) {
+              currentQuery = state.query;
+              databases.clear();
+              nextCursor = null;
+              hasMore = false;
+              isPaginating = false;
+            }
           });
           return;
         }
 
-        if (state is DatabasesSuccess) {
+        if (state is DatabasesSuccess || state is DatabasesSearchSuccess) {
+          final List<DatabaseEntity> newDatabasesFromState;
+          final bool newHasMore;
+          final String? newNextCursor;
+          final String newQuery;
+
+          if (state is DatabasesSuccess) {
+            newDatabasesFromState = state.databases;
+            newHasMore = state.hasMore;
+            newNextCursor = state.nextCursor;
+            newQuery = state.query;
+          } else {
+            final searchState = state as DatabasesSearchSuccess;
+            newDatabasesFromState = searchState.databases;
+            newHasMore = searchState.hasMore;
+            newNextCursor = searchState.nextCursor;
+            newQuery = searchState.query;
+          }
+
+          if (newQuery != currentQuery) {
+            return;
+          }
+
           setState(() {
             if (!isPaginating) {
               databases.clear();
             }
-            databases.addAll(state.databases);
-            hasMore = state.hasMore;
-            nextCursor = state.nextCursor;
-            isLoading = false;
-            isPaginating = false;
-          });
-        }
-        if (state is DatabasesSearchSuccess) {
-          setState(() {
-            if (!isPaginating) {
-              databases.clear();
-            }
-            databases.addAll(state.databases);
-            hasMore = state.hasMore;
-            nextCursor = state.nextCursor;
+            databases.addAll(newDatabasesFromState);
+            hasMore = newHasMore;
+            nextCursor = newNextCursor;
             isLoading = false;
             isPaginating = false;
           });
         }
         if (state is DatabasesFailure) {
+          if (state.query != currentQuery) {
+            return;
+          }
+
           setState(() {
             isLoading = false;
             isPaginating = false;
@@ -133,7 +136,7 @@ class _DatabasesListState extends State<DatabasesList> {
         }
       },
       builder: (context, state) {
-        if (state is DatabasesFailure) {
+        if (state is DatabasesFailure && state.query == currentQuery) {
           return SliverToBoxAdapter(
             child: CustomErrorWidget(errorMessage: state.message),
           );

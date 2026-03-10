@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bloc/bloc.dart';
-
+import 'package:quicknotion/core/constants/constants.dart';
+import 'package:quicknotion/core/database/cache/secure_storage.dart';
 import 'package:quicknotion/feature/databases/data/repos/return_pages_repo_impl.dart';
 import 'package:quicknotion/feature/databases/domain/entities/page_entity.dart';
 
@@ -11,15 +12,16 @@ class ReturnPagesCubit extends Cubit<ReturnPagesState> {
 
   final ReturnPagesRepoImpl repoImpl;
   Future<List<PageEntity>> returnPages({
-    required String token,
+    String? token,
     String query = "",
     String? startCursor,
     required String databaseId,
   }) async {
     emit(ReturnPagesLoading());
+    final tokenfromDB = await SecureStorage.readData(key: tokenKey);
 
     final result = await repoImpl.raturnPages(
-      token,
+      token ?? tokenfromDB!,
       query,
       startCursor,
       databaseId,
@@ -28,7 +30,7 @@ class ReturnPagesCubit extends Cubit<ReturnPagesState> {
     return result.fold(
       (failure) {
         emit(ReturnPagesFailure(message: failure.message));
-        return <PageEntity>[]; 
+        return <PageEntity>[];
       },
       (data) {
         final pages = data['pages'] as List<PageEntity>;

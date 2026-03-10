@@ -61,14 +61,14 @@ class _RelationSearchViewState extends State<RelationSearchView> {
     }
   }
 
-  Future<void> _onSearchChanged() async {
-    setState(() {
-      _pages.clear();
-      nextCursor = null;
-      hasMore = false;
-    });
-    await _getPages();
-  }
+  // Future<void> _onSearchChanged() async {
+  //   setState(() {
+  //     _pages.clear();
+  //     nextCursor = null;
+  //     hasMore = false;
+  //   });
+  //   await _getPages();
+  // }
 
   Future<void> _getPages({bool isPaginating = false}) async {
     if (isLoading) return;
@@ -76,9 +76,7 @@ class _RelationSearchViewState extends State<RelationSearchView> {
       isLoading = true;
       this.isPaginating = isPaginating;
     });
-    final token = await SecureStorage.readData(key: tokenKey);
     context.read<ReturnPagesCubit>().returnPages(
-      token: token ?? "",
       query: _searchController.text,
       startCursor: isPaginating ? nextCursor : null,
       databaseId: widget.property.relationDatabaseId ?? "",
@@ -127,8 +125,13 @@ class _RelationSearchViewState extends State<RelationSearchView> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: CustomSearchTextField(
-              getPages: _onSearchChanged,
-              searchController: _searchController,
+              getPages: (value) {
+                context.read<ReturnPagesCubit>().returnPages(
+                  query: value,
+                  startCursor: isPaginating ? nextCursor : null,
+                  databaseId: widget.property.relationDatabaseId ?? "",
+                );
+              },
               hintText: 'Search pages...',
             ),
           ),
