@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:quicknotion/core/helpers/custom_show_snack_bar.dart';
 import 'package:quicknotion/core/utls/custom_loading_indecator.dart';
 import 'package:quicknotion/core/utls/setup_service_locator_getit.dart';
@@ -9,7 +10,6 @@ import 'package:quicknotion/feature/databases/domain/entities/database_entity.da
 import 'package:quicknotion/feature/databases/presentation/controllers/new_page_cubit/new_page_cubit.dart';
 import 'package:quicknotion/feature/databases/presentation/controllers/return_pages_cubit/return_pages_cubit.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/new_page_view_body.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class NewPageView extends StatelessWidget {
   const NewPageView({super.key, required this.database});
@@ -68,7 +68,7 @@ class _NewPageBlocBuilderState extends State<NewPageBlocBuilder> {
               child: Padding(
                 padding: const EdgeInsets.only(
                   bottom: 16.0,
-                  left: 20,
+                  left: 0,
                   right: 20,
                 ),
                 child: NewPageViewBody(database: widget.database),

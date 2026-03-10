@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:quicknotion/config/themes/app_colors.dart';
+import 'package:quicknotion/config/themes/app_text_style.dart';
 import 'package:quicknotion/core/constants/constants.dart';
 import 'package:quicknotion/core/database/cache/secure_storage.dart';
 import 'package:quicknotion/core/helpers/custom_search_text_field.dart';
-import 'package:quicknotion/core/utls/custom_loading_indecator.dart';
 import 'package:quicknotion/feature/databases/domain/entities/page_entity.dart';
 import 'package:quicknotion/feature/databases/domain/entities/property_entity.dart';
 import 'package:quicknotion/feature/databases/presentation/controllers/return_pages_cubit/return_pages_cubit.dart';
-import 'package:quicknotion/config/themes/app_colors.dart';
-import 'package:quicknotion/config/themes/app_text_style.dart';
+import 'package:quicknotion/feature/databases/presentation/widgets/list_of_databases_fo_relation_search.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/relation_search_app_bar.dart';
+import 'package:quicknotion/feature/databases/presentation/widgets/relation_search_card_skeleton.dart';
 
 class RelationSearchView extends StatefulWidget {
   static const String routeName = 'relation_search_view';
@@ -50,7 +51,7 @@ class _RelationSearchViewState extends State<RelationSearchView> {
 
   void _onScroll() {
     final controller = _scrollController;
-    if (controller == null || !controller.hasClients || isLoading || !hasMore) {
+    if (!controller.hasClients || isLoading || !hasMore) {
       return;
     }
     final maxScroll = controller.position.maxScrollExtent;
@@ -84,6 +85,25 @@ class _RelationSearchViewState extends State<RelationSearchView> {
     );
   }
 
+  void _onPageSelectionChanged({
+    required PageEntity page,
+    required bool isSelected,
+  }) {
+    setState(() {
+      if (isSelected) {
+        final alreadySelected = _selectedPages.any(
+          (item) => item.id == page.id,
+        );
+        if (!alreadySelected) {
+          _selectedPages.add(page);
+        }
+        return;
+      }
+
+      _selectedPages.removeWhere((item) => item.id == page.id);
+    });
+  }
+
   @override
   void dispose() {
     _searchController.dispose();
@@ -104,10 +124,13 @@ class _RelationSearchViewState extends State<RelationSearchView> {
       ),
       body: Column(
         children: [
-          CustomSearchTextField(
-            getPages: _onSearchChanged,
-            searchController: _searchController,
-            hintText: 'Search pages...',
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: CustomSearchTextField(
+              getPages: _onSearchChanged,
+              searchController: _searchController,
+              hintText: 'Search pages...',
+            ),
           ),
           Expanded(
             child: BlocConsumer<ReturnPagesCubit, ReturnPagesState>(
@@ -162,7 +185,13 @@ class _RelationSearchViewState extends State<RelationSearchView> {
                 }
 
                 if (_pages.isEmpty && isLoading) {
-                  return const CustomLoadingIndecator(height: 50);
+                  return ListView.builder(
+                    padding: EdgeInsets.symmetric(horizontal: 12.w),
+                    itemCount: 6,
+                    itemBuilder: (context, index) {
+                      return const RelationSearchCardSkeleton();
+                    },
+                  );
                 }
 
                 if (_pages.isEmpty && !isLoading) {
@@ -179,53 +208,19 @@ class _RelationSearchViewState extends State<RelationSearchView> {
                     if (index == _pages.length) {
                       return Padding(
                         padding: EdgeInsets.symmetric(vertical: 20.h),
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            color: AppColors.primary,
-                          ),
-                        ),
+                        child: const RelationSearchCardSkeleton(),
                       );
                     }
                     final page = _pages[index];
                     final isSelected = _selectedPages.any(
                       (p) => p.id == page.id,
                     );
-                    return Container(
-                      margin: EdgeInsets.only(bottom: 8.h),
-                      decoration: BoxDecoration(
-                        color: isSelected
-                            ? AppColors.primary.withValues(alpha: 0.1)
-                            : Colors.transparent,
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                      child: CheckboxListTile(
-                        title: Text(
-                          page.title,
-                          style: AppTextStyles.titleMedium!.copyWith(
-                            fontSize: 15.sp,
-                            color: isSelected ? AppColors.primary : null,
-                          ),
-                        ),
-                        value: isSelected,
-                        activeColor: AppColors.primary,
-                        checkColor: Colors.white,
-                        controlAffinity: ListTileControlAffinity.trailing,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.r),
-                        ),
-                        onChanged: (bool? value) {
-                          setState(() {
-                            if (value == true) {
-                              if (!_selectedPages.any((p) => p.id == page.id)) {
-                                _selectedPages.add(page);
-                              }
-                            } else {
-                              _selectedPages.removeWhere(
-                                (p) => p.id == page.id,
-                              );
-                            }
-                          });
-                        },
+                    return ListOfDatabasesFoRelationSearch(
+                      isSelected: isSelected,
+                      page: page,
+                      onChanged: (value) => _onPageSelectionChanged(
+                        page: page,
+                        isSelected: value ?? false,
                       ),
                     );
                   },
