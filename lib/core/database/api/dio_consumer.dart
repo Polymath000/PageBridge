@@ -1,33 +1,38 @@
 import 'package:dio/dio.dart';
-import 'package:quicknotion/core/database/api/api_consumer.dart' show ApiConsumer;
+import 'package:quicknotion/core/database/api/api_consumer.dart'
+    show ApiConsumer;
+import 'package:quicknotion/core/database/api/api_consumer.dart';
 import 'package:quicknotion/core/database/api/end_ponits.dart';
 import 'package:quicknotion/core/errors/expentions.dart';
 import 'package:quicknotion/core/network/interceptors.dart';
+
 class DioConsumer extends ApiConsumer {
   final Dio dio;
 
   DioConsumer({required this.dio}) {
-    dio..interceptors.addAll([LoggerInterceptor()]);
+    dio.interceptors.addAll([LoggerInterceptor()]);
     dio.options.baseUrl = EndPoint.baseUrl;
   }
-  
-  //!POST
+
+  //! POST
   @override
-  Future<Response> post(
+  Future<Response<dynamic>> post(
     String path, {
-    data,
+    dynamic data,
     Map<String, dynamic>? queryParameters,
     Options? options,
     bool isFormData = false,
+    CancelToken? cancelToken, // Added
   }) async {
     try {
-      final response = dio.post(
+      final response = await dio.post(
         path,
         data: isFormData
             ? FormData.fromMap(data as Map<String, dynamic>)
             : data,
         queryParameters: queryParameters,
-        options: options
+        options: options,
+        cancelToken: cancelToken, // Passed to Dio
       );
       return response;
     } on DioException catch (e) {
@@ -36,61 +41,72 @@ class DioConsumer extends ApiConsumer {
     }
   }
 
-  //!GET
+  //! GET
   @override
-  Future get(
+  Future<dynamic> get(
     String path, {
     Object? data,
     Map<String, dynamic>? queryParameters,
+    CancelToken? cancelToken, // Added
   }) async {
     try {
-      var res = await dio.get(
+      final res = await dio.get(
         path,
         data: data,
         queryParameters: queryParameters,
+        cancelToken: cancelToken, // Passed to Dio
       );
       return res.data;
     } on DioException catch (e) {
       handleDioException(e);
+      rethrow;
     }
   }
 
-  //!DELETE
+  //! DELETE
   @override
-  Future delete(
+  Future<dynamic> delete(
     String path, {
     Object? data,
     Map<String, dynamic>? queryParameters,
+    CancelToken? cancelToken, // Added
   }) async {
     try {
-      var res = await dio.delete(
+      final res = await dio.delete(
         path,
         data: data,
         queryParameters: queryParameters,
+        cancelToken: cancelToken, // Passed to Dio
       );
       return res.data;
     } on DioException catch (e) {
       handleDioException(e);
+      rethrow;
     }
   }
 
-  //!PATCH
+  //! PATCH
   @override
-  Future patch(
+  Future<dynamic> patch(
     String path, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
     bool isFormData = false,
+    CancelToken? cancelToken, // Added
   }) async {
     try {
-      var res = await dio.patch(
+      final res = await dio.patch(
         path,
-        data: isFormData ? FormData.fromMap(data) : data,
+        data: isFormData
+            ? FormData.fromMap(data as Map<String, dynamic>)
+            : data,
         queryParameters: queryParameters,
+        cancelToken: cancelToken, // Passed to Dio
       );
       return res.data;
     } on DioException catch (e) {
       handleDioException(e);
+      rethrow;
     }
   }
 }

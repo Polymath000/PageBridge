@@ -1,0 +1,70 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "C/C++ Runner: Debug Session",
+      "type": "cppdbg",
+      "request": "launch",
+      "args": [],
+      "stopAtEntry": false,
+      "externalConsole": false,
+      "cwd": "/media/windows/workspace/My_Apps/QuickNotion/quicknotion/windows/runner",
+      "program": "/media/windows/workspace/My_Apps/QuickNotion/quicknotion/windows/runner/build/Debug/outDebug",
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
+    },
+    {
+      "name" : "Debug",
+      "request" : "launch",
+      "type" : "dart",
+      "program": "lib/main.dart",
+      "toolArgs": ["--no-dds"],
+      "args": []
+    },
+    {
+      "name" : "Release",
+      "request" : "launch",
+      "type" : "dart",
+      "program": "lib/main.dart",
+      "toolArgs": ["--no-dds"],
+      "args": ["--release"]
+    },
+    {
+      "name" : "Profile",
+      "request" : "launch",
+      "type" : "dart",
+      "program": "lib/main.dart",
+      "toolArgs": ["--no-dds"],
+      "args": ["--profile"]
+    },
+    {
+      "name" : "Pixel",
+      "request": "launch",  
+      "type": "dart",
+      "toolArgs": ["--no-dds"],
+      "deviceId": "emulator-5554"
+    },
+    {
+      "name" : "smallDevice",
+      "request": "launch",  
+      "type": "dart",
+      "toolArgs": ["--no-dds"],
+      "deviceId": "emulator-5556"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "All Devices",
+      "configurations": [
+        "Pixel","smallDevice"
+      ]
+    }
+  ]
+}

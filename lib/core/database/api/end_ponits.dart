@@ -1,19 +1,18 @@
 import 'package:dio/dio.dart';
 
-sealed class EndPoint {
-  const EndPoint();
+class EndPoint {
+  EndPoint({required this.dataSourceId});
   static const String baseUrl = 'https://api.notion.com/v1';
-  // This endpoint need : Token (Authorization) ,and Notion-Version return list of database in the token
-  // and body 
-  static const String allDatabases = "$baseUrl/search";
-  // This endpoint need : Token (Authorization) , Notion-Version and body 
-  static const String addNewPage = "$baseUrl/pages/";
+  static const String search = '/search';
+  static const String addNewPage = '/pages/';
+  final String dataSourceId;
+  late String returnPages = "/data_sources/$dataSourceId/query";
 }
 
-Options headers(String token) => Options(
+Options headers({required String token, String notionVersion = "2022-06-28"}) => Options(
   headers: {
     "Authorization": "Bearer $token",
-    "Notion-Version": "2022-06-28",
+    "Notion-Version": notionVersion,
     "Content-Type": "application/json",
   },
 );
