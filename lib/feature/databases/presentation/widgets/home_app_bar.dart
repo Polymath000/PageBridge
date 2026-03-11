@@ -7,8 +7,7 @@ import 'package:quicknotion/config/themes/app_text_style.dart';
 import 'package:quicknotion/feature/databases/presentation/controllers/theme_mode_cubit/theme_mode_cubit.dart';
 
 class HomeAppBar extends StatelessWidget {
-  const HomeAppBar({super.key, required this.query});
-  final String query;
+  const HomeAppBar({super.key,});
 
   @override
   Widget build(BuildContext context) {

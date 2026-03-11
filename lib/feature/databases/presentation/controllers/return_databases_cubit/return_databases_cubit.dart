@@ -14,7 +14,6 @@ class DatabasesCubit extends Cubit<DatabasesState> {
   DatabasesCubit({required this.databaseRepo}) : super(DatabasesInitial());
 
   Future<void> returnDatabases({String? token, String query = ""}) async {
-    // Cancel any ongoing request before starting a new one
     _cancelToken?.cancel("New search initiated");
     _cancelToken = CancelToken();
 
@@ -51,7 +50,6 @@ class DatabasesCubit extends Cubit<DatabasesState> {
   Future<void> fetchMore() async {
     final currentState = state;
 
-    // Guard against double fetching or fetching when there is no more data
     if (currentState is! DatabasesSuccess ||
         !currentState.hasMore ||
         currentState.isPaginating) {

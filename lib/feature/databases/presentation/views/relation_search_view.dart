@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
-import 'package:quicknotion/core/constants/constants.dart';
-import 'package:quicknotion/core/database/cache/secure_storage.dart';
 import 'package:quicknotion/core/helpers/custom_search_text_field.dart';
 import 'package:quicknotion/feature/databases/domain/entities/page_entity.dart';
 import 'package:quicknotion/feature/databases/domain/entities/property_entity.dart';
@@ -31,56 +29,27 @@ class RelationSearchView extends StatefulWidget {
 }
 
 class _RelationSearchViewState extends State<RelationSearchView> {
-  final TextEditingController _searchController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  final List<PageEntity> _pages = [];
   List<PageEntity> _selectedPages = [];
-  bool isLoading = false;
-  String? nextCursor;
-  bool hasMore = false;
-  bool isPaginating = false;
-  bool _isReloading = false;
 
   @override
   void initState() {
     super.initState();
     _selectedPages = List.from(widget.initialSelectedPages);
-    _getPages();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<ReturnPagesCubit>().returnPages(
+        databaseId: widget.property.relationDatabaseId ?? "",
+      );
+    });
+
     _scrollController.addListener(_onScroll);
   }
 
   void _onScroll() {
-    final controller = _scrollController;
-    if (!controller.hasClients || isLoading || !hasMore) {
-      return;
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent * 0.75) {
+      context.read<ReturnPagesCubit>().fetchMore();
     }
-    final maxScroll = controller.position.maxScrollExtent;
-    final current = controller.position.pixels;
-    if (current >= maxScroll * 0.75) {
-      _getPages(isPaginating: true);
-    }
-  }
-
-  // Future<void> _onSearchChanged() async {
-  //   setState(() {
-  //     _pages.clear();
-  //     nextCursor = null;
-  //     hasMore = false;
-  //   });
-  //   await _getPages();
-  // }
-
-  Future<void> _getPages({bool isPaginating = false}) async {
-    if (isLoading) return;
-    setState(() {
-      isLoading = true;
-      this.isPaginating = isPaginating;
-    });
-    context.read<ReturnPagesCubit>().returnPages(
-      query: _searchController.text,
-      startCursor: isPaginating ? nextCursor : null,
-      databaseId: widget.property.relationDatabaseId ?? "",
-    );
   }
 
   void _onPageSelectionChanged({
@@ -89,23 +58,18 @@ class _RelationSearchViewState extends State<RelationSearchView> {
   }) {
     setState(() {
       if (isSelected) {
-        final alreadySelected = _selectedPages.any(
-          (item) => item.id == page.id,
-        );
-        if (!alreadySelected) {
+        if (!_selectedPages.any((item) => item.id == page.id)) {
           _selectedPages.add(page);
         }
-        return;
+      } else {
+        _selectedPages.removeWhere((item) => item.id == page.id);
       }
-
-      _selectedPages.removeWhere((item) => item.id == page.id);
     });
   }
 
   @override
   void dispose() {
-    _searchController.dispose();
-    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -114,8 +78,6 @@ class _RelationSearchViewState extends State<RelationSearchView> {
     return Scaffold(
       appBar: relationSearchAppBar(
         context: context,
-        getPages: _getPages,
-        isReloading: _isReloading,
         name: widget.property.name,
         selectedPages: _selectedPages,
         onSelectionConfirmed: widget.onSelectionConfirmed,
@@ -128,7 +90,6 @@ class _RelationSearchViewState extends State<RelationSearchView> {
               getPages: (value) {
                 context.read<ReturnPagesCubit>().returnPages(
                   query: value,
-                  startCursor: isPaginating ? nextCursor : null,
                   databaseId: widget.property.relationDatabaseId ?? "",
                 );
               },
@@ -136,98 +97,61 @@ class _RelationSearchViewState extends State<RelationSearchView> {
             ),
           ),
           Expanded(
-            child: BlocConsumer<ReturnPagesCubit, ReturnPagesState>(
-              listener: (context, state) {
-                if (state is ReturnPagesLoading) {
-                  setState(() {
-                    _isReloading = true;
-                  });
-                  return;
-                }
-
-                if (state is ReturnPagesSuccess ||
-                    state is ReturnPagesSearchSuccess) {
-                  final List<PageEntity> newPagesFromState;
-                  final bool newHasMore;
-                  final String? newNextCursor;
-
-                  if (state is ReturnPagesSuccess) {
-                    newPagesFromState = state.pages;
-                    newHasMore = state.hasMore;
-                    newNextCursor = state.nextCursor;
-                  } else {
-                    final searchState = state as ReturnPagesSearchSuccess;
-                    newPagesFromState = searchState.pages;
-                    newHasMore = searchState.hasMore;
-                    newNextCursor = searchState.nextCursor;
-                  }
-
-                  setState(() {
-                    if (!isPaginating) {
-                      _pages.clear();
-                    }
-                    _pages.addAll(newPagesFromState);
-                    hasMore = newHasMore;
-                    nextCursor = newNextCursor;
-                    isLoading = false;
-                    isPaginating = false;
-                    _isReloading = false;
-                  });
-                }
-                if (state is ReturnPagesFailure) {
-                  setState(() {
-                    isLoading = false;
-                    isPaginating = false;
-                    _isReloading = false;
-                  });
-                }
-              },
+            child: BlocBuilder<ReturnPagesCubit, ReturnPagesState>(
               builder: (context, state) {
                 if (state is ReturnPagesFailure) {
                   return Center(child: Text('Error: ${state.message}'));
                 }
 
-                if (_pages.isEmpty && isLoading) {
+                if (state is ReturnPagesLoading) {
                   return ListView.builder(
                     padding: EdgeInsets.symmetric(horizontal: 12.w),
                     itemCount: 6,
+                    itemBuilder: (context, index) =>
+                        const RelationSearchCardSkeleton(),
+                  );
+                }
+
+                if (state is ReturnPagesSuccess) {
+                  final pages = state.pages;
+
+                  if (pages.isEmpty) {
+                    return _buildEmptyState();
+                  }
+
+                  final totalCount =
+                      pages.length + (state.isPaginating ? 1 : 0);
+
+                  return ListView.builder(
+                    controller: _scrollController,
+                    itemCount: totalCount,
+                    padding: EdgeInsets.symmetric(horizontal: 12.w),
                     itemBuilder: (context, index) {
-                      return const RelationSearchCardSkeleton();
+                      if (index == pages.length) {
+                        return Padding(
+                          padding: EdgeInsets.symmetric(vertical: 20.h),
+                          child: const RelationSearchCardSkeleton(),
+                        );
+                      }
+
+                      final page = pages[index];
+                      final isSelected = _selectedPages.any(
+                        (p) => p.id == page.id,
+                      );
+
+                      return ListOfDatabasesFoRelationSearch(
+                        isSelected: isSelected,
+                        page: page,
+                        onChanged: (value) => _onPageSelectionChanged(
+                          page: page,
+                          isSelected: value ?? false,
+                        ),
+                      );
                     },
                   );
                 }
 
-                if (_pages.isEmpty && !isLoading) {
-                  return _buildEmptyState();
-                }
-
-                final total = _pages.length + (isLoading ? 1 : 0);
-
-                return ListView.builder(
-                  controller: _scrollController,
-                  itemCount: total,
-                  padding: EdgeInsets.symmetric(horizontal: 12.w),
-                  itemBuilder: (context, index) {
-                    if (index == _pages.length) {
-                      return Padding(
-                        padding: EdgeInsets.symmetric(vertical: 20.h),
-                        child: const RelationSearchCardSkeleton(),
-                      );
-                    }
-                    final page = _pages[index];
-                    final isSelected = _selectedPages.any(
-                      (p) => p.id == page.id,
-                    );
-                    return ListOfDatabasesFoRelationSearch(
-                      isSelected: isSelected,
-                      page: page,
-                      onChanged: (value) => _onPageSelectionChanged(
-                        page: page,
-                        isSelected: value ?? false,
-                      ),
-                    );
-                  },
-                );
+                return const SizedBox.shrink();
               },
             ),
           ),

@@ -1,7 +1,5 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:bloc/bloc.dart';
-import 'package:quicknotion/core/constants/constants.dart';
-import 'package:quicknotion/core/database/cache/secure_storage.dart';
+import 'package:dio/dio.dart';
 import 'package:quicknotion/feature/databases/data/repos/return_pages_repo_impl.dart';
 import 'package:quicknotion/feature/databases/domain/entities/page_entity.dart';
 
@@ -9,53 +7,78 @@ part 'return_pages_state.dart';
 
 class ReturnPagesCubit extends Cubit<ReturnPagesState> {
   ReturnPagesCubit({required this.repoImpl}) : super(ReturnPagesInitial());
-
+  CancelToken? _cancelToken;
   final ReturnPagesRepoImpl repoImpl;
-  Future<List<PageEntity>> returnPages({
-    String? token,
+  Future<void> returnPages({
     String query = "",
-    String? startCursor,
     required String databaseId,
   }) async {
+    _cancelToken?.cancel("New search initiated");
+    _cancelToken = CancelToken();
     emit(ReturnPagesLoading());
-    final tokenfromDB = await SecureStorage.readData(key: tokenKey);
+    // final tokenfromDB = await SecureStorage.readData(key: tokenKey);
 
     final result = await repoImpl.raturnPages(
-      token ?? tokenfromDB!,
+      // token ?? tokenfromDB!,
       query,
-      startCursor,
+      null,
       databaseId,
+      _cancelToken,
     );
 
     return result.fold(
       (failure) {
+        if (failure.message.toLowerCase().contains('cancel')) {
+          return;
+        }
         emit(ReturnPagesFailure(message: failure.message));
-        return <PageEntity>[];
       },
       (data) {
-        final pages = data['pages'] as List<PageEntity>;
-        final hasMore = data['has_more'] as bool;
-        final nextCursor = data['next_cursor'] as String?;
+        emit(
+          ReturnPagesSuccess(
+            pages: data['pages'],
+            hasMore: data['has_more'],
+            nextCursor: data['next_cursor'],
+            query: query,
+            DatabaseId: databaseId,
+          ),
+        );
+      },
+    );
+  }
 
-        if (query.isEmpty) {
-          emit(
-            ReturnPagesSuccess(
-              pages: pages,
-              hasMore: hasMore,
-              nextCursor: nextCursor,
-            ),
-          );
-        } else {
-          emit(
-            ReturnPagesSearchSuccess(
-              pages: pages,
-              hasMore: hasMore,
-              nextCursor: nextCursor,
-            ),
-          );
-        }
+  Future<void> fetchMore() async {
+    final currentState = state;
+    if (currentState is! ReturnPagesSuccess ||
+        !currentState.hasMore ||
+        currentState.isPaginating) {
+      return;
+    }
+    emit(currentState.copyWith(isPaginating: true));
+    final result = await repoImpl.raturnPages(
+      currentState.query,
+      currentState.nextCursor,
+      currentState.DatabaseId,
+      _cancelToken,
+    );
 
-        return pages;
+    result.fold(
+      (failure) {
+        if (failure.message.toLowerCase().contains('cancel')) return;
+        emit(ReturnPagesFailure(message: failure.message));
+      },
+      (data) {
+        final List<PageEntity> pages = List.from(currentState.pages)
+          ..addAll(data["pages"]);
+        emit(
+          currentState.copyWith(
+            DatabaseId: currentState.DatabaseId,
+            hasMore: data['has_more'],
+            nextCursor: data['next_cursor'],
+            isPaginating: false,
+            pages: pages,
+          ),
+        );
       },
     );
   }

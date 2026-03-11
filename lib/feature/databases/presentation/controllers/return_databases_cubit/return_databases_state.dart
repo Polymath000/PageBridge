@@ -1,6 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'return_databases_cubit.dart';
-
 
 sealed class DatabasesState {}
 
@@ -12,7 +10,7 @@ final class DatabasesSuccess extends DatabasesState {
   final List<DatabaseEntity> databases;
   final bool hasMore;
   final String? nextCursor;
-  final bool isPaginating; // To show a loader at the bottom
+  final bool isPaginating;
   final String query;
 
   DatabasesSuccess({
@@ -23,7 +21,6 @@ final class DatabasesSuccess extends DatabasesState {
     this.query = "",
   });
 
-  // copyWith is essential for updating pagination state without flickering
   DatabasesSuccess copyWith({
     List<DatabaseEntity>? databases,
     bool? hasMore,

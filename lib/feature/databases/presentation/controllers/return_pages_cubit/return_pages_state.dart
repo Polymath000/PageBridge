@@ -10,24 +10,35 @@ class ReturnPagesSuccess extends ReturnPagesState {
   final List<PageEntity> pages;
   final bool hasMore;
   final String? nextCursor;
-
+  final bool isPaginating;
+  final String query;
+  final String DatabaseId;
   ReturnPagesSuccess({
     required this.pages,
-    required this.hasMore,
-    required this.nextCursor,
+    this.hasMore = false,
+    this.nextCursor,
+    this.isPaginating = false,
+    this.query = "",
+    required this.DatabaseId,
   });
-}
 
-class ReturnPagesSearchSuccess extends ReturnPagesState {
-  final List<PageEntity> pages;
-  final bool hasMore;
-  final String? nextCursor;
-
-  ReturnPagesSearchSuccess({
-    required this.pages,
-    required this.hasMore,
-    required this.nextCursor,
-  });
+  ReturnPagesSuccess copyWith({
+    List<PageEntity>? pages,
+    bool? hasMore,
+    String? nextCursor,
+    bool? isPaginating,
+    String? query,
+    String? DatabaseId,
+  }) {
+    return ReturnPagesSuccess(
+      pages: pages ?? this.pages,
+      hasMore: hasMore ?? this.hasMore,
+      isPaginating: isPaginating ?? this.isPaginating,
+      nextCursor: nextCursor ?? this.nextCursor,
+      query: query ?? this.query,
+      DatabaseId: DatabaseId ?? this.DatabaseId,
+    );
+  }
 }
 
 final class ReturnPagesFailure extends ReturnPagesState {

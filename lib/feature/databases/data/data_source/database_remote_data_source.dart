@@ -27,7 +27,6 @@ class DatabaseRemoteDataSourceImpl implements DatabaseRemoteDataSource {
     String? startCursor, {
     CancelToken? cancelToken,
   }) async {
-    // FIX 1: EndPoint.search MUST be the first argument
     var data = await dioConsumer.post(
       EndPoint.search,
       cancelToken: cancelToken,

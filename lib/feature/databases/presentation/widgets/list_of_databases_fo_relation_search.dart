@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/feature/databases/domain/entities/page_entity.dart';
-import 'package:quicknotion/feature/databases/presentation/views/relation_search_view.dart';
 import 'package:quicknotion/feature/databases/presentation/widgets/database_card_for_relation_search.dart';
 
 class ListOfDatabasesFoRelationSearch extends StatelessWidget {

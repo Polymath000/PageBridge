@@ -8,9 +8,7 @@ import 'package:quicknotion/feature/databases/domain/entities/page_entity.dart';
 PreferredSizeWidget relationSearchAppBar({
   required BuildContext context,
   required String name,
-  required bool isReloading,
   required List<PageEntity> selectedPages,
-  required Future<void> Function() getPages,
   ValueChanged<List<PageEntity>>? onSelectionConfirmed,
 }) {
   final theme = Theme.of(context);
@@ -34,21 +32,6 @@ PreferredSizeWidget relationSearchAppBar({
                   style: AppTextStyles.titleMedium?.copyWith(fontSize: 18.sp),
                 ),
               ),
-              if (isReloading)
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(strokeWidth: 2),
-                  ),
-                )
-              else
-                IconButton(
-                  tooltip: 'Reload',
-                  icon: const Icon(Icons.refresh),
-                  onPressed: getPages,
-                ),
               TextButton(
                 onPressed: () {
                   onSelectionConfirmed?.call(selectedPages);

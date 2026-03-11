@@ -7,7 +7,7 @@ import 'package:quicknotion/feature/databases/presentation/widgets/home_app_bar.
 import 'package:quicknotion/feature/databases/presentation/widgets/home_view_body.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({super.key,});
+  const HomeView({super.key});
   static const String routeName = 'home';
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -15,7 +15,6 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final ScrollController _scrollController = ScrollController();
-  final String _currentSearchQuery = "";
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +25,8 @@ class _HomeViewState extends State<HomeView> {
         child: CustomScrollView(
           controller: _scrollController,
           slivers: [
-            HomeAppBar(query: _currentSearchQuery),
-            HomeViewBody(
-              scrollController: _scrollController,
-            ),
+            HomeAppBar(),
+            HomeViewBody(scrollController: _scrollController),
           ],
         ),
       ),
