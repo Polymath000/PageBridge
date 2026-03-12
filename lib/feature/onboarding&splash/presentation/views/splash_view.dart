@@ -29,7 +29,8 @@ class _SplashViewState extends State<SplashView> {
     if (token != null) {
       AppRoutes.homeView(context);
     } else {
-      AppRoutes.tokenView(context);
+      AppRoutes.authView(context);
+      // AppRoutes.tokenView(context);
     }
   }
 

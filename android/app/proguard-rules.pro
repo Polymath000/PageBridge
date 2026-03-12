@@ -4,7 +4,7 @@
 -keep class io.flutter.embedding.** { *; }
 
 # Your app's main classes
--keep class com.example.quicknotion.** { *; }
+-keep class com.example.QuickNotion.** { *; }
 
 # Keep enums
 -keepclassmembers enum * {

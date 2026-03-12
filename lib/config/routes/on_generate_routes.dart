@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quicknotion/core/utls/setup_service_locator_getit.dart';
+import 'package:quicknotion/feature/auth/presentation/veiw/auth_view.dart';
 import 'package:quicknotion/feature/databases/data/repos/return_pages_repo_impl.dart';
 import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
 import 'package:quicknotion/feature/databases/domain/entities/page_entity.dart';
@@ -9,7 +10,6 @@ import 'package:quicknotion/feature/databases/presentation/controllers/return_pa
 import 'package:quicknotion/feature/databases/presentation/views/home_view.dart';
 import 'package:quicknotion/feature/databases/presentation/views/new_page_view.dart';
 import 'package:quicknotion/feature/databases/presentation/views/relation_search_view.dart';
-import 'package:quicknotion/feature/databases/presentation/views/token_view.dart';
 import 'package:quicknotion/feature/onboarding&splash/presentation/views/splash_view.dart';
 
 sealed class AppRoutes {
@@ -42,13 +42,12 @@ sealed class AppRoutes {
     final BuildContext context, {
     required final DatabaseEntity database,
   }) => _pushNamed(context, NewPageView.routeName, arguments: database);
-  static Future<Object?> tokenView(final BuildContext context) =>
-      _pushNamedAndRemoveAll(context, TokenView.routeName);
   static Future<Object?> homeView(final BuildContext context) =>
       _pushNamedAndRemoveAll(context, HomeView.routeName);
   static Future<Object?> splashView(final BuildContext context) =>
       _pushNamedAndRemoveAll(context, SplashView.routeName);
-
+  static Future<Object?> authView(final BuildContext context) =>
+      _pushNamedAndRemoveAll(context, AuthView.routeName);
   static Future<Object?> relationSearchView(
     final BuildContext context, {
     required final PropertyEntity property,
@@ -66,7 +65,7 @@ sealed class AppRoutes {
 }
 
 Map<String, Widget Function(BuildContext, Object?)> _routes = {
-  TokenView.routeName: (_, _) => const TokenView(),
+  AuthView.routeName: (_, _) => const AuthView(),
 
   HomeView.routeName: (_, _) => HomeView(),
 
