@@ -10,7 +10,8 @@ import 'package:quicknotion/feature/databases/presentation/controllers/return_pa
 import 'package:quicknotion/feature/databases/presentation/views/home_view.dart';
 import 'package:quicknotion/feature/databases/presentation/views/new_page_view.dart';
 import 'package:quicknotion/feature/databases/presentation/views/relation_search_view.dart';
-import 'package:quicknotion/feature/onboarding&splash/presentation/views/splash_view.dart';
+import 'package:quicknotion/feature/onStartedViews/presentation/views/onboarding_view.dart';
+import 'package:quicknotion/feature/onStartedViews/presentation/views/splash_view.dart';
 
 sealed class AppRoutes {
   const AppRoutes();
@@ -46,6 +47,8 @@ sealed class AppRoutes {
       _pushNamedAndRemoveAll(context, HomeView.routeName);
   static Future<Object?> splashView(final BuildContext context) =>
       _pushNamedAndRemoveAll(context, SplashView.routeName);
+  static Future<Object?> onboardingView(final BuildContext context) =>
+      _pushNamedAndRemoveAll(context, OnboardingView.routeName);
   static Future<Object?> authView(final BuildContext context) =>
       _pushNamedAndRemoveAll(context, AuthView.routeName);
   static Future<Object?> relationSearchView(
@@ -70,6 +73,7 @@ Map<String, Widget Function(BuildContext, Object?)> _routes = {
   HomeView.routeName: (_, _) => HomeView(),
 
   SplashView.routeName: (_, _) => const SplashView(),
+  OnboardingView.routeName: (_, _) => const OnboardingView(),
   NewPageView.routeName: (_, final args) {
     final data = args! as DatabaseEntity;
     return NewPageView(database: data);

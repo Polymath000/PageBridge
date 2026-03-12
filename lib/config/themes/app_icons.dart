@@ -29,4 +29,5 @@ class AppIcons {
   static final IconData darkMode = Icons.dark_mode_rounded;
   static final IconData lightMode = Icons.light_mode_rounded;
   static final IconData search = FontAwesomeIcons.magnifyingGlass;
+  static final IconData logout = Icons.logout_rounded;
 }

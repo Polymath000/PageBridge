@@ -3,14 +3,15 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
 
-class BackgroundAuth extends StatefulWidget {
-  const BackgroundAuth({super.key});
+class CustomAnimationBackground extends StatefulWidget {
+  const CustomAnimationBackground({super.key});
 
   @override
-  State<BackgroundAuth> createState() => _BackgroundAuthState();
+  State<CustomAnimationBackground> createState() =>
+      _CustomAnimationBackgroundState();
 }
 
-class _BackgroundAuthState extends State<BackgroundAuth>
+class _CustomAnimationBackgroundState extends State<CustomAnimationBackground>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
 

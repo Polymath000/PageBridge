@@ -3,6 +3,7 @@ import 'package:quicknotion/config/routes/on_generate_routes.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/core/constants/constants.dart';
 import 'package:quicknotion/core/database/cache/secure_storage.dart';
+import 'package:quicknotion/core/services/shared_preferences_singleton.dart';
 import 'package:quicknotion/core/utls/app_images.dart';
 import 'package:quicknotion/core/utls/custom_loading_indecator.dart';
 
@@ -26,9 +27,14 @@ class _SplashViewState extends State<SplashView> {
     await Future.delayed(const Duration(seconds: 1));
     if (!mounted) return;
     token = await SecureStorage.readData(key: tokenKey);
+    final seenOnboarding =
+        SharedPreferencesSingleton.getBool(onboardingSeenKey) ?? false;
     if (token != null) {
       // ignore: use_build_context_synchronously
       AppRoutes.homeView(context);
+    } else if (!seenOnboarding) {
+      // ignore: use_build_context_synchronously
+      AppRoutes.onboardingView(context);
     } else {
       // ignore: use_build_context_synchronously
       AppRoutes.authView(context);

@@ -6,7 +6,7 @@ import 'package:quicknotion/core/helpers/custom_show_snack_bar.dart';
 import 'package:quicknotion/core/utls/app_images.dart';
 
 import '../controllers/auth_cubit/auth_cubit.dart';
-import 'background_auth.dart';
+import '../../../../core/helpers/custom_animation_background.dart';
 
 class AuthBody extends StatefulWidget {
   const AuthBody({super.key});
@@ -65,7 +65,7 @@ class _AuthBodyState extends State<AuthBody>
         final textTheme = Theme.of(context).textTheme;
         return Stack(
           children: [
-            const BackgroundAuth(),
+            const CustomAnimationBackground(),
             SafeArea(
               child: Center(
                 child: SingleChildScrollView(
