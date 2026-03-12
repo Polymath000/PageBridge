@@ -48,7 +48,6 @@ class ReturnPagesRemoteDataSourceImpl implements ReturnPagesRemoteDataSource {
     List<PageEntity> pages = [];
     if (data.data != null && data.data['results'] != null) {
       pages = await getPagesList(data);
-      // SecureStorage.writeData(key: tokenKey, value: token);
     }
     return {
       'pages': pages,

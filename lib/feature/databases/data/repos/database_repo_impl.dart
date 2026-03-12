@@ -13,7 +13,6 @@ class DatabaseRepoImpl extends DatabaseRepo {
 
   @override
   Future<Either<Failure, Map<String, dynamic>>> returnTheDatabases(
-    String token,
     String query,
     String? startCursor,
     CancelToken? cancelToken,
@@ -21,7 +20,6 @@ class DatabaseRepoImpl extends DatabaseRepo {
     try {
       if (await networkInfo.isConnected!) {
         final databasesData = await remoteDataSource.returnTheDatabases(
-          token,
           query,
           startCursor,
           cancelToken: cancelToken,

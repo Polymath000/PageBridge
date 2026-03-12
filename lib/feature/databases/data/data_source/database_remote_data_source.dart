@@ -8,7 +8,6 @@ import 'package:quicknotion/feature/databases/domain/entities/database_entity.da
 
 abstract class DatabaseRemoteDataSource {
   Future<Map<String, dynamic>> returnTheDatabases(
-    String token,
     String? query,
     String? startCursor, {
     CancelToken? cancelToken,
@@ -22,15 +21,16 @@ class DatabaseRemoteDataSourceImpl implements DatabaseRemoteDataSource {
 
   @override
   Future<Map<String, dynamic>> returnTheDatabases(
-    String token,
     String? query,
     String? startCursor, {
     CancelToken? cancelToken,
   }) async {
+    final token = await SecureStorage.readData(key: tokenKey);
     var data = await dioConsumer.post(
       EndPoint.search,
       cancelToken: cancelToken,
-      options: headers(token: token),
+
+      options: headers(token: token ?? ""),
       data: {
         if (query != null && query.isNotEmpty) "query": query,
         "filter": {"value": "database", "property": "object"},
@@ -42,7 +42,6 @@ class DatabaseRemoteDataSourceImpl implements DatabaseRemoteDataSource {
     List<DatabaseEntity> databases = [];
     if (data.data != null && data.data['results'] != null) {
       databases = await getDatabaseList(data);
-      SecureStorage.writeData(key: tokenKey, value: token);
     }
 
     return {
