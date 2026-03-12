@@ -12,14 +12,14 @@ class ReturnPagesSuccess extends ReturnPagesState {
   final String? nextCursor;
   final bool isPaginating;
   final String query;
-  final String DatabaseId;
+  final String databaseId;
   ReturnPagesSuccess({
     required this.pages,
     this.hasMore = false,
     this.nextCursor,
     this.isPaginating = false,
     this.query = "",
-    required this.DatabaseId,
+    required this.databaseId,
   });
 
   ReturnPagesSuccess copyWith({
@@ -28,7 +28,7 @@ class ReturnPagesSuccess extends ReturnPagesState {
     String? nextCursor,
     bool? isPaginating,
     String? query,
-    String? DatabaseId,
+    String? databaseId,
   }) {
     return ReturnPagesSuccess(
       pages: pages ?? this.pages,
@@ -36,7 +36,7 @@ class ReturnPagesSuccess extends ReturnPagesState {
       isPaginating: isPaginating ?? this.isPaginating,
       nextCursor: nextCursor ?? this.nextCursor,
       query: query ?? this.query,
-      DatabaseId: DatabaseId ?? this.DatabaseId,
+      databaseId: databaseId ?? this.databaseId,
     );
   }
 }

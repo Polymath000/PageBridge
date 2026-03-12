@@ -47,7 +47,6 @@ class _RelationTypeWidgetBodyState extends State<RelationTypeWidgetBody> {
 
     return BlocConsumer<ReturnPagesCubit, ReturnPagesState>(
       listener: (context, state) {
-        // TODO: implement listener
       },
       builder: (context, state) {
         return Form(

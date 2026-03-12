@@ -40,7 +40,7 @@ class ReturnPagesCubit extends Cubit<ReturnPagesState> {
             hasMore: data['has_more'],
             nextCursor: data['next_cursor'],
             query: query,
-            DatabaseId: databaseId,
+            databaseId: databaseId,
           ),
         );
       },
@@ -58,7 +58,7 @@ class ReturnPagesCubit extends Cubit<ReturnPagesState> {
     final result = await repoImpl.raturnPages(
       currentState.query,
       currentState.nextCursor,
-      currentState.DatabaseId,
+      currentState.databaseId,
       _cancelToken,
     );
 
@@ -72,7 +72,7 @@ class ReturnPagesCubit extends Cubit<ReturnPagesState> {
           ..addAll(data["pages"]);
         emit(
           currentState.copyWith(
-            DatabaseId: currentState.DatabaseId,
+            databaseId: currentState.databaseId,
             hasMore: data['has_more'],
             nextCursor: data['next_cursor'],
             isPaginating: false,

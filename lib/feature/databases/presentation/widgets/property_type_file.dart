@@ -32,6 +32,7 @@ class _PropertyTypeFileState extends State<PropertyTypeFile> {
             if (sizeInMb > 5) {
               customShowSnackBar(
                 message: "File size must be less than 5MB",
+                // ignore: use_build_context_synchronously
                 context: context,
                 backgroundColor: AppColors.red,
               );
@@ -46,6 +47,7 @@ class _PropertyTypeFileState extends State<PropertyTypeFile> {
         } else {
           customShowSnackBar(
             message: "No file was selected",
+            // ignore: use_build_context_synchronously
             context: context,
             backgroundColor: AppColors.red,
           );
