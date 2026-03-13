@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quicknotion/config/routes/on_generate_routes.dart';
-import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/config/themes/app_icons.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
 import 'package:quicknotion/config/themes/theme_config.dart';
@@ -18,6 +17,7 @@ class HomeAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final modernSlate = Theme.of(context).extension<ModernSlateColors>()!;
     return SliverAppBar(
       toolbarHeight: 70,
       pinned: true,
@@ -26,15 +26,17 @@ class HomeAppBar extends StatelessWidget {
         borderRadius: BorderRadius.vertical(bottom: Radius.circular(24)),
       ),
       clipBehavior: Clip.antiAlias,
-      backgroundColor: AppColors.darkGrey,
-      shadowColor: AppColors.darkGrey,
-      surfaceTintColor: AppColors.darkGrey,
+      backgroundColor: modernSlate.card,
+      shadowColor: modernSlate.border,
+      surfaceTintColor: modernSlate.card,
       expandedHeight: 90,
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
         title: Text(
           'Databases',
-          style: AppTextStyles.titleLarge?.copyWith(color: AppColors.white),
+          style: AppTextStyles.titleLarge?.copyWith(
+            color: modernSlate.primaryText,
+          ),
         ),
         expandedTitleScale: 1.2.sp,
         background: Container(
@@ -45,12 +47,12 @@ class HomeAppBar extends StatelessWidget {
             gradient: LinearGradient(
               colors: [
                 Theme.of(context).brightness == Brightness.light
-                    ? AppColors.darkerEdge
-                    : AppColors.grey,
-                AppColors.darkGrey,
+                    ? const Color.fromARGB(255, 226, 236, 246)
+                    : modernSlate.searchBarFill,
+                modernSlate.card,
                 Theme.of(context).brightness == Brightness.light
-                    ? AppColors.grey
-                    : AppColors.darkerEdge,
+                    ? const Color.fromARGB(255, 226, 236, 246)
+                    : modernSlate.searchBarFill,
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,

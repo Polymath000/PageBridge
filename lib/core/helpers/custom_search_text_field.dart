@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
+import 'package:quicknotion/config/themes/theme_config.dart';
 
 class CustomSearchTextField extends StatefulWidget {
   const CustomSearchTextField({
@@ -28,14 +29,11 @@ class _CustomSearchTextFieldState extends State<CustomSearchTextField> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
+    final modernSlate = theme.extension<ModernSlateColors>()!;
 
-    final Color fillColor = isDark
-        ? AppColors.white.withValues(alpha: 0.05)
-        : AppColors.lightGray;
-
-    final Color iconColor = isDark ? AppColors.grey : AppColors.darkGrey;
-    final Color textColor = isDark ? AppColors.white : AppColors.black;
+    final Color fillColor = modernSlate.searchBarFill;
+    final Color iconColor = modernSlate.secondaryText;
+    final Color textColor = modernSlate.primaryText;
 
     return ValueListenableBuilder<TextEditingValue>(
       valueListenable: searchController,
@@ -48,7 +46,7 @@ class _CustomSearchTextFieldState extends State<CustomSearchTextField> {
           style: TextStyle(color: textColor, fontSize: 16.sp),
           decoration: InputDecoration(
             hintText: widget.hintText,
-            hintStyle: TextStyle(color: iconColor.withValues(alpha: 0.7)),
+            hintStyle: TextStyle(color: iconColor),
             filled: true,
             fillColor: fillColor,
             prefixIcon: Icon(Icons.search, color: iconColor),
@@ -64,18 +62,14 @@ class _CustomSearchTextFieldState extends State<CustomSearchTextField> {
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),
               borderSide: BorderSide(
-                color: isDark
-                    ? AppColors.white.withValues(alpha: 0.4)
-                    : AppColors.black.withValues(alpha: 0.4),
+                color: modernSlate.border,
                 width: 0.9,
               ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),
               borderSide: BorderSide(
-                color: isDark
-                    ? AppColors.blue.withValues(alpha: 0.3)
-                    : AppColors.blue.withValues(alpha: 0.6),
+                color: theme.colorScheme.primary,
                 width: 1.5,
               ),
             ),

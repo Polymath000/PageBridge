@@ -11,11 +11,62 @@ import 'package:flutter/material.dart'
         DynamicSchemeVariant,
         TargetPlatform,
         ThemeData,
+        ThemeExtension,
         immutable;
 
 // import '../../helpers/get_setting.dart' show getSetting;
 import 'app_colors.dart' show AppColors;
 import 'app_theme_data.dart' show AppThemeData;
+
+@immutable
+final class ModernSlateColors extends ThemeExtension<ModernSlateColors> {
+  const ModernSlateColors({
+    required this.background,
+    required this.card,
+    required this.searchBarFill,
+    required this.primaryText,
+    required this.secondaryText,
+    required this.border,
+  });
+
+  final Color background;
+  final Color card;
+  final Color searchBarFill;
+  final Color primaryText;
+  final Color secondaryText;
+  final Color border;
+
+  @override
+  ModernSlateColors copyWith({
+    Color? background,
+    Color? card,
+    Color? searchBarFill,
+    Color? primaryText,
+    Color? secondaryText,
+    Color? border,
+  }) {
+    return ModernSlateColors(
+      background: background ?? this.background,
+      card: card ?? this.card,
+      searchBarFill: searchBarFill ?? this.searchBarFill,
+      primaryText: primaryText ?? this.primaryText,
+      secondaryText: secondaryText ?? this.secondaryText,
+      border: border ?? this.border,
+    );
+  }
+
+  @override
+  ModernSlateColors lerp(ModernSlateColors other, double t) {
+    return ModernSlateColors(
+      background: Color.lerp(background, other.background, t)!,
+      card: Color.lerp(card, other.card, t)!,
+      searchBarFill: Color.lerp(searchBarFill, other.searchBarFill, t)!,
+      primaryText: Color.lerp(primaryText, other.primaryText, t)!,
+      secondaryText: Color.lerp(secondaryText, other.secondaryText, t)!,
+      border: Color.lerp(border, other.border, t)!,
+    );
+  }
+}
 
 @immutable
 final class ThemeConfig {
@@ -70,6 +121,24 @@ final class ThemeConfig {
           )
         : AppThemeData.text;
 
+    final modernSlateColors = brightness == Brightness.light
+        ? const ModernSlateColors(
+            background: Color(0xFFF8F9FA),
+            card: Color(0xFFFFFFFF),
+            searchBarFill: Color(0xFFEDF2F7),
+            primaryText: Color(0xFF1A202C),
+            secondaryText: Color(0xFFA0AEC0),
+            border: Color(0xFFE2E8F0),
+          )
+        : const ModernSlateColors(
+            background: Color(0xFF0F172A),
+            card: Color(0xFF1E293B),
+            searchBarFill: Color(0xFF334155),
+            primaryText: Color(0xFFF8FAFC),
+            secondaryText: Color(0xFF94A3B8),
+            border: Color(0xFF334155),
+          );
+
     return ThemeData(
       inputDecorationTheme: AppThemeData.inputDecoration,
       platform: getSetting.platform,
@@ -77,6 +146,7 @@ final class ThemeConfig {
       useSystemColors: true,
       colorScheme: colorScheme,
       brightness: brightness,
+      extensions: <ThemeExtension<dynamic>>[modernSlateColors],
       // colorSchemeSeed: getSetting.seedColor,
       fontFamily: 'Cairo',
       fontFamilyFallback: const <String>['Cairo', 'Roboto'],

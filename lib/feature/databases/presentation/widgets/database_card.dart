@@ -3,6 +3,7 @@ import 'package:quicknotion/config/routes/on_generate_routes.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
 import 'package:quicknotion/config/themes/app_icons.dart';
+import 'package:quicknotion/config/themes/theme_config.dart';
 import 'package:quicknotion/core/helpers/custom_show_snack_bar.dart';
 import 'package:quicknotion/core/utls/app_images.dart';
 import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
@@ -13,6 +14,7 @@ class DatabaseCard extends StatelessWidget {
   final DatabaseEntity database;
   @override
   Widget build(BuildContext context) {
+    final modernSlate = Theme.of(context).extension<ModernSlateColors>()!;
     return SizedBox(
       width: double.infinity,
       child: TweenAnimationBuilder<double>(
@@ -44,7 +46,7 @@ class DatabaseCard extends StatelessWidget {
           },
           child: Card(
             margin: const EdgeInsets.only(bottom: 16.0, right: 0),
-            color: AppColors.pickledBluewood,
+            color: modernSlate.card,
             child: Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 12.0,
@@ -70,12 +72,12 @@ class DatabaseCard extends StatelessWidget {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.titleLarge!.copyWith(
-                        color: AppColors.white,
+                        color: modernSlate.primaryText,
                         fontSize: 20.sp,
                       ),
                     ),
                   ),
-                  Icon(AppIcons.arrowForward, color: AppColors.lightGray),
+                  Icon(AppIcons.arrowForward, color: modernSlate.secondaryText),
                 ],
               ),
             ),

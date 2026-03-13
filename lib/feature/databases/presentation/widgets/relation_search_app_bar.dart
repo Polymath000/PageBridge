@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
+import 'package:quicknotion/config/themes/theme_config.dart';
 import 'package:quicknotion/core/helpers/custom_back_arrow.dart';
 import 'package:quicknotion/feature/databases/domain/entities/page_entity.dart';
 
@@ -11,6 +12,7 @@ PreferredSizeWidget relationSearchAppBar({
   required List<PageEntity> selectedPages,
   ValueChanged<List<PageEntity>>? onSelectionConfirmed,
 }) {
+  final modernSlate = Theme.of(context).extension<ModernSlateColors>()!;
   final isLight = Theme.of(context).brightness == Brightness.light;
   final topPadding = MediaQuery.of(context).padding.top;
   const toolbarHeight = 70.0;
@@ -19,12 +21,11 @@ PreferredSizeWidget relationSearchAppBar({
     preferredSize: Size.fromHeight(toolbarHeight + topPadding),
     child: DecoratedBox(
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(24)),
         gradient: LinearGradient(
           colors: [
-            isLight ? AppColors.darkerEdge : AppColors.grey,
-            AppColors.darkGrey,
-            isLight ? AppColors.grey : AppColors.darkerEdge,
+            isLight ? const Color(0xFFE2E8F0) : modernSlate.searchBarFill,
+            modernSlate.card,
+            isLight ? const Color(0xFFF1F5F9) : modernSlate.searchBarFill,
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -37,7 +38,7 @@ PreferredSizeWidget relationSearchAppBar({
           child: SizedBox(
             height: toolbarHeight,
             child: IconTheme(
-              data: const IconThemeData(color: AppColors.white),
+              data: IconThemeData(color: modernSlate.primaryText),
               child: Row(
                 children: [
                   const CustomBackArrow(),
@@ -48,7 +49,7 @@ PreferredSizeWidget relationSearchAppBar({
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.titleMedium?.copyWith(
                         fontSize: 18.sp,
-                        color: AppColors.white,
+                        color: modernSlate.primaryText,
                       ),
                     ),
                   ),
@@ -60,7 +61,7 @@ PreferredSizeWidget relationSearchAppBar({
                     child: Text(
                       "Done",
                       style: AppTextStyles.titleMedium?.copyWith(
-                        color: AppColors.white,
+                        color: modernSlate.primaryText,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
