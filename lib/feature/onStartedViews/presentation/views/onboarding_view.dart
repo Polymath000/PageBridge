@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quicknotion/config/routes/on_generate_routes.dart';
 import 'package:quicknotion/core/constants/constants.dart';
 import 'package:quicknotion/core/services/shared_preferences_singleton.dart';
-import 'package:quicknotion/core/helpers/custom_animation_background.dart';
+import 'package:quicknotion/feature/auth/presentation/widgets/custom_animation_background.dart';
 import 'package:quicknotion/feature/onStartedViews/presentation/widgets/onboarding_footer.dart';
 import 'package:quicknotion/feature/onStartedViews/presentation/widgets/onboarding_header.dart';
 import 'package:quicknotion/feature/onStartedViews/presentation/widgets/onboarding_page.dart';
@@ -77,7 +77,7 @@ class _OnboardingViewState extends State<OnboardingView> {
     return Scaffold(
       body: Stack(
         children: [
-          const Positioned.fill(child: CustomAnimationBackground()),
+          const CustomAnimationBackground(),
           SafeArea(
             child: Column(
               children: [

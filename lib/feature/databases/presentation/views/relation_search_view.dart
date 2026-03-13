@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/config/themes/app_text_style.dart';
+import 'package:quicknotion/feature/auth/presentation/widgets/custom_animation_background.dart';
 import 'package:quicknotion/core/helpers/custom_search_text_field.dart';
 import 'package:quicknotion/feature/databases/domain/entities/page_entity.dart';
 import 'package:quicknotion/feature/databases/domain/entities/property_entity.dart';
@@ -82,78 +83,86 @@ class _RelationSearchViewState extends State<RelationSearchView> {
         selectedPages: _selectedPages,
         onSelectionConfirmed: widget.onSelectionConfirmed,
       ),
-      body: Column(
+      body: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: CustomSearchTextField(
-              getPages: (value) {
-                context.read<ReturnPagesCubit>().returnPages(
-                  query: value,
-                  databaseId: widget.property.relationDatabaseId ?? "",
-                );
-              },
-              hintText: 'Search pages...',
-            ),
-          ),
-          Expanded(
-            child: BlocBuilder<ReturnPagesCubit, ReturnPagesState>(
-              builder: (context, state) {
-                if (state is ReturnPagesFailure) {
-                  return Center(child: Text('Error: ${state.message}'));
-                }
+          const CustomAnimationBackground(),
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 16,
+                ),
+                child: CustomSearchTextField(
+                  getPages: (value) {
+                    context.read<ReturnPagesCubit>().returnPages(
+                      query: value,
+                      databaseId: widget.property.relationDatabaseId ?? "",
+                    );
+                  },
+                  hintText: 'Search pages...',
+                ),
+              ),
+              Expanded(
+                child: BlocBuilder<ReturnPagesCubit, ReturnPagesState>(
+                  builder: (context, state) {
+                    if (state is ReturnPagesFailure) {
+                      return Center(child: Text('Error: ${state.message}'));
+                    }
 
-                if (state is ReturnPagesLoading) {
-                  return ListView.builder(
-                    padding: EdgeInsets.symmetric(horizontal: 12.w),
-                    itemCount: 6,
-                    itemBuilder: (context, index) =>
-                        const RelationSearchCardSkeleton(),
-                  );
-                }
+                    if (state is ReturnPagesLoading) {
+                      return ListView.builder(
+                        padding: EdgeInsets.symmetric(horizontal: 12.w),
+                        itemCount: 6,
+                        itemBuilder: (context, index) =>
+                            const RelationSearchCardSkeleton(),
+                      );
+                    }
 
-                if (state is ReturnPagesSuccess) {
-                  final pages = state.pages;
+                    if (state is ReturnPagesSuccess) {
+                      final pages = state.pages;
 
-                  if (pages.isEmpty) {
-                    return _buildEmptyState();
-                  }
-
-                  final totalCount =
-                      pages.length + (state.isPaginating ? 1 : 0);
-
-                  return ListView.builder(
-                    controller: _scrollController,
-                    itemCount: totalCount,
-                    padding: EdgeInsets.symmetric(horizontal: 12.w),
-                    itemBuilder: (context, index) {
-                      if (index == pages.length) {
-                        return Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20.h),
-                          child: const RelationSearchCardSkeleton(),
-                        );
+                      if (pages.isEmpty) {
+                        return _buildEmptyState();
                       }
 
-                      final page = pages[index];
-                      final isSelected = _selectedPages.any(
-                        (p) => p.id == page.id,
-                      );
+                      final totalCount =
+                          pages.length + (state.isPaginating ? 1 : 0);
 
-                      return ListOfDatabasesFoRelationSearch(
-                        isSelected: isSelected,
-                        page: page,
-                        onChanged: (value) => _onPageSelectionChanged(
-                          page: page,
-                          isSelected: value ?? false,
-                        ),
-                      );
-                    },
-                  );
-                }
+                      return ListView.builder(
+                        controller: _scrollController,
+                        itemCount: totalCount,
+                        padding: EdgeInsets.symmetric(horizontal: 12.w),
+                        itemBuilder: (context, index) {
+                          if (index == pages.length) {
+                            return Padding(
+                              padding: EdgeInsets.symmetric(vertical: 20.h),
+                              child: const RelationSearchCardSkeleton(),
+                            );
+                          }
 
-                return const SizedBox.shrink();
-              },
-            ),
+                          final page = pages[index];
+                          final isSelected = _selectedPages.any(
+                            (p) => p.id == page.id,
+                          );
+
+                          return ListOfDatabasesFoRelationSearch(
+                            isSelected: isSelected,
+                            page: page,
+                            onChanged: (value) => _onPageSelectionChanged(
+                              page: page,
+                              isSelected: value ?? false,
+                            ),
+                          );
+                        },
+                      );
+                    }
+
+                    return const SizedBox.shrink();
+                  },
+                ),
+              ),
+            ],
           ),
         ],
       ),

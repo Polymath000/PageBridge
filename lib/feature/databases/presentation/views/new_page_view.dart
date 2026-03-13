@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:quicknotion/feature/auth/presentation/widgets/custom_animation_background.dart';
 import 'package:quicknotion/core/helpers/custom_show_snack_bar.dart';
 import 'package:quicknotion/core/utls/custom_loading_indecator.dart';
 import 'package:quicknotion/core/utls/setup_service_locator_getit.dart';
@@ -63,17 +64,22 @@ class _NewPageBlocBuilderState extends State<NewPageBlocBuilder> {
         inAsyncCall: newPageLoading || returnPagesLoading,
         progressIndicator: CustomLoadingIndecator(),
         child: Scaffold(
-          body: SafeArea(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  bottom: 16.0,
-                  left: 0,
-                  right: 20,
+          body: Stack(
+            children: [
+              const CustomAnimationBackground(),
+              SafeArea(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      bottom: 16.0,
+                      left: 0,
+                      right: 20,
+                    ),
+                    child: NewPageViewBody(database: widget.database),
+                  ),
                 ),
-                child: NewPageViewBody(database: widget.database),
               ),
-            ),
+            ],
           ),
         ),
       ),

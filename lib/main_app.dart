@@ -35,6 +35,7 @@ class QuickNotionApp extends StatelessWidget {
           initTheme: initTheme,
           builder: (context, theme) {
             return MaterialApp(
+              color: AppColors.transparent,
               onGenerateRoute: onGenerateRoute,
               initialRoute: SplashView.routeName,
               theme: theme,
@@ -42,9 +43,7 @@ class QuickNotionApp extends StatelessWidget {
               builder: (context, child) {
                 AppColors.init(context);
                 AppTextStyles.init(context);
-                return ThemeSwitchingArea(
-                  child: child ?? const SizedBox(),
-                );
+                return ThemeSwitchingArea(child: child ?? const SizedBox());
               },
             );
           },

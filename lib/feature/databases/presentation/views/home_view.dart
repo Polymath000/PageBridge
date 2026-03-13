@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quicknotion/feature/auth/presentation/widgets/custom_animation_background.dart';
 import 'package:quicknotion/core/utls/setup_service_locator_getit.dart';
 import 'package:quicknotion/feature/databases/data/repos/database_repo_impl.dart';
 import 'package:quicknotion/feature/databases/presentation/controllers/return_databases_cubit/return_databases_cubit.dart';
@@ -19,16 +20,21 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider(
-        create: (context) =>
-            DatabasesCubit(databaseRepo: getit.get<DatabaseRepoImpl>()),
-        child: CustomScrollView(
-          controller: _scrollController,
-          slivers: [
-            HomeAppBar(),
-            HomeViewBody(scrollController: _scrollController),
-          ],
-        ),
+      body: Stack(
+        children: [
+          const CustomAnimationBackground(),
+          BlocProvider(
+            create: (context) =>
+                DatabasesCubit(databaseRepo: getit.get<DatabaseRepoImpl>()),
+            child: CustomScrollView(
+              controller: _scrollController,
+              slivers: [
+                HomeAppBar(),
+                HomeViewBody(scrollController: _scrollController),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
