@@ -1,9 +1,12 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:quicknotion/config/routes/on_generate_routes.dart';
 import 'package:quicknotion/config/themes/app_colors.dart';
 import 'package:quicknotion/core/helpers/custom_show_snack_bar.dart';
 import 'package:quicknotion/core/utls/app_images.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/auth_cubit/auth_cubit.dart';
 import 'custom_animation_background.dart';
@@ -17,10 +20,16 @@ class AuthBody extends StatefulWidget {
 
 class _AuthBodyState extends State<AuthBody>
     with SingleTickerProviderStateMixin {
+  static final Uri _termsUrl = Uri.parse(
+    dotenv.env["TERMS_AND_CONDITIONS_WEB"] ?? "",
+  );
   late final AnimationController _controller;
   late final Animation<double> _fade;
   late final Animation<Offset> _slide;
   late final Animation<double> _logoScale;
+  late final TapGestureRecognizer _termsTapRecognizer;
+  late final TapGestureRecognizer _privacyTapRecognizer;
+  bool _acceptedTerms = false;
 
   @override
   void initState() {
@@ -38,14 +47,40 @@ class _AuthBodyState extends State<AuthBody>
       begin: 0.85,
       end: 1,
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutBack));
+    _termsTapRecognizer = TapGestureRecognizer()..onTap = _openTerms;
+    _privacyTapRecognizer = TapGestureRecognizer()..onTap = _openTerms;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) _controller.forward();
     });
   }
 
+  Future<void> _openTerms() async {
+    try {
+      final didLaunch = await launchUrl(
+        _termsUrl,
+        mode: LaunchMode.externalApplication,
+      );
+      if (!didLaunch && mounted) {
+        customShowSnackBar(
+          message: 'Could not open the Terms & Privacy page.',
+          context: context,
+        );
+      }
+    } catch (_) {
+      if (mounted) {
+        customShowSnackBar(
+          message: 'Could not open the Terms & Privacy page.',
+          context: context,
+        );
+      }
+    }
+  }
+
   @override
   void dispose() {
+    _termsTapRecognizer.dispose();
+    _privacyTapRecognizer.dispose();
     _controller.dispose();
     super.dispose();
   }
@@ -63,6 +98,21 @@ class _AuthBodyState extends State<AuthBody>
       builder: (context, state) {
         final isLoading = state is AuthLoading;
         final textTheme = Theme.of(context).textTheme;
+        final termsTextStyle =
+            textTheme.bodySmall?.copyWith(
+              color: AppColors.darkGrey,
+              height: 1.4,
+            ) ??
+            const TextStyle(
+              fontSize: 12,
+              color: AppColors.darkGrey,
+              height: 1.4,
+            );
+        final termsLinkStyle = termsTextStyle.copyWith(
+          color: AppColors.black,
+          fontWeight: FontWeight.w600,
+          decoration: TextDecoration.underline,
+        );
         return Stack(
           children: [
             const CustomAnimationBackground(),
@@ -146,14 +196,59 @@ class _AuthBodyState extends State<AuthBody>
                                   ),
                                 ),
                                 const SizedBox(height: 24),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Checkbox(
+                                      value: _acceptedTerms,
+                                      onChanged: isLoading
+                                          ? null
+                                          : (value) {
+                                              setState(() {
+                                                _acceptedTerms = value ?? false;
+                                              });
+                                            },
+                                    ),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 8),
+                                        child: Text.rich(
+                                          TextSpan(
+                                            style: termsTextStyle,
+                                            children: [
+                                              const TextSpan(
+                                                text: 'I agree to the ',
+                                              ),
+                                              TextSpan(
+                                                text: 'Terms & Conditions',
+                                                style: termsLinkStyle,
+                                                recognizer: _termsTapRecognizer,
+                                              ),
+                                              const TextSpan(text: ' and '),
+                                              TextSpan(
+                                                text: 'Privacy Policy',
+                                                style: termsLinkStyle,
+                                                recognizer:
+                                                    _privacyTapRecognizer,
+                                              ),
+                                              const TextSpan(text: '.'),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 16),
                                 SizedBox(
                                   width: double.infinity,
                                   child: ElevatedButton(
                                     onPressed: isLoading
                                         ? null
-                                        : () => context
-                                              .read<AuthCubit>()
-                                              .signIn(),
+                                        : _acceptedTerms
+                                        ? () =>
+                                              context.read<AuthCubit>().signIn()
+                                        : null,
                                     style: ElevatedButton.styleFrom(
                                       padding: const EdgeInsets.symmetric(
                                         vertical: 14,
