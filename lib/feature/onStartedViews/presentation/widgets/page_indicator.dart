@@ -13,6 +13,9 @@ class PageIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final activeColor = isDark ? AppColors.white : AppColors.spaceBlack;
+    final inactiveColor = activeColor.withValues(alpha: isDark ? 0.45 : 0.3);
     return ValueListenableBuilder<int>(
       valueListenable: pageIndex,
       builder: (context, value, _) {
@@ -26,9 +29,7 @@ class PageIndicator extends StatelessWidget {
               height: 6,
               width: isActive ? 22 : 8,
               decoration: BoxDecoration(
-                color: isActive
-                    ? AppColors.white
-                    : AppColors.white.withValues(alpha: 0.4),
+                color: isActive ? activeColor : inactiveColor,
                 borderRadius: BorderRadius.circular(99),
               ),
             );

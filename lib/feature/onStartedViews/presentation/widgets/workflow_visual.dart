@@ -8,13 +8,17 @@ class WorkflowVisual extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final foreground = isDark ? AppColors.white : AppColors.spaceBlack;
+    final fillColor = foreground.withValues(alpha: isDark ? 0.12 : 0.08);
+    final borderColor = foreground.withValues(alpha: isDark ? 0.18 : 0.14);
     final textTheme = Theme.of(context).textTheme;
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: AppColors.white.withValues(alpha: 0.12),
+        color: fillColor,
         borderRadius: BorderRadius.circular(22),
-        border: Border.all(color: AppColors.white.withValues(alpha: 0.18)),
+        border: Border.all(color: borderColor),
       ),
       child: Column(
         children: [

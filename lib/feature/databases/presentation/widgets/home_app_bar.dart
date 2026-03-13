@@ -9,6 +9,7 @@ import 'package:quicknotion/config/themes/app_text_style.dart';
 import 'package:quicknotion/config/themes/theme_config.dart';
 import 'package:quicknotion/core/constants/constants.dart';
 import 'package:quicknotion/core/database/cache/secure_storage.dart';
+import 'package:quicknotion/core/helpers/custom_confirm_dialog.dart';
 import 'package:quicknotion/core/helpers/day_night_switch.dart';
 import 'package:quicknotion/feature/databases/presentation/controllers/theme_mode_cubit/theme_mode_cubit.dart';
 
@@ -86,6 +87,12 @@ class HomeAppBar extends StatelessWidget {
           tooltip: 'Logout',
           icon: Icon(AppIcons.logout),
           onPressed: () async {
+            final bool shouldLogout = await showAppConfirmDialog(
+              context: context,
+              title: 'Confirm',
+              message: 'Are you sure you want to signup',
+            );
+            if (!context.mounted || !shouldLogout) return;
             await SecureStorage.deleteData(key: tokenKey);
             if (!context.mounted) return;
             AppRoutes.authView(context);

@@ -9,12 +9,19 @@ class PreviewDatabaseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final backgroundColor = isDark ? AppColors.spaceBlack : AppColors.white;
+    final foregroundColor = isDark ? AppColors.white : AppColors.spaceBlack;
+    final borderColor = isDark
+        ? AppColors.transparent
+        : AppColors.spaceBlack.withValues(alpha: 0.08);
     final textTheme = Theme.of(context).textTheme;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       decoration: BoxDecoration(
-        color: AppColors.spaceBlack,
+        color: backgroundColor,
         borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: borderColor),
       ),
       child: Row(
         children: [
@@ -24,7 +31,7 @@ class PreviewDatabaseCard extends StatelessWidget {
             child: Text(
               title,
               style: textTheme.titleMedium?.copyWith(
-                color: AppColors.white,
+                color: foregroundColor,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -32,7 +39,7 @@ class PreviewDatabaseCard extends StatelessWidget {
           Icon(
             Icons.arrow_forward_ios_rounded,
             size: 14,
-            color: AppColors.white.withValues(alpha: 0.7),
+            color: foregroundColor.withValues(alpha: 0.7),
           ),
         ],
       ),

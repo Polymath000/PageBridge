@@ -18,6 +18,9 @@ class OnboardingFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final buttonBackground = isDark ? AppColors.white : AppColors.spaceBlack;
+    final buttonForeground = isDark ? AppColors.spaceBlack : AppColors.white;
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
       child: Column(
@@ -34,8 +37,8 @@ class OnboardingFooter extends StatelessWidget {
                   onPressed: onPrimaryAction,
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 14),
-                    backgroundColor: AppColors.white,
-                    foregroundColor: AppColors.spaceBlack,
+                    backgroundColor: buttonBackground,
+                    foregroundColor: buttonForeground,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14),
                     ),

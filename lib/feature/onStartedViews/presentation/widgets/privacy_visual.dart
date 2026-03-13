@@ -6,21 +6,25 @@ class PrivacyVisual extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final foreground = isDark ? AppColors.white : AppColors.spaceBlack;
+    final fillColor = foreground.withValues(alpha: isDark ? 0.12 : 0.08);
+    final borderColor = foreground.withValues(alpha: isDark ? 0.35 : 0.2);
     return Container(
       width: 140,
       height: 140,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: AppColors.white.withValues(alpha: 0.12),
+        color: fillColor,
         border: Border.all(
-          color: AppColors.white.withValues(alpha: 0.4),
+          color: borderColor,
           width: 1.2,
         ),
       ),
-      child: const Icon(
+      child: Icon(
         Icons.lock_outline_rounded,
         size: 62,
-        color: AppColors.white,
+        color: foreground,
       ),
     );
   }
