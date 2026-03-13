@@ -17,6 +17,7 @@ dependencies:
     sdk: flutter
   flutter_animate_on_scroll: ^0.3.0
   flutter_bloc: ^9.1.1
+  flutter_dotenv: ^6.0.0
   flutter_getit: ^3.0.1
   flutter_screenutil: ^5.9.3
   flutter_secure_storage: ^9.2.4
@@ -29,6 +30,7 @@ dependencies:
   intl: ^0.18.1
   loading_indicator: ^3.1.1
   logger: ^2.6.2
+  meta: ^1.17.0
   modal_progress_hud_nsn: ^0.5.1
   multi_dropdown: ^3.0.1
   open_filex: ^4.5.0
@@ -46,6 +48,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - .env
     - assets/images/
 
 flutter_assets:

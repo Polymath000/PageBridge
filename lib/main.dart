@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:quicknotion/core/database/cache/secure_storage.dart';
 import 'package:quicknotion/core/services/shared_preferences_singleton.dart';
 import 'package:quicknotion/core/utls/setup_service_locator_getit.dart';
@@ -11,7 +12,7 @@ void main() async {
   await SecureStorage.init();
   await SharedPreferencesSingleton.init();
   setUpServiceLocator();
-
+  await dotenv.load(fileName: ".env");
   runApp(
     BlocProvider(
       create: (context) => ThemeModeCubit(),

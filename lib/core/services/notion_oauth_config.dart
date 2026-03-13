@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/foundation.dart' show immutable;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Holds Notion OAuth configuration
 @immutable
@@ -21,13 +22,12 @@ class NotionOAuthConfig {
   });
 
   factory NotionOAuthConfig.fromEnvironment() {
-    //TODO:handle the .env here
-    const clientId = "2a9d872b-594c-80bc-854d-003719e3f508";
-    const clientSecret = "secret_CoWD69w40RJV82HoBtCmySQ28ZwgeJL9KtqkRliA1k0";
-    const redirectUri = "https://polymath000.github.io/notion-callback/";
-    const callbackScheme = 'quicknotion';
+    final clientId = dotenv.env["NOTION_CLIENT_ID"] ?? "";
+    final clientSecret = dotenv.env["NOTION_CLIENT_SECRET"] ?? "";
+    final redirectUri = dotenv.env["NOTION_REDIRECT_URI"] ?? "";
+    final callbackScheme = dotenv.env["NOTION_CALLBACK_SCHEME"] ?? "";
 
-    return const NotionOAuthConfig(
+    return NotionOAuthConfig(
       clientId: clientId,
       clientSecret: clientSecret,
       redirectUri: redirectUri,
