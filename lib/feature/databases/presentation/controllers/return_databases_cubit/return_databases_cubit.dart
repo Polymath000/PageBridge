@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:quicknotion/feature/databases/data/repos/database_repo_impl.dart';
-import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
+import 'package:pagebridge/feature/databases/data/repos/database_repo_impl.dart';
+import 'package:pagebridge/feature/databases/domain/entities/database_entity.dart';
 
 part 'return_databases_state.dart';
 

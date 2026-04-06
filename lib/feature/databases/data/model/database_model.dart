@@ -1,7 +1,7 @@
-import 'package:quicknotion/feature/databases/data/model/property_model.dart';
-import 'package:quicknotion/feature/databases/domain/entities/property_entity.dart';
+import 'package:pagebridge/feature/databases/data/model/property_model.dart';
+import 'package:pagebridge/feature/databases/domain/entities/property_entity.dart';
 
-import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
+import 'package:pagebridge/feature/databases/domain/entities/database_entity.dart';
 
 class DatabaseModel extends DatabaseEntity {
   const DatabaseModel({

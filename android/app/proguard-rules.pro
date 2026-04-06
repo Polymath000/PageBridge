@@ -4,7 +4,7 @@
 -keep class io.flutter.embedding.** { *; }
 
 # Your app's main classes
--keep class com.example.QuickNotion.** { *; }
+-keep class com.example.pagebridge.** { *; }
 
 # Keep enums
 -keepclassmembers enum * {
@@ -26,4 +26,3 @@
 -keep class io.flutter.embedding.engine.deferredcomponents.PlayStoreDeferredComponentManager {
     *** splitInstallManager;
 }
-

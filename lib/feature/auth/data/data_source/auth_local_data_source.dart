@@ -1,5 +1,5 @@
-import 'package:quicknotion/core/constants/constants.dart';
-import 'package:quicknotion/core/database/cache/secure_storage.dart';
+import 'package:pagebridge/core/constants/constants.dart';
+import 'package:pagebridge/core/database/cache/secure_storage.dart';
 
 abstract class AuthLocalDataSource {
   Future<void> saveToken(String token);

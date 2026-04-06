@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
-import 'package:quicknotion/feature/databases/presentation/widgets/database_card.dart';
+import 'package:pagebridge/feature/databases/domain/entities/database_entity.dart';
+import 'package:pagebridge/feature/databases/presentation/widgets/database_card.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class CustomSkeletonizerDatabase extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:quicknotion/config/themes/app_colors.dart';
-import 'package:quicknotion/feature/onStartedViews/presentation/widgets/preview_database_card.dart';
-import 'package:quicknotion/feature/onStartedViews/presentation/widgets/preview_field.dart';
+import 'package:pagebridge/config/themes/app_colors.dart';
+import 'package:pagebridge/feature/onStartedViews/presentation/widgets/preview_database_card.dart';
+import 'package:pagebridge/feature/onStartedViews/presentation/widgets/preview_field.dart';
 
 class WorkflowVisual extends StatelessWidget {
   const WorkflowVisual({super.key});

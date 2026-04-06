@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quicknotion/core/utls/error_widget.dart';
-import 'package:quicknotion/feature/databases/presentation/controllers/return_databases_cubit/return_databases_cubit.dart';
-import 'package:quicknotion/feature/databases/presentation/widgets/custom_skeletonizer_database.dart';
-import 'package:quicknotion/feature/databases/presentation/widgets/database_card.dart';
+import 'package:pagebridge/core/utls/error_widget.dart';
+import 'package:pagebridge/feature/databases/presentation/controllers/return_databases_cubit/return_databases_cubit.dart';
+import 'package:pagebridge/feature/databases/presentation/widgets/custom_skeletonizer_database.dart';
+import 'package:pagebridge/feature/databases/presentation/widgets/database_card.dart';
 
 class DatabasesList extends StatefulWidget {
   final ScrollController controller;

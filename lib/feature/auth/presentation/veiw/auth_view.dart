@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:quicknotion/core/utls/setup_service_locator_getit.dart';
+import 'package:pagebridge/core/utls/setup_service_locator_getit.dart';
 
 import '../../domain/usecases/sign_in_with_notion_usecase.dart';
 import '../controllers/auth_cubit/auth_cubit.dart';

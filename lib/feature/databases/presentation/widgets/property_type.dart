@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:quicknotion/core/utls/custom_check_box.dart';
-import 'package:quicknotion/feature/databases/domain/entities/property_entity.dart';
-import 'package:quicknotion/feature/databases/presentation/widgets/property_type_multi_select.dart';
-import 'package:quicknotion/feature/databases/presentation/widgets/property_type_notion_date_widget.dart';
-import 'package:quicknotion/feature/databases/presentation/widgets/property_type_select_one_item.dart';
-import 'package:quicknotion/feature/databases/presentation/widgets/property_type_text.dart';
-import 'package:quicknotion/feature/databases/presentation/widgets/relation_type_widget.dart';
+import 'package:pagebridge/core/utls/custom_check_box.dart';
+import 'package:pagebridge/feature/databases/domain/entities/property_entity.dart';
+import 'package:pagebridge/feature/databases/presentation/widgets/property_type_multi_select.dart';
+import 'package:pagebridge/feature/databases/presentation/widgets/property_type_notion_date_widget.dart';
+import 'package:pagebridge/feature/databases/presentation/widgets/property_type_select_one_item.dart';
+import 'package:pagebridge/feature/databases/presentation/widgets/property_type_text.dart';
+import 'package:pagebridge/feature/databases/presentation/widgets/relation_type_widget.dart';
 
 class PropertyType extends StatefulWidget {
   const PropertyType({super.key, required this.property, this.onChanged});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quicknotion/config/themes/app_icons.dart';
+import 'package:pagebridge/config/themes/app_icons.dart';
 
 IconData getIconDependsOnPropertyType(String type) {
   switch (type) {

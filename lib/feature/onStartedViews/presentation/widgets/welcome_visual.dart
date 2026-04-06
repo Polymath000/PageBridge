@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quicknotion/config/themes/app_colors.dart';
-import 'package:quicknotion/core/utls/app_images.dart';
+import 'package:pagebridge/config/themes/app_colors.dart';
+import 'package:pagebridge/core/utls/app_images.dart';
 
 class WelcomeVisual extends StatelessWidget {
   const WelcomeVisual({super.key});
@@ -27,7 +27,7 @@ class WelcomeVisual extends StatelessWidget {
         ],
       ),
       child: Image.asset(
-        Assets.assetsImagesQuickNotionLogo,
+        Assets.assetsImagesPageBridgeLogo,
         fit: BoxFit.contain,
       ),
     );

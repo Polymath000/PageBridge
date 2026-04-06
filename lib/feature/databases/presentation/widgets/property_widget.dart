@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:quicknotion/config/themes/app_colors.dart';
-import 'package:quicknotion/config/themes/app_text_style.dart';
-import 'package:quicknotion/core/helpers/custom_back_arrow.dart';
-import 'package:quicknotion/core/utls/get_icon_depends_on_property_type.dart';
-import 'package:quicknotion/feature/databases/domain/entities/property_entity.dart';
-import 'package:quicknotion/feature/databases/presentation/widgets/property_type.dart';
-import 'package:quicknotion/feature/databases/presentation/widgets/title_property.dart';
+import 'package:pagebridge/config/themes/app_colors.dart';
+import 'package:pagebridge/config/themes/app_text_style.dart';
+import 'package:pagebridge/core/helpers/custom_back_arrow.dart';
+import 'package:pagebridge/core/utls/get_icon_depends_on_property_type.dart';
+import 'package:pagebridge/feature/databases/domain/entities/property_entity.dart';
+import 'package:pagebridge/feature/databases/presentation/widgets/property_type.dart';
+import 'package:pagebridge/feature/databases/presentation/widgets/title_property.dart';
 
 class PropertyWidget extends StatelessWidget {
   const PropertyWidget({super.key, required this.property, this.onChanged});

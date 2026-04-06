@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:quicknotion/core/errors/failure.dart';
-import 'package:quicknotion/core/network/network_info.dart';
-import 'package:quicknotion/feature/databases/data/data_source/database_remote_data_source.dart';
-import 'package:quicknotion/feature/databases/domain/repo/database_repo.dart';
+import 'package:pagebridge/core/errors/failure.dart';
+import 'package:pagebridge/core/network/network_info.dart';
+import 'package:pagebridge/feature/databases/data/data_source/database_remote_data_source.dart';
+import 'package:pagebridge/feature/databases/domain/repo/database_repo.dart';
 
 class DatabaseRepoImpl extends DatabaseRepo {
   final DatabaseRemoteDataSource remoteDataSource;

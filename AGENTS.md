@@ -1,4 +1,4 @@
-# QuickNotion Agent Guide
+# PageBridge Agent Guide
 
 Apply these instructions for all work in this repository.
 

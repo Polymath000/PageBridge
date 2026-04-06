@@ -3,9 +3,9 @@ import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_web_auth_2/flutter_web_auth_2.dart';
-import 'package:quicknotion/core/database/api/dio_consumer.dart';
-import 'package:quicknotion/core/database/api/end_ponits.dart';
-import 'package:quicknotion/core/services/notion_oauth_config.dart';
+import 'package:pagebridge/core/database/api/dio_consumer.dart';
+import 'package:pagebridge/core/database/api/end_ponits.dart';
+import 'package:pagebridge/core/services/notion_oauth_config.dart';
 
 import '../models/auth_token_model.dart';
 

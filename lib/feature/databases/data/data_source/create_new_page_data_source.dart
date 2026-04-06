@@ -1,8 +1,8 @@
-import 'package:quicknotion/core/constants/constants.dart';
-import 'package:quicknotion/core/database/api/dio_consumer.dart';
-import 'package:quicknotion/core/database/api/end_ponits.dart';
-import 'package:quicknotion/core/database/cache/secure_storage.dart';
-import 'package:quicknotion/feature/databases/data/model/property_model.dart';
+import 'package:pagebridge/core/constants/constants.dart';
+import 'package:pagebridge/core/database/api/dio_consumer.dart';
+import 'package:pagebridge/core/database/api/end_ponits.dart';
+import 'package:pagebridge/core/database/cache/secure_storage.dart';
+import 'package:pagebridge/feature/databases/data/model/property_model.dart';
 
 abstract class CreateNewPageDataSource {
   Future<void> createNewPage({

@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:quicknotion/core/errors/failure.dart';
-import 'package:quicknotion/feature/databases/data/model/property_model.dart';
+import 'package:pagebridge/core/errors/failure.dart';
+import 'package:pagebridge/feature/databases/data/model/property_model.dart';
 
 abstract class CreateNewPageRepo {
   Future<Either<Failure, void>> createNewPage({

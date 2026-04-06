@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quicknotion/config/themes/app_colors.dart';
-import 'package:quicknotion/feature/onStartedViews/presentation/widgets/page_indicator.dart';
+import 'package:pagebridge/config/themes/app_colors.dart';
+import 'package:pagebridge/feature/onStartedViews/presentation/widgets/page_indicator.dart';
 
 class OnboardingFooter extends StatelessWidget {
   final ValueNotifier<int> pageIndex;

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:quicknotion/config/themes/app_colors.dart';
-import 'package:quicknotion/config/themes/app_text_style.dart';
-import 'package:quicknotion/core/utls/custom_check_box.dart';
-import 'package:quicknotion/core/utls/get_color.dart';
-import 'package:quicknotion/feature/databases/domain/entities/property_entity.dart';
+import 'package:pagebridge/config/themes/app_colors.dart';
+import 'package:pagebridge/config/themes/app_text_style.dart';
+import 'package:pagebridge/core/utls/custom_check_box.dart';
+import 'package:pagebridge/core/utls/get_color.dart';
+import 'package:pagebridge/feature/databases/domain/entities/property_entity.dart';
 
 class PropertyTypeMultiSelect extends StatefulWidget {
   const PropertyTypeMultiSelect({

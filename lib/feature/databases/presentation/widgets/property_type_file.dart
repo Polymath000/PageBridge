@@ -1,9 +1,9 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:quicknotion/config/themes/app_colors.dart';
-import 'package:quicknotion/config/themes/app_text_style.dart';
-import 'package:quicknotion/core/helpers/custom_show_snack_bar.dart';
+import 'package:pagebridge/config/themes/app_colors.dart';
+import 'package:pagebridge/config/themes/app_text_style.dart';
+import 'package:pagebridge/core/helpers/custom_show_snack_bar.dart';
 
 class PropertyTypeFile extends StatefulWidget {
   const PropertyTypeFile({super.key, this.onChanged});

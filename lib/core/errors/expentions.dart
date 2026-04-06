@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:quicknotion/core/errors/error_model.dart' show ErrorModel;
+import 'package:pagebridge/core/errors/error_model.dart' show ErrorModel;
 
 //!ServerException
 class ServerException implements Exception {

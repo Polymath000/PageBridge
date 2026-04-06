@@ -37,7 +37,7 @@ import 'package:flutter/material.dart'
         TextTheme,
         WidgetStatePropertyAll,
         immutable;
-import 'package:quicknotion/core/constants/borders.dart';
+import 'package:pagebridge/core/constants/borders.dart';
 
 @immutable
 sealed class AppThemeData {

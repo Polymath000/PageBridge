@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:quicknotion/core/errors/failure.dart';
-import 'package:quicknotion/core/network/network_info.dart';
+import 'package:pagebridge/core/errors/failure.dart';
+import 'package:pagebridge/core/network/network_info.dart';
 
 import '../../domain/entities/auth_token_entity.dart';
 import '../../domain/repo/auth_repository.dart';
@@ -40,7 +40,7 @@ class AuthRepositoryImpl extends AuthRepository {
       }
     } on DioException catch (e) {
       return left(ServerFailure.fromDioError(e));
-    } on Exception catch (e) {
+    } on Exception {
       return left(Failure(message: "Notion authentication failed."));
     }
   }

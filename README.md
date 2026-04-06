@@ -1,6 +1,6 @@
-# QuickNotion
+# PageBridge
 
-QuickNotion is a Flutter app for capturing ideas quickly and syncing them to your Notion workspace. Sign in with Notion, pick a database, and create pages through a fast, property-aware form.
+PageBridge is a Flutter app for capturing ideas quickly and syncing them to your Notion workspace. Sign in with Notion, pick a database, and create pages through a fast, property-aware form.
 
 **Features**
 - Notion OAuth sign-in with secure token storage.

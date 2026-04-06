@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
-import 'package:quicknotion/core/database/api/api_consumer.dart'
+import 'package:pagebridge/core/database/api/api_consumer.dart'
     show ApiConsumer;
-import 'package:quicknotion/core/database/api/api_consumer.dart';
-import 'package:quicknotion/core/database/api/end_ponits.dart';
-import 'package:quicknotion/core/errors/expentions.dart';
-import 'package:quicknotion/core/network/interceptors.dart';
+import 'package:pagebridge/core/database/api/api_consumer.dart';
+import 'package:pagebridge/core/database/api/end_ponits.dart';
+import 'package:pagebridge/core/errors/expentions.dart';
+import 'package:pagebridge/core/network/interceptors.dart';
 
 class DioConsumer extends ApiConsumer {
   final Dio dio;

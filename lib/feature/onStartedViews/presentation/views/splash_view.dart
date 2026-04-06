@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:quicknotion/config/routes/on_generate_routes.dart';
-import 'package:quicknotion/config/themes/app_colors.dart';
-import 'package:quicknotion/core/constants/constants.dart';
-import 'package:quicknotion/core/database/cache/secure_storage.dart';
-import 'package:quicknotion/core/services/shared_preferences_singleton.dart';
-import 'package:quicknotion/core/utls/app_images.dart';
-import 'package:quicknotion/core/utls/custom_loading_indecator.dart';
+import 'package:pagebridge/config/routes/on_generate_routes.dart';
+import 'package:pagebridge/config/themes/app_colors.dart';
+import 'package:pagebridge/core/constants/constants.dart';
+import 'package:pagebridge/core/database/cache/secure_storage.dart';
+import 'package:pagebridge/core/services/shared_preferences_singleton.dart';
+import 'package:pagebridge/core/utls/app_images.dart';
+import 'package:pagebridge/core/utls/custom_loading_indecator.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -62,7 +62,7 @@ class _SplashViewState extends State<SplashView> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image(
-                image: AssetImage(Assets.assetsImagesQuickNotionLogo),
+                image: AssetImage(Assets.assetsImagesPageBridgeLogo),
                 height: 200,
               ),
               const SizedBox(height: 40),

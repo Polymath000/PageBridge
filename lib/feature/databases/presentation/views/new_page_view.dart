@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import 'package:quicknotion/feature/auth/presentation/widgets/custom_animation_background.dart';
-import 'package:quicknotion/core/helpers/custom_show_snack_bar.dart';
-import 'package:quicknotion/core/utls/custom_loading_indecator.dart';
-import 'package:quicknotion/core/utls/setup_service_locator_getit.dart';
-import 'package:quicknotion/feature/databases/data/repos/create_new_page_repo_impl.dart';
-import 'package:quicknotion/feature/databases/data/repos/return_pages_repo_impl.dart';
-import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
-import 'package:quicknotion/feature/databases/presentation/controllers/new_page_cubit/new_page_cubit.dart';
-import 'package:quicknotion/feature/databases/presentation/controllers/return_pages_cubit/return_pages_cubit.dart';
-import 'package:quicknotion/feature/databases/presentation/widgets/new_page_view_body.dart';
+import 'package:pagebridge/feature/auth/presentation/widgets/custom_animation_background.dart';
+import 'package:pagebridge/core/helpers/custom_show_snack_bar.dart';
+import 'package:pagebridge/core/utls/custom_loading_indecator.dart';
+import 'package:pagebridge/core/utls/setup_service_locator_getit.dart';
+import 'package:pagebridge/feature/databases/data/repos/create_new_page_repo_impl.dart';
+import 'package:pagebridge/feature/databases/data/repos/return_pages_repo_impl.dart';
+import 'package:pagebridge/feature/databases/domain/entities/database_entity.dart';
+import 'package:pagebridge/feature/databases/presentation/controllers/new_page_cubit/new_page_cubit.dart';
+import 'package:pagebridge/feature/databases/presentation/controllers/return_pages_cubit/return_pages_cubit.dart';
+import 'package:pagebridge/feature/databases/presentation/widgets/new_page_view_body.dart';
 
 class NewPageView extends StatelessWidget {
   const NewPageView({super.key, required this.database});

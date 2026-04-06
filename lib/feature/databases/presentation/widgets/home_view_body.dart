@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quicknotion/core/helpers/custom_search_text_field.dart';
-import 'package:quicknotion/feature/databases/presentation/controllers/return_databases_cubit/return_databases_cubit.dart';
-import 'package:quicknotion/feature/databases/presentation/widgets/databases_list.dart';
+import 'package:pagebridge/core/helpers/custom_search_text_field.dart';
+import 'package:pagebridge/feature/databases/presentation/controllers/return_databases_cubit/return_databases_cubit.dart';
+import 'package:pagebridge/feature/databases/presentation/widgets/databases_list.dart';
 
 class HomeViewBody extends StatelessWidget {
   const HomeViewBody({super.key, required this.scrollController});

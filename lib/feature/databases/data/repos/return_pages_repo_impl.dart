@@ -1,10 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:quicknotion/core/errors/failure.dart';
-import 'package:quicknotion/core/network/network_info.dart';
-import 'package:quicknotion/feature/databases/data/data_source/return_pages_remote_data_souce.dart';
-import 'package:quicknotion/feature/databases/domain/repo/return_pages_repo.dart';
+import 'package:pagebridge/core/errors/failure.dart';
+import 'package:pagebridge/core/network/network_info.dart';
+import 'package:pagebridge/feature/databases/data/data_source/return_pages_remote_data_souce.dart';
+import 'package:pagebridge/feature/databases/domain/repo/return_pages_repo.dart';
 
 class ReturnPagesRepoImpl extends ReturnPagesRepo {
   ReturnPagesRemoteDataSource returnPagesRemoteDataSource;

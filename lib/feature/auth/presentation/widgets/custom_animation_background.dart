@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:quicknotion/config/themes/app_colors.dart';
+import 'package:pagebridge/config/themes/app_colors.dart';
 
 class CustomAnimationBackground extends StatefulWidget {
   final BackgroundMode mode;

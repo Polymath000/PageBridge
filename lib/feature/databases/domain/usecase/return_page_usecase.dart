@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:quicknotion/core/errors/failure.dart';
-import 'package:quicknotion/feature/databases/domain/entities/page_entity.dart';
-import 'package:quicknotion/feature/databases/domain/repo/return_pages_repo.dart';
+import 'package:pagebridge/core/errors/failure.dart';
+import 'package:pagebridge/feature/databases/domain/entities/page_entity.dart';
+import 'package:pagebridge/feature/databases/domain/repo/return_pages_repo.dart';
 
 class ReturnPageUsecase {
   final ReturnPagesRepo returnPagesRepo;

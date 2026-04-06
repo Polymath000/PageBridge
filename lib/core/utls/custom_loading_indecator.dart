@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:quicknotion/config/themes/app_colors.dart';
+import 'package:pagebridge/config/themes/app_colors.dart';
 
 class CustomLoadingIndecator extends StatelessWidget {
   const CustomLoadingIndecator({super.key, this.height = 190});

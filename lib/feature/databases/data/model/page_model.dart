@@ -1,5 +1,5 @@
-import 'package:quicknotion/feature/databases/data/model/property_model.dart';
-import 'package:quicknotion/feature/databases/domain/entities/page_entity.dart';
+import 'package:pagebridge/feature/databases/data/model/property_model.dart';
+import 'package:pagebridge/feature/databases/domain/entities/page_entity.dart';
 
 class PageModel extends PageEntity {
   final PropertyModel properties;

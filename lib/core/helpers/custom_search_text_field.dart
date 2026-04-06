@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:quicknotion/config/themes/app_colors.dart';
-import 'package:quicknotion/config/themes/theme_config.dart';
+import 'package:pagebridge/config/themes/theme_config.dart';
 
 class CustomSearchTextField extends StatefulWidget {
   const CustomSearchTextField({

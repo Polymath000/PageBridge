@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quicknotion/core/utls/setup_service_locator_getit.dart';
-import 'package:quicknotion/feature/auth/presentation/veiw/auth_view.dart';
-import 'package:quicknotion/feature/databases/data/repos/return_pages_repo_impl.dart';
-import 'package:quicknotion/feature/databases/domain/entities/database_entity.dart';
-import 'package:quicknotion/feature/databases/domain/entities/page_entity.dart';
-import 'package:quicknotion/feature/databases/domain/entities/property_entity.dart';
-import 'package:quicknotion/feature/databases/presentation/controllers/return_pages_cubit/return_pages_cubit.dart';
-import 'package:quicknotion/feature/databases/presentation/views/home_view.dart';
-import 'package:quicknotion/feature/databases/presentation/views/new_page_view.dart';
-import 'package:quicknotion/feature/databases/presentation/views/relation_search_view.dart';
-import 'package:quicknotion/feature/onStartedViews/presentation/views/onboarding_view.dart';
-import 'package:quicknotion/feature/onStartedViews/presentation/views/splash_view.dart';
+import 'package:pagebridge/core/utls/setup_service_locator_getit.dart';
+import 'package:pagebridge/feature/auth/presentation/veiw/auth_view.dart';
+import 'package:pagebridge/feature/databases/data/repos/return_pages_repo_impl.dart';
+import 'package:pagebridge/feature/databases/domain/entities/database_entity.dart';
+import 'package:pagebridge/feature/databases/domain/entities/page_entity.dart';
+import 'package:pagebridge/feature/databases/domain/entities/property_entity.dart';
+import 'package:pagebridge/feature/databases/presentation/controllers/return_pages_cubit/return_pages_cubit.dart';
+import 'package:pagebridge/feature/databases/presentation/views/home_view.dart';
+import 'package:pagebridge/feature/databases/presentation/views/new_page_view.dart';
+import 'package:pagebridge/feature/databases/presentation/views/relation_search_view.dart';
+import 'package:pagebridge/feature/onStartedViews/presentation/views/onboarding_view.dart';
+import 'package:pagebridge/feature/onStartedViews/presentation/views/splash_view.dart';
 
 sealed class AppRoutes {
   const AppRoutes();

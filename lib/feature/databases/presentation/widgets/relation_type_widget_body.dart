@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:multi_dropdown/multi_dropdown.dart';
-import 'package:quicknotion/config/themes/app_icons.dart';
-import 'package:quicknotion/feature/databases/domain/entities/property_entity.dart';
-import 'package:quicknotion/feature/databases/presentation/controllers/return_pages_cubit/return_pages_cubit.dart';
+import 'package:pagebridge/config/themes/app_icons.dart';
+import 'package:pagebridge/feature/databases/domain/entities/property_entity.dart';
+import 'package:pagebridge/feature/databases/presentation/controllers/return_pages_cubit/return_pages_cubit.dart';
 
 class RelationTypeWidgetBody extends StatefulWidget {
   const RelationTypeWidgetBody({

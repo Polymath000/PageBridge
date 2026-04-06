@@ -1,4 +1,4 @@
-import 'package:quicknotion/feature/databases/domain/entities/property_entity.dart';
+import 'package:pagebridge/feature/databases/domain/entities/property_entity.dart';
 
 class PropertyModel extends PropertyEntity {
   const PropertyModel({
