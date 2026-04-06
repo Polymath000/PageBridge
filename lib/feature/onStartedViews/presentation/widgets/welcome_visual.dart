@@ -27,7 +27,7 @@ class WelcomeVisual extends StatelessWidget {
         ],
       ),
       child: Image.asset(
-        Assets.assetsImagesPageBridgeLogo,
+        Assets.assetsImagesPageBridgeBrandLogo,
         fit: BoxFit.contain,
       ),
     );

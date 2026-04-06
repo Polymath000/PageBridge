@@ -61,9 +61,13 @@ class _SplashViewState extends State<SplashView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image(
-                image: AssetImage(Assets.assetsImagesPageBridgeLogo),
-                height: 200,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Image.asset(
+                  Assets.assetsImagesPageBridgeBrandLogo,
+                  width: 340,
+                  fit: BoxFit.contain,
+                ),
               ),
               const SizedBox(height: 40),
 

@@ -172,7 +172,7 @@ class _AuthBodyState extends State<AuthBody>
                                       ],
                                     ),
                                     child: Image.asset(
-                                      Assets.assetsImagesPageBridgeLogo,
+                                      Assets.assetsImagesPageBridgeBrandLogo,
                                       fit: BoxFit.contain,
                                     ),
                                   ),
