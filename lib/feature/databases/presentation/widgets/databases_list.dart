@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pagebridge/core/helpers/custom_empty_state.dart';
 import 'package:pagebridge/core/utls/error_widget.dart';
 import 'package:pagebridge/feature/databases/presentation/controllers/return_databases_cubit/return_databases_cubit.dart';
 import 'package:pagebridge/feature/databases/presentation/widgets/custom_skeletonizer_database.dart';
@@ -16,18 +17,26 @@ class DatabasesList extends StatefulWidget {
 class _DatabasesListState extends State<DatabasesList> {
   @override
   void initState() {
-    context.read<DatabasesCubit>().returnDatabases();
     super.initState();
+    context.read<DatabasesCubit>().returnDatabases();
+    widget.controller.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    if (widget.controller.position.pixels >=
+        widget.controller.position.maxScrollExtent * 0.75) {
+      context.read<DatabasesCubit>().fetchMore();
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.controller.removeListener(_onScroll);
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    widget.controller.addListener(() {
-      if (widget.controller.position.pixels >=
-          widget.controller.position.maxScrollExtent * 0.75) {
-        context.read<DatabasesCubit>().fetchMore();
-      }
-    });
     return BlocBuilder<DatabasesCubit, DatabasesState>(
       builder: (context, state) {
         if (state is DatabasesLoading) {
@@ -54,8 +63,11 @@ class _DatabasesListState extends State<DatabasesList> {
           final items = state.databases;
           if (items.isEmpty) {
             return const SliverToBoxAdapter(
-              child: CustomErrorWidget(
-                errorMessage: "There are no databases found.",
+              child: CustomEmptyState(
+                icon: Icons.storage_outlined,
+                title: 'No databases found',
+                subtitle:
+                    'Connect a database in Notion to get started,\nor try a different search.',
               ),
             );
           }

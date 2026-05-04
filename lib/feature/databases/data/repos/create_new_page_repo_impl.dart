@@ -15,17 +15,19 @@ class CreateNewPageRepoImpl extends CreateNewPageRepo {
     required this.networkInfo,
   });
   @override
-  Future<Either<Failure, void>> createNewPage({
+  Future<Either<Failure, String>> createNewPage({
     required String databaseId,
     required List<PropertyModel> properties,
+    String? content,
   }) async {
     try {
       if (await networkInfo.isConnected!) {
-        await createNewPageDataSource.createNewPage(
+        final url = await createNewPageDataSource.createNewPage(
           databaseId: databaseId,
           properties: properties,
+          content: content,
         );
-        return right(null);
+        return right(url);
       } else {
         return left(NetworkFailure.error());
       }

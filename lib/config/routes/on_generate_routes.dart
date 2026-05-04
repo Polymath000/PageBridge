@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pagebridge/core/utls/setup_service_locator_getit.dart';
 import 'package:pagebridge/feature/auth/presentation/veiw/auth_view.dart';
-import 'package:pagebridge/feature/databases/data/repos/return_pages_repo_impl.dart';
+import 'package:pagebridge/feature/databases/domain/repo/return_pages_repo.dart';
 import 'package:pagebridge/feature/databases/domain/entities/database_entity.dart';
 import 'package:pagebridge/feature/databases/domain/entities/page_entity.dart';
 import 'package:pagebridge/feature/databases/domain/entities/property_entity.dart';
@@ -82,7 +82,7 @@ Map<String, Widget Function(BuildContext, Object?)> _routes = {
     final data = args! as Map<String, dynamic>;
     return BlocProvider(
       create: (context) =>
-          ReturnPagesCubit(repoImpl: getit.get<ReturnPagesRepoImpl>()),
+          ReturnPagesCubit(repo: getit.get<ReturnPagesRepo>()),
       child: RelationSearchView(
         property: data['property'] as PropertyEntity,
         initialSelectedPages: data['initialSelectedPages'] as List<PageEntity>,
@@ -97,8 +97,26 @@ Route<dynamic>? Function(RouteSettings)? onGenerateRoute = (final settings) {
   final builder =
       _routes[settings.name] ??
       (_, _) => const Scaffold(body: Center(child: Text('Page not found')));
-  return MaterialPageRoute(
-    builder: (final context) => builder(context, settings.arguments),
+  return PageRouteBuilder(
     settings: settings,
+    pageBuilder: (context, animation, secondaryAnimation) => 
+        builder(context, settings.arguments),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(0.0, 0.05);
+      const end = Offset.zero;
+      const curve = Curves.easeOutCubic;
+
+      final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+      final offsetAnimation = animation.drive(tween);
+
+      return FadeTransition(
+        opacity: animation,
+        child: SlideTransition(
+          position: offsetAnimation,
+          child: child,
+        ),
+      );
+    },
+    transitionDuration: const Duration(milliseconds: 300),
   );
 };

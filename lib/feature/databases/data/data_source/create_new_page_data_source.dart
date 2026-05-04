@@ -5,9 +5,10 @@ import 'package:pagebridge/core/database/cache/secure_storage.dart';
 import 'package:pagebridge/feature/databases/data/model/property_model.dart';
 
 abstract class CreateNewPageDataSource {
-  Future<void> createNewPage({
+  Future<String> createNewPage({
     required String databaseId,
     required List<PropertyModel> properties,
+    String? content,
   });
 }
 
@@ -15,9 +16,10 @@ class CreateNewPageDataSourceImpl implements CreateNewPageDataSource {
   DioConsumer dioConsumer;
   CreateNewPageDataSourceImpl(this.dioConsumer);
   @override
-  Future<void> createNewPage({
+  Future<String> createNewPage({
     required String databaseId,
     required List<PropertyModel> properties,
+    String? content,
   }) async {
     final token = await SecureStorage.readData(key: tokenKey);
     final Map<String, dynamic> mappedProperties = {};
@@ -28,13 +30,33 @@ class CreateNewPageDataSourceImpl implements CreateNewPageDataSource {
       }
     }
 
-    await dioConsumer.post(
+    final Map<String, dynamic> requestData = {
+      'parent': {'database_id': databaseId},
+      'properties': mappedProperties,
+    };
+
+    if (content != null && content.trim().isNotEmpty) {
+      requestData['children'] = [
+        {
+          "object": "block",
+          "type": "paragraph",
+          "paragraph": {
+            "rich_text": [
+              {
+                "type": "text",
+                "text": {"content": content.trim()}
+              }
+            ]
+          }
+        }
+      ];
+    }
+
+    final response = await dioConsumer.post(
       EndPoint.addNewPage,
-      data: {
-        'parent': {'database_id': databaseId},
-        'properties': mappedProperties,
-      },
+      data: requestData,
       options: headers(token: token!),
     );
+    return response.data['url'] as String;
   }
 }

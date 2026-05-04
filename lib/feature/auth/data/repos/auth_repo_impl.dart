@@ -25,14 +25,17 @@ class AuthRepositoryImpl extends AuthRepository {
     try {
       if (await networkInfo.isConnected!) {
         final token = await remoteDataSource.signInWithNotion();
-        await localDataSource.saveToken(token.accessToken);
+        await localDataSource.saveToken(token);
 
         return right(
           AuthTokenEntity(
             accessToken: token.accessToken,
             workspaceId: token.workspaceId,
             workspaceName: token.workspaceName,
+            workspaceIcon: token.workspaceIcon,
             botId: token.botId,
+            ownerName: token.ownerName,
+            ownerAvatarUrl: token.ownerAvatarUrl,
           ),
         );
       } else {

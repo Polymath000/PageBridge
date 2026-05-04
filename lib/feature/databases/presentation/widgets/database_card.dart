@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:pagebridge/config/routes/on_generate_routes.dart';
 import 'package:pagebridge/config/themes/app_colors.dart';
 import 'package:pagebridge/config/themes/app_text_style.dart';
@@ -15,6 +16,7 @@ class DatabaseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final modernSlate = Theme.of(context).extension<ModernSlateColors>()!;
+    final hasCover = database.cover?.url != null;
     return SizedBox(
       width: double.infinity,
       child: TweenAnimationBuilder<double>(
@@ -36,50 +38,78 @@ class DatabaseCard extends StatelessWidget {
               context,
               database: database,
             );
-            if (result == true && context.mounted) {
+            if (result is String && context.mounted) {
               customShowSnackBar(
                 message: "The new page has been added successfully",
                 context: context,
                 backgroundColor: AppColors.green,
+                action: SnackBarAction(
+                  label: 'Open in Notion',
+                  textColor: Colors.white,
+                  onPressed: () {
+                    launchUrl(
+                      Uri.parse(result),
+                      mode: LaunchMode.externalApplication,
+                    );
+                  },
+                ),
               );
             }
           },
           child: Card(
             margin: const EdgeInsets.only(bottom: 16.0, right: 0),
             color: modernSlate.card,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 12.0,
-                vertical: 16,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  (database.icon?.emoji?.isEmpty ?? true)
-                      ? SizedBox(
-                          height: 16.h,
-                          child: Image(
-                            image: AssetImage(
-                              Assets.assetsImagesDatabaseicon,
-                            ),
-                          ),
-                        )
-                      : Text(database.icon?.emoji ?? ""),
+            clipBehavior: Clip.antiAlias,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (hasCover)
                   SizedBox(
-                    width: MediaQuery.sizeOf(context).width * 0.7,
-                    child: Text(
-                      database.title,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.titleLarge!.copyWith(
-                        color: modernSlate.primaryText,
-                        fontSize: 20.sp,
-                      ),
+                    height: 72,
+                    child: Image.network(
+                      database.cover!.url!,
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) => const SizedBox.shrink(),
                     ),
                   ),
-                  Icon(AppIcons.arrowForward, color: modernSlate.secondaryText),
-                ],
-              ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12.0,
+                    vertical: 16,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      (database.icon?.emoji?.isEmpty ?? true)
+                          ? SizedBox(
+                              height: 16.h,
+                              child: Image(
+                                image: AssetImage(
+                                  Assets.assetsImagesDatabaseicon,
+                                ),
+                              ),
+                            )
+                          : Text(database.icon?.emoji ?? ""),
+                      SizedBox(
+                        width: MediaQuery.sizeOf(context).width * 0.7,
+                        child: Text(
+                          database.title,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.titleLarge!.copyWith(
+                            color: modernSlate.primaryText,
+                            fontSize: 20.sp,
+                          ),
+                        ),
+                      ),
+                      Icon(
+                        AppIcons.arrowForward,
+                        color: modernSlate.secondaryText,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -87,3 +117,4 @@ class DatabaseCard extends StatelessWidget {
     );
   }
 }
+

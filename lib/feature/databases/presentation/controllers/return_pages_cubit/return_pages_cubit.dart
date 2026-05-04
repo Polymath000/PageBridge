@@ -1,14 +1,14 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:pagebridge/feature/databases/data/repos/return_pages_repo_impl.dart';
 import 'package:pagebridge/feature/databases/domain/entities/page_entity.dart';
+import 'package:pagebridge/feature/databases/domain/repo/return_pages_repo.dart';
 
 part 'return_pages_state.dart';
 
 class ReturnPagesCubit extends Cubit<ReturnPagesState> {
-  ReturnPagesCubit({required this.repoImpl}) : super(ReturnPagesInitial());
+  ReturnPagesCubit({required this.repo}) : super(ReturnPagesInitial());
   CancelToken? _cancelToken;
-  final ReturnPagesRepoImpl repoImpl;
+  final ReturnPagesRepo repo;
   Future<void> returnPages({
     String query = "",
     required String databaseId,
@@ -18,7 +18,7 @@ class ReturnPagesCubit extends Cubit<ReturnPagesState> {
     emit(ReturnPagesLoading());
     // final tokenfromDB = await SecureStorage.readData(key: tokenKey);
 
-    final result = await repoImpl.raturnPages(
+    final result = await repo.returnPages(
       // token ?? tokenfromDB!,
       query,
       null,
@@ -55,7 +55,7 @@ class ReturnPagesCubit extends Cubit<ReturnPagesState> {
       return;
     }
     emit(currentState.copyWith(isPaginating: true));
-    final result = await repoImpl.raturnPages(
+    final result = await repo.returnPages(
       currentState.query,
       currentState.nextCursor,
       currentState.databaseId,

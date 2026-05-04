@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagebridge/config/themes/theme_config.dart';
@@ -18,9 +20,20 @@ class CustomSearchTextField extends StatefulWidget {
 
 class _CustomSearchTextFieldState extends State<CustomSearchTextField> {
   final TextEditingController searchController = TextEditingController();
+  Timer? _debounce;
+
+  static const _debounceDuration = Duration(milliseconds: 400);
+
+  void _onSearchChanged(String value) {
+    _debounce?.cancel();
+    _debounce = Timer(_debounceDuration, () {
+      widget.getPages?.call(value);
+    });
+  }
 
   @override
   void dispose() {
+    _debounce?.cancel();
     searchController.dispose();
     super.dispose();
   }
@@ -39,9 +52,7 @@ class _CustomSearchTextFieldState extends State<CustomSearchTextField> {
       builder: (context, value, child) {
         return TextField(
           controller: searchController,
-          onChanged: (value) {
-            widget.getPages?.call(value);
-          },
+          onChanged: _onSearchChanged,
           style: TextStyle(color: textColor, fontSize: 16.sp),
           decoration: InputDecoration(
             hintText: widget.hintText,
@@ -54,6 +65,7 @@ class _CustomSearchTextFieldState extends State<CustomSearchTextField> {
                     icon: Icon(Icons.clear, color: iconColor),
                     onPressed: () {
                       searchController.clear();
+                      _debounce?.cancel();
                       widget.getPages?.call('');
                     },
                   )
@@ -82,3 +94,4 @@ class _CustomSearchTextFieldState extends State<CustomSearchTextField> {
     );
   }
 }
+

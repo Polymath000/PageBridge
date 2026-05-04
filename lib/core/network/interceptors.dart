@@ -1,20 +1,20 @@
+import 'dart:developer';
 import 'package:dio/dio.dart';
-import 'package:logger/logger.dart';
 
 /// This interceptor is used to show request and response logs
 class LoggerInterceptor extends Interceptor {
-  Logger logger = Logger(printer: PrettyPrinter(methodCount: 0));
-
   @override
   void onError(final DioException err, final ErrorInterceptorHandler handler) {
     final options = err.requestOptions;
     final requestPath = '${options.baseUrl}${options.path}';
-    logger
-      ..e('${options.method} request ==> $requestPath')
-      ..d(
-        'Error type: ${err.error} \n '
-        'Error message: ${err.message}',
-      );
+    
+    log(
+      '${options.method} request ==> $requestPath\n'
+      'Error type: ${err.type}\n'
+      'Error message: ${err.message}',
+      name: 'DioError',
+      error: err.error,
+    );
     handler.next(err); 
   }
 
@@ -24,7 +24,7 @@ class LoggerInterceptor extends Interceptor {
     final RequestInterceptorHandler handler,
   ) {
     final requestPath = '${options.baseUrl}${options.path}';
-    logger.i('${options.method} request ==> $requestPath');
+    log('${options.method} request ==> $requestPath', name: 'DioRequest');
     handler.next(options);
   }
 
@@ -33,11 +33,12 @@ class LoggerInterceptor extends Interceptor {
     final Response response,
     final ResponseInterceptorHandler handler,
   ) {
-    logger.d(
-      'STATUSCODE: ${response.statusCode} \n '
-      'STATUSMESSAGE: ${response.statusMessage} \n'
-      'HEADERS: ${response.headers} \n'
+    log(
+      'STATUSCODE: ${response.statusCode}\n'
+      'STATUSMESSAGE: ${response.statusMessage}\n'
+      'HEADERS: ${response.headers}\n'
       'Data: ${response.data}',
+      name: 'DioResponse',
     );
     handler.next(response);
   }

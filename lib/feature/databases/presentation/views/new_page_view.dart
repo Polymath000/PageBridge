@@ -5,8 +5,8 @@ import 'package:pagebridge/feature/auth/presentation/widgets/custom_animation_ba
 import 'package:pagebridge/core/helpers/custom_show_snack_bar.dart';
 import 'package:pagebridge/core/utls/custom_loading_indecator.dart';
 import 'package:pagebridge/core/utls/setup_service_locator_getit.dart';
-import 'package:pagebridge/feature/databases/data/repos/create_new_page_repo_impl.dart';
-import 'package:pagebridge/feature/databases/data/repos/return_pages_repo_impl.dart';
+import 'package:pagebridge/feature/databases/domain/repo/create_new_page_repo.dart';
+import 'package:pagebridge/feature/databases/domain/repo/return_pages_repo.dart';
 import 'package:pagebridge/feature/databases/domain/entities/database_entity.dart';
 import 'package:pagebridge/feature/databases/presentation/controllers/new_page_cubit/new_page_cubit.dart';
 import 'package:pagebridge/feature/databases/presentation/controllers/return_pages_cubit/return_pages_cubit.dart';
@@ -23,11 +23,11 @@ class NewPageView extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) =>
-              ReturnPagesCubit(repoImpl: getit.get<ReturnPagesRepoImpl>()),
+              ReturnPagesCubit(repo: getit.get<ReturnPagesRepo>()),
         ),
         BlocProvider(
           create: (context) => NewPageCubit(
-            createNewPageRepoImpl: getit.get<CreateNewPageRepoImpl>(),
+            createNewPageRepo: getit.get<CreateNewPageRepo>(),
           ),
         ),
       ],

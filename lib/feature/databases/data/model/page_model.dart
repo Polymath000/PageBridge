@@ -6,7 +6,6 @@ class PageModel extends PageEntity {
   final DateTime createdTime;
   final DateTime lastEditedTime;
   final bool archived;
-  final String url;
 
   PageModel({
     required super.id,
@@ -14,27 +13,50 @@ class PageModel extends PageEntity {
     required this.createdTime,
     required this.lastEditedTime,
     required this.archived,
-    required this.url,
+    required super.url,
+    super.iconEmoji,
+    super.iconUrl,
     required super.databaseId,
     required this.properties,
   });
 
   factory PageModel.fromJson(Map<String, dynamic> json) {
-    final titleList =
-        json['properties']?['Name']?['title'] as List<dynamic>? ?? [];
+    String parsedTitle = 'No Title';
+    final propertiesMap = json['properties'] as Map<String, dynamic>? ?? {};
+    for (var value in propertiesMap.values) {
+      if (value['type'] == 'title') {
+        final titleList = value['title'] as List<dynamic>? ?? [];
+        if (titleList.isNotEmpty) {
+          parsedTitle = titleList.map((e) => e['plain_text']).join();
+        }
+        break;
+      }
+    }
 
-    final title = titleList.isNotEmpty
-        ? titleList.map((e) => e['plain_text']).join()
-        : 'No Title';
-    final dynamic properties = PropertyModel.fromJson(title, json['properties']);
+    String? iconEmoji;
+    String? iconUrl;
+    final iconData = json['icon'];
+    if (iconData != null) {
+      if (iconData['type'] == 'emoji') {
+        iconEmoji = iconData['emoji'];
+      } else if (iconData['type'] == 'external') {
+        iconUrl = iconData['external']?['url'];
+      } else if (iconData['type'] == 'file') {
+        iconUrl = iconData['file']?['url'];
+      }
+    }
+
+    final dynamic properties = PropertyModel.fromJson(parsedTitle, json['properties']);
     
     return PageModel(
       id: json['id'],
-      title: title,
+      title: parsedTitle,
       createdTime: DateTime.parse(json['created_time']),
       lastEditedTime: DateTime.parse(json['last_edited_time']),
       archived: json['archived'] ?? false,
       url: json['url'],
+      iconEmoji: iconEmoji,
+      iconUrl: iconUrl,
       databaseId: json['parent']?['database_id'] ?? '',
       properties: properties,
     );

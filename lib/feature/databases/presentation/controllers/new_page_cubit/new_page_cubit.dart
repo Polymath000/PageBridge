@@ -2,15 +2,20 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:pagebridge/feature/databases/data/model/property_model.dart';
 
-import 'package:pagebridge/feature/databases/data/repos/create_new_page_repo_impl.dart';
+import 'package:pagebridge/feature/databases/domain/repo/create_new_page_repo.dart';
 
 part 'new_page_state.dart';
 
 class NewPageCubit extends Cubit<NewPageState> {
-  NewPageCubit({required this.createNewPageRepoImpl}) : super(NewPageInitial());
-  CreateNewPageRepoImpl createNewPageRepoImpl;
+  NewPageCubit({required this.createNewPageRepo}) : super(NewPageInitial());
+  final CreateNewPageRepo createNewPageRepo;
 
   List<PropertyModel> newPageProperties = [];
+  String? pageContent;
+
+  void setContent(String? content) {
+    pageContent = content;
+  }
 
   void addProperty({
     required String key,
@@ -34,20 +39,21 @@ class NewPageCubit extends Cubit<NewPageState> {
     }
   }
 
-  Future<bool> createNewPage({required String databaseId}) async {
+  Future<String?> createNewPage({required String databaseId}) async {
     emit(NewPageLoading());
-    final result = await createNewPageRepoImpl.createNewPage(
+    final result = await createNewPageRepo.createNewPage(
       properties: newPageProperties,
       databaseId: databaseId,
+      content: pageContent,
     );
     return result.fold(
       (failure) {
         emit(NewPageFailure(message: failure.message));
-        return false;
+        return null;
       },
-      (r) {
+      (url) {
         emit(NewPageSuccess());
-        return true;
+        return url;
       },
     );
   }

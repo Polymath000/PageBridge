@@ -1,12 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:pagebridge/feature/databases/data/repos/database_repo_impl.dart';
 import 'package:pagebridge/feature/databases/domain/entities/database_entity.dart';
+import 'package:pagebridge/feature/databases/domain/repo/database_repo.dart';
 
 part 'return_databases_state.dart';
 
 class DatabasesCubit extends Cubit<DatabasesState> {
-  final DatabaseRepoImpl databaseRepo;
+  final DatabaseRepo databaseRepo;
   CancelToken? _cancelToken;
 
   DatabasesCubit({required this.databaseRepo}) : super(DatabasesInitial());

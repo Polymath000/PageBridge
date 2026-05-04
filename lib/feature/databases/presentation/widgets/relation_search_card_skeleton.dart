@@ -12,10 +12,11 @@ class RelationSearchCardSkeleton extends StatelessWidget {
       enabled: true,
       child: ListOfDatabasesFoRelationSearch(
         isSelected: false,
-        page: PageEntity(
+        page: const PageEntity(
           id: 'skeleton-id',
           title: 'Loading relation page title',
           databaseId: 'skeleton-database-id',
+          url: '',
         ),
         onChanged: (_) {},
       ),
