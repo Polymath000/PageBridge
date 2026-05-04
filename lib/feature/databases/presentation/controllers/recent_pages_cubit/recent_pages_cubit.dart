@@ -8,6 +8,7 @@ part 'recent_pages_state.dart';
 class RecentPagesCubit extends Cubit<RecentPagesState> {
   final RecentPagesRepo repo;
   CancelToken? _cancelToken;
+  String? _currentQuery;
 
   RecentPagesCubit({required this.repo}) : super(RecentPagesInitial());
 
@@ -16,7 +17,10 @@ class RecentPagesCubit extends Cubit<RecentPagesState> {
     _cancelToken = CancelToken();
     emit(RecentPagesLoading());
 
-    final result = await repo.getRecentPages(cancelToken: _cancelToken);
+    final result = await repo.getRecentPages(
+      query: _currentQuery,
+      cancelToken: _cancelToken,
+    );
 
     result.fold(
       (failure) {
@@ -46,6 +50,7 @@ class RecentPagesCubit extends Cubit<RecentPagesState> {
 
     final result = await repo.getRecentPages(
       startCursor: currentState.nextCursor,
+      query: _currentQuery,
       cancelToken: _cancelToken,
     );
 
@@ -67,5 +72,14 @@ class RecentPagesCubit extends Cubit<RecentPagesState> {
         );
       },
     );
+  }
+
+  void search(String query) {
+    if (query.isEmpty) {
+      _currentQuery = null;
+    } else {
+      _currentQuery = query;
+    }
+    fetchRecentPages();
   }
 }

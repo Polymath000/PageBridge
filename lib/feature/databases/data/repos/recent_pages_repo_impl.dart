@@ -17,12 +17,14 @@ class RecentPagesRepoImpl extends RecentPagesRepo {
   @override
   Future<Either<Failure, Map<String, dynamic>>> getRecentPages({
     String? startCursor,
+    String? query,
     CancelToken? cancelToken,
   }) async {
     try {
       if (await networkInfo.isConnected!) {
         final data = await remoteDataSource.getRecentPages(
           startCursor: startCursor,
+          query: query,
           cancelToken: cancelToken,
         );
         return right(data);

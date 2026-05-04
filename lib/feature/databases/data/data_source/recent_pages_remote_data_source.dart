@@ -9,6 +9,7 @@ import 'package:pagebridge/feature/databases/domain/entities/page_entity.dart';
 abstract class RecentPagesRemoteDataSource {
   Future<Map<String, dynamic>> getRecentPages({
     String? startCursor,
+    String? query,
     CancelToken? cancelToken,
   });
 }
@@ -20,6 +21,7 @@ class RecentPagesRemoteDataSourceImpl implements RecentPagesRemoteDataSource {
   @override
   Future<Map<String, dynamic>> getRecentPages({
     String? startCursor,
+    String? query,
     CancelToken? cancelToken,
   }) async {
     final token = await SecureStorage.readData(key: tokenKey);
@@ -39,6 +41,7 @@ class RecentPagesRemoteDataSourceImpl implements RecentPagesRemoteDataSource {
           "timestamp": "last_edited_time"
         },
         if (startCursor != null) 'start_cursor': startCursor,
+        if (query != null && query.isNotEmpty) 'query': query,
       },
     );
 
