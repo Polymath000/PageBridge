@@ -1,4 +1,4 @@
-package com.example.pagebridge
+package pagebridge.polymath
 
 import io.flutter.embedding.android.FlutterActivity
 

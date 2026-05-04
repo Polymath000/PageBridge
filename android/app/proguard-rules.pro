@@ -4,7 +4,7 @@
 -keep class io.flutter.embedding.** { *; }
 
 # Your app's main classes
--keep class com.example.pagebridge.** { *; }
+-keep class pagebridge.polymath.** { *; }
 
 # Keep enums
 -keepclassmembers enum * {
