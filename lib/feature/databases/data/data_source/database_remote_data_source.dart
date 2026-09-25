@@ -25,7 +25,7 @@ class DatabaseRemoteDataSourceImpl implements DatabaseRemoteDataSource {
     String? startCursor, {
     CancelToken? cancelToken,
   }) async {
-    final token = await SecureStorage.readData(key: tokenKey);
+    final token = await SecureStorage.readData(key: AppConstants.tokenKey);
     var data = await dioConsumer.post(
       EndPoint.search,
       cancelToken: cancelToken,
@@ -34,7 +34,7 @@ class DatabaseRemoteDataSourceImpl implements DatabaseRemoteDataSource {
       data: {
         if (query != null && query.isNotEmpty) "query": query,
         "filter": {"value": "database", "property": "object"},
-        'page_size': pageSizeOfTheAPI,
+        'page_size': AppConstants.pageSizeOfTheAPI,
         if (startCursor != null) 'start_cursor': startCursor,
       },
     );

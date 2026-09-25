@@ -13,18 +13,30 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
 
   @override
   Future<void> saveToken(AuthTokenEntity token) async {
-    await SecureStorage.writeData(key: tokenKey, value: token.accessToken);
+    await SecureStorage.writeData(
+      key: AppConstants.tokenKey,
+      value: token.accessToken,
+    );
     if (token.workspaceName != null) {
-      await SharedPreferencesSingleton.setString('workspaceName', token.workspaceName!);
+      await SharedPreferencesSingleton.setString(
+        'workspaceName',
+        token.workspaceName!,
+      );
     }
     if (token.workspaceIcon != null) {
-      await SharedPreferencesSingleton.setString('workspaceIcon', token.workspaceIcon!);
+      await SharedPreferencesSingleton.setString(
+        'workspaceIcon',
+        token.workspaceIcon!,
+      );
     }
     if (token.ownerName != null) {
       await SharedPreferencesSingleton.setString('ownerName', token.ownerName!);
     }
     if (token.ownerAvatarUrl != null) {
-      await SharedPreferencesSingleton.setString('ownerAvatarUrl', token.ownerAvatarUrl!);
+      await SharedPreferencesSingleton.setString(
+        'ownerAvatarUrl',
+        token.ownerAvatarUrl!,
+      );
     }
   }
 }

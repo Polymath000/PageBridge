@@ -21,7 +21,7 @@ class CreateNewPageDataSourceImpl implements CreateNewPageDataSource {
     required List<PropertyModel> properties,
     String? content,
   }) async {
-    final token = await SecureStorage.readData(key: tokenKey);
+    final token = await SecureStorage.readData(key: AppConstants.tokenKey);
     final Map<String, dynamic> mappedProperties = {};
     for (var prop in properties) {
       final json = prop.toJson();
@@ -44,11 +44,11 @@ class CreateNewPageDataSourceImpl implements CreateNewPageDataSource {
             "rich_text": [
               {
                 "type": "text",
-                "text": {"content": content.trim()}
-              }
-            ]
-          }
-        }
+                "text": {"content": content.trim()},
+              },
+            ],
+          },
+        },
       ];
     }
 

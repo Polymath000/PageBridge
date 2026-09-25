@@ -14,14 +14,20 @@ import 'package:pagebridge/core/services/shared_preferences_singleton.dart';
 import 'package:pagebridge/feature/databases/presentation/controllers/theme_mode_cubit/theme_mode_cubit.dart';
 
 class HomeAppBar extends StatelessWidget {
-  const HomeAppBar({super.key, this.title = 'Databases', this.showActions = true});
+  const HomeAppBar({
+    super.key,
+    this.title = 'Databases',
+    this.showActions = true,
+  });
   final String title;
   final bool showActions;
 
   @override
   Widget build(BuildContext context) {
     final modernSlate = Theme.of(context).extension<ModernSlateColors>()!;
-    final ownerAvatarUrl = SharedPreferencesSingleton.getString('ownerAvatarUrl');
+    final ownerAvatarUrl = SharedPreferencesSingleton.getString(
+      'ownerAvatarUrl',
+    );
 
     return SliverAppBar(
       toolbarHeight: 70,
@@ -34,7 +40,7 @@ class HomeAppBar extends StatelessWidget {
       backgroundColor: modernSlate.card,
       shadowColor: modernSlate.border,
       surfaceTintColor: modernSlate.card,
-      expandedHeight:showActions? 110: 80,
+      expandedHeight: showActions ? 110 : 80,
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
         title: Row(
@@ -107,7 +113,9 @@ class HomeAppBar extends StatelessWidget {
                                   theme: nextTheme ?? theme,
                                   isReversed: value,
                                 );
-                                context.read<ThemeModeCubit>().changeThemeMode(context);
+                                context.read<ThemeModeCubit>().changeThemeMode(
+                                  context,
+                                );
                               },
                             ),
                           ],
@@ -124,7 +132,9 @@ class HomeAppBar extends StatelessWidget {
                           message: 'Are you sure you want to log out?',
                         );
                         if (!context.mounted || !shouldLogout) return;
-                        await SecureStorage.deleteData(key: tokenKey);
+                        await SecureStorage.deleteData(
+                          key: AppConstants.tokenKey,
+                        );
                         if (!context.mounted) return;
                         AppRoutes.authView(context);
                       },

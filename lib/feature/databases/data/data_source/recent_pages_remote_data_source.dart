@@ -24,22 +24,16 @@ class RecentPagesRemoteDataSourceImpl implements RecentPagesRemoteDataSource {
     String? query,
     CancelToken? cancelToken,
   }) async {
-    final token = await SecureStorage.readData(key: tokenKey);
+    final token = await SecureStorage.readData(key: AppConstants.tokenKey);
 
     var data = await dioConsumer.post(
       EndPoint.search,
       options: headers(token: token ?? "", notionVersion: "2022-06-28"),
       cancelToken: cancelToken,
       data: {
-        'page_size': pageSizeOfTheAPI,
-        "filter": {
-          "value": "page",
-          "property": "object"
-        },
-        "sort": {
-          "direction": "descending",
-          "timestamp": "last_edited_time"
-        },
+        'page_size': AppConstants.pageSizeOfTheAPI,
+        "filter": {"value": "page", "property": "object"},
+        "sort": {"direction": "descending", "timestamp": "last_edited_time"},
         if (startCursor != null) 'start_cursor': startCursor,
         if (query != null && query.isNotEmpty) 'query': query,
       },

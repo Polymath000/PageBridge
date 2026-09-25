@@ -26,9 +26,10 @@ class _SplashViewState extends State<SplashView> {
   void _checkAuthentication() async {
     await Future.delayed(const Duration(seconds: 1));
     if (!mounted) return;
-    token = await SecureStorage.readData(key: tokenKey);
+    token = await SecureStorage.readData(key: AppConstants.tokenKey);
     final seenOnboarding =
-        SharedPreferencesSingleton.getBool(onboardingSeenKey) ?? false;
+        SharedPreferencesSingleton.getBool(AppConstants.onboardingSeenKey) ??
+        false;
     if (token != null) {
       // ignore: use_build_context_synchronously
       AppRoutes.homeView(context);

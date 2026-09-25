@@ -1,5 +1,8 @@
-const String themeModeKey = 'themeMode';
-const String tokenKey = "token";
-const String userKey = "user";
-const String onboardingSeenKey = 'onboardingSeen';
-const int pageSizeOfTheAPI = 18;
+class AppConstants {
+  AppConstants._();
+  static const String themeModeKey = 'themeMode';
+  static const String tokenKey = "token";
+  static const String userKey = "user";
+  static const String onboardingSeenKey = 'onboardingSeen';
+  static const int pageSizeOfTheAPI = 18;
+}

@@ -27,14 +27,14 @@ class ReturnPagesRemoteDataSourceImpl implements ReturnPagesRemoteDataSource {
     CancelToken? cancelToken,
   }) async {
     EndPoint endPoint = EndPoint(dataSourceId: databaseId);
-    final token = await SecureStorage.readData(key: tokenKey);
+    final token = await SecureStorage.readData(key: AppConstants.tokenKey);
 
     var data = await dioConsumer.post(
       endPoint.returnPages,
       options: headers(token: token ?? "", notionVersion: "2025-09-03"),
       cancelToken: cancelToken,
       data: {
-        'page_size': pageSizeOfTheAPI,
+        'page_size': AppConstants.pageSizeOfTheAPI,
         "filter": {
           "property": "Name",
           "title": {"contains": query},

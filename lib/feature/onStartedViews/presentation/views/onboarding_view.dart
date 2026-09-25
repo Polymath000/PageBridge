@@ -55,7 +55,10 @@ class _OnboardingViewState extends State<OnboardingView> {
   }
 
   Future<void> _completeOnboarding(BuildContext context) async {
-    await SharedPreferencesSingleton.setBool(onboardingSeenKey, value: true);
+    await SharedPreferencesSingleton.setBool(
+      AppConstants.onboardingSeenKey,
+      value: true,
+    );
     if (!context.mounted) return;
     AppRoutes.authView(context);
   }
