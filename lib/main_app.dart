@@ -6,7 +6,6 @@ import 'package:pagebridge/config/routes/on_generate_routes.dart';
 import 'package:pagebridge/config/themes/app_text_style.dart';
 import 'package:pagebridge/config/themes/theme_config.dart' show ThemeConfig;
 import 'package:pagebridge/core/services/shared_preferences_singleton.dart';
-import 'package:pagebridge/feature/onStartedViews/presentation/views/splash_view.dart';
 
 import 'config/themes/app_colors.dart';
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pagebridge/config/routes/on_generate_routes.dart';
 import 'package:pagebridge/core/helpers/custom_button.dart';
 import 'package:pagebridge/core/helpers/custom_confirm_dialog.dart';
 import 'package:pagebridge/feature/databases/domain/entities/database_entity.dart';
@@ -29,7 +28,10 @@ class NewPageViewBody extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 8.0,
+            ),
             child: TextFormField(
               maxLines: null,
               minLines: 3,
@@ -54,23 +56,23 @@ class NewPageViewBody extends StatelessWidget {
           CustomButton(
             onPressed: () async {
               final cubit = context.read<NewPageCubit>();
-              final hasData = cubit.newPageProperties.any(
-                (p) => p.value != null && p.value.toString().isNotEmpty,
-              ) || (cubit.pageContent != null && cubit.pageContent!.trim().isNotEmpty);
+              final hasData =
+                  cubit.newPageProperties.any(
+                    (p) => p.value != null && p.value.toString().isNotEmpty,
+                  ) ||
+                  (cubit.pageContent != null &&
+                      cubit.pageContent!.trim().isNotEmpty);
 
               if (!hasData) {
                 final confirmed = await showAppConfirmDialog(
                   context: context,
                   title: 'Empty Page',
-                  message:
-                      'Are you sure you want to add a new empty page?',
+                  message: 'Are you sure you want to add a new empty page?',
                 );
                 if (!confirmed || !context.mounted) return;
               }
 
-              final url = await cubit.createNewPage(
-                databaseId: database.id,
-              );
+              final url = await cubit.createNewPage(databaseId: database.id);
               if (url != null && context.mounted) {
                 Navigator.pop(context, url);
               }
@@ -81,4 +83,3 @@ class NewPageViewBody extends StatelessWidget {
     );
   }
 }
-

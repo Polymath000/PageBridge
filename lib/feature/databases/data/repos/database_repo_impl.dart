@@ -18,7 +18,7 @@ class DatabaseRepoImpl extends DatabaseRepo {
     CancelToken? cancelToken,
   ) async {
     try {
-      if (await networkInfo.isConnected!) {
+      if (await networkInfo.isConnected) {
         final databasesData = await remoteDataSource.returnTheDatabases(
           query,
           startCursor,

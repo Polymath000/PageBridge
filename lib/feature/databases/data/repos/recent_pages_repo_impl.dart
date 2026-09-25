@@ -21,7 +21,7 @@ class RecentPagesRepoImpl extends RecentPagesRepo {
     CancelToken? cancelToken,
   }) async {
     try {
-      if (await networkInfo.isConnected!) {
+      if (await networkInfo.isConnected) {
         final data = await remoteDataSource.getRecentPages(
           startCursor: startCursor,
           query: query,

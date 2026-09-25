@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
@@ -41,7 +42,7 @@ setUpServiceLocator() {
   getit.registerLazySingleton<Dio>(() => Dio());
 
   getit.registerLazySingleton<NetworkInfo>(
-    () => NetworkInfoImpl(),
+    () => NetworkInfoImpl(Connectivity()),
   );
   getit.registerLazySingleton<DatabaseRemoteDataSourceImpl>(
     () => DatabaseRemoteDataSourceImpl(DioConsumer(dio: getit.get<Dio>())),
@@ -91,9 +92,7 @@ setUpServiceLocator() {
   );
 
   getit.registerLazySingleton<SignInWithNotionUseCase>(
-    () => SignInWithNotionUseCase(
-      repository: getit.get<AuthRepositoryImpl>(),
-    ),
+    () => SignInWithNotionUseCase(repository: getit.get<AuthRepositoryImpl>()),
   );
   //? getit for return pages
   getit.registerLazySingleton<ReturnPagesRepo>(
@@ -102,5 +101,4 @@ setUpServiceLocator() {
       networkInfo: getit.get<NetworkInfo>(),
     ),
   );
-
 }

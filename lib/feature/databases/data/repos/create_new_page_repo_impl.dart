@@ -21,7 +21,7 @@ class CreateNewPageRepoImpl extends CreateNewPageRepo {
     String? content,
   }) async {
     try {
-      if (await networkInfo.isConnected!) {
+      if (await networkInfo.isConnected) {
         final url = await createNewPageDataSource.createNewPage(
           databaseId: databaseId,
           properties: properties,

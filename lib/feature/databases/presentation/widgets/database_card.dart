@@ -6,7 +6,7 @@ import 'package:pagebridge/config/themes/app_text_style.dart';
 import 'package:pagebridge/config/themes/app_icons.dart';
 import 'package:pagebridge/config/themes/theme_config.dart';
 import 'package:pagebridge/core/helpers/custom_show_snack_bar.dart';
-import 'package:pagebridge/core/utls/app_images.dart';
+import 'package:pagebridge/config/themes/app_images.dart';
 import 'package:pagebridge/feature/databases/domain/entities/database_entity.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -118,4 +118,3 @@ class DatabaseCard extends StatelessWidget {
     );
   }
 }
-

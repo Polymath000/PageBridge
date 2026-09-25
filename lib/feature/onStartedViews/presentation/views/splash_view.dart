@@ -4,7 +4,7 @@ import 'package:pagebridge/config/themes/app_colors.dart';
 import 'package:pagebridge/core/constants/constants.dart';
 import 'package:pagebridge/core/database/cache/secure_storage.dart';
 import 'package:pagebridge/core/services/shared_preferences_singleton.dart';
-import 'package:pagebridge/core/utls/app_images.dart';
+import 'package:pagebridge/config/themes/app_images.dart';
 import 'package:pagebridge/core/utls/custom_loading_indecator.dart';
 
 class SplashView extends StatefulWidget {
@@ -35,7 +35,11 @@ class _SplashViewState extends State<SplashView> {
       Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home, (_) => false);
     } else if (!seenOnboarding) {
       // ignore: use_build_context_synchronously
-      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.onboarding, (_) => false);
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        AppRoutes.onboarding,
+        (_) => false,
+      );
     } else {
       // ignore: use_build_context_synchronously
       Navigator.pushNamedAndRemoveUntil(context, AppRoutes.auth, (_) => false);

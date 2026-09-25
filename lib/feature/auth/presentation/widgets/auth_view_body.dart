@@ -5,7 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:pagebridge/config/routes/on_generate_routes.dart';
 import 'package:pagebridge/config/themes/app_colors.dart';
 import 'package:pagebridge/core/helpers/custom_show_snack_bar.dart';
-import 'package:pagebridge/core/utls/app_images.dart';
+import 'package:pagebridge/config/themes/app_images.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/auth_cubit/auth_cubit.dart';
@@ -92,7 +92,11 @@ class _AuthBodyState extends State<AuthBody>
         if (state is AuthFailure) {
           customShowSnackBar(message: state.message, context: context);
         } else if (state is AuthSuccess) {
-          Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home, (_) => false);
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            AppRoutes.home,
+            (_) => false,
+          );
         }
       },
       builder: (context, state) {

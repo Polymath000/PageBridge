@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart' show immutable;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-/// Holds Notion OAuth configuration
 @immutable
 class NotionOAuthConfig {
   final String clientId;

@@ -23,7 +23,7 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<Either<Failure, AuthTokenEntity>> signInWithNotion() async {
     try {
-      if (await networkInfo.isConnected!) {
+      if (await networkInfo.isConnected) {
         final token = await remoteDataSource.signInWithNotion();
         await localDataSource.saveToken(token);
 

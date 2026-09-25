@@ -22,7 +22,7 @@ class ReturnPagesRepoImpl extends ReturnPagesRepo {
     CancelToken? cancelToken,
   ) async {
     try {
-      if (await networkInfo.isConnected!) {
+      if (await networkInfo.isConnected) {
         final pagesData = await returnPagesRemoteDataSource.returnPages(
           query,
           startCursor,
