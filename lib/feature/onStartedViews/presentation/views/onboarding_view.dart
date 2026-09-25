@@ -60,7 +60,7 @@ class _OnboardingViewState extends State<OnboardingView> {
       value: true,
     );
     if (!context.mounted) return;
-    AppRoutes.authView(context);
+    Navigator.pushNamedAndRemoveUntil(context, AppRoutes.auth, (_) => false);
   }
 
   void _handlePrimaryAction(BuildContext context) {

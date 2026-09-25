@@ -34,9 +34,10 @@ class DatabaseCard extends StatelessWidget {
         },
         child: GestureDetector(
           onTap: () async {
-            final result = await AppRoutes.newPageView(
+            final result = await Navigator.pushNamed(
               context,
-              database: database,
+              AppRoutes.newPage,
+              arguments: database,
             );
             if (result is String && context.mounted) {
               customShowSnackBar(

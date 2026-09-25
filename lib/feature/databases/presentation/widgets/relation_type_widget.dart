@@ -26,16 +26,19 @@ class _RelationTypeWidgetState extends State<RelationTypeWidget> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        await AppRoutes.relationSearchView(
-          context,
-          property: widget.property,
-          initialSelectedPages: _selectedPages,
-          onSelectionConfirmed: (selectedPages) {
-            setState(() {
-              _selectedPages = selectedPages;
-            });
-            widget.onChanged?.call(_selectedPages.map((e) => e.id).toList());
-          },
+        await Navigator.pushNamed(
+          context, 
+          AppRoutes.relationSearch, 
+          arguments: {
+            'property': widget.property,
+            'initialSelectedPages': _selectedPages,
+            'onSelectionConfirmed': (List<PageEntity> selectedPages) {
+              setState(() {
+                _selectedPages = selectedPages;
+              });
+              widget.onChanged?.call(_selectedPages.map((e) => e.id).toList());
+            },
+          }
         );
       },
       child: Container(

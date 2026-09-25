@@ -72,7 +72,7 @@ class NewPageViewBody extends StatelessWidget {
                 databaseId: database.id,
               );
               if (url != null && context.mounted) {
-                AppRoutes.pop(context, url);
+                Navigator.pop(context, url);
               }
             },
           ),

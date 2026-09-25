@@ -36,8 +36,8 @@ class PageBridgeApp extends StatelessWidget {
           builder: (context, theme) {
             return MaterialApp(
               color: AppColors.transparent,
-              onGenerateRoute: onGenerateRoute,
-              initialRoute: SplashView.routeName,
+              onGenerateRoute: AppRoutes.onGenerateRoute,
+              initialRoute: AppRoutes.splash,
               theme: theme,
               debugShowCheckedModeBanner: false,
               builder: (context, child) {

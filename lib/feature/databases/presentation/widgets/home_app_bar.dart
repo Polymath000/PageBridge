@@ -136,7 +136,7 @@ class HomeAppBar extends StatelessWidget {
                           key: AppConstants.tokenKey,
                         );
                         if (!context.mounted) return;
-                        AppRoutes.authView(context);
+                        Navigator.pushNamedAndRemoveUntil(context, AppRoutes.auth, (_) => false);
                       },
                     ),
                   ],

@@ -32,13 +32,13 @@ class _SplashViewState extends State<SplashView> {
         false;
     if (token != null) {
       // ignore: use_build_context_synchronously
-      AppRoutes.homeView(context);
+      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home, (_) => false);
     } else if (!seenOnboarding) {
       // ignore: use_build_context_synchronously
-      AppRoutes.onboardingView(context);
+      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.onboarding, (_) => false);
     } else {
       // ignore: use_build_context_synchronously
-      AppRoutes.authView(context);
+      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.auth, (_) => false);
     }
   }
 

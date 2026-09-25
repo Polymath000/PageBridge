@@ -12,111 +12,54 @@ import 'package:pagebridge/feature/databases/presentation/views/new_page_view.da
 import 'package:pagebridge/feature/databases/presentation/views/relation_search_view.dart';
 import 'package:pagebridge/feature/onStartedViews/presentation/views/onboarding_view.dart';
 import 'package:pagebridge/feature/onStartedViews/presentation/views/splash_view.dart';
+import 'package:pagebridge/core/helpers/page_not_found_view.dart';
 
 sealed class AppRoutes {
-  const AppRoutes();
-  static void pop<T extends Object?>(
-    final BuildContext context, [
-    final T? result,
-  ]) => Navigator.pop<T>(context);
+  static const String splash = '/';
+  static const String onboarding = '/onboarding';
+  static const String auth = '/auth';
+  static const String home = '/home';
+  static const String newPage = '/newPage';
+  static const String relationSearch = '/relationSearch';
 
-  static Future<T?> _pushNamed<T extends Object?>(
-    final BuildContext context,
-    final String routeName, {
-    final Object? arguments,
-  }) => Navigator.pushNamed<T>(context, routeName, arguments: arguments);
+  static Route<dynamic> onGenerateRoute(RouteSettings settings) {
+    switch (settings.name) {
+      case splash:
+        return _fadeRoute(const SplashView());
+      case onboarding:
+        return _fadeRoute(const OnboardingView());
+      case auth:
+        return _fadeRoute(const AuthView());
+      case home:
+        return _fadeRoute(HomeView());
+      case newPage:
+        final data = settings.arguments! as DatabaseEntity;
+        return _fadeRoute(NewPageView(database: data));
+      case relationSearch:
+        final data = settings.arguments! as Map<String, dynamic>;
+        return _fadeRoute(
+          BlocProvider(
+            create: (context) =>
+                ReturnPagesCubit(repo: getit.get<ReturnPagesRepo>()),
+            child: RelationSearchView(
+              property: data['property'] as PropertyEntity,
+              initialSelectedPages: data['initialSelectedPages'] as List<PageEntity>,
+              onSelectionConfirmed:
+                  data['onSelectionConfirmed'] as ValueChanged<List<PageEntity>>?,
+            ),
+          ),
+        );
+      default:
+        return _fadeRoute(const PageNotFoundView());
+    }
+  }
 
-  static Future<T?> _pushNamedAndRemoveAll<T extends Object?>(
-    final BuildContext context,
-    final String newRouteName, {
-    final Object? arguments,
-  }) => Navigator.pushNamedAndRemoveUntil<T>(
-    context,
-    newRouteName,
-    (_) => false,
-    arguments: arguments,
-  );
-
-  // Routes with arguments
-
-  static Future<Object?> newPageView(
-    final BuildContext context, {
-    required final DatabaseEntity database,
-  }) => _pushNamed(context, NewPageView.routeName, arguments: database);
-  static Future<Object?> homeView(final BuildContext context) =>
-      _pushNamedAndRemoveAll(context, HomeView.routeName);
-  static Future<Object?> splashView(final BuildContext context) =>
-      _pushNamedAndRemoveAll(context, SplashView.routeName);
-  static Future<Object?> onboardingView(final BuildContext context) =>
-      _pushNamedAndRemoveAll(context, OnboardingView.routeName);
-  static Future<Object?> authView(final BuildContext context) =>
-      _pushNamedAndRemoveAll(context, AuthView.routeName);
-  static Future<Object?> relationSearchView(
-    final BuildContext context, {
-    required final PropertyEntity property,
-    required final List<PageEntity> initialSelectedPages,
-    final ValueChanged<List<PageEntity>>? onSelectionConfirmed,
-  }) => _pushNamed(
-    context,
-    RelationSearchView.routeName,
-    arguments: {
-      'property': property,
-      'initialSelectedPages': initialSelectedPages,
-      'onSelectionConfirmed': onSelectionConfirmed,
-    },
-  );
-}
-
-Map<String, Widget Function(BuildContext, Object?)> _routes = {
-  AuthView.routeName: (_, _) => const AuthView(),
-
-  HomeView.routeName: (_, _) => HomeView(),
-
-  SplashView.routeName: (_, _) => const SplashView(),
-  OnboardingView.routeName: (_, _) => const OnboardingView(),
-  NewPageView.routeName: (_, final args) {
-    final data = args! as DatabaseEntity;
-    return NewPageView(database: data);
-  },
-  RelationSearchView.routeName: (_, final args) {
-    final data = args! as Map<String, dynamic>;
-    return BlocProvider(
-      create: (context) =>
-          ReturnPagesCubit(repo: getit.get<ReturnPagesRepo>()),
-      child: RelationSearchView(
-        property: data['property'] as PropertyEntity,
-        initialSelectedPages: data['initialSelectedPages'] as List<PageEntity>,
-        onSelectionConfirmed:
-            data['onSelectionConfirmed'] as ValueChanged<List<PageEntity>>?,
-      ),
+  static PageRouteBuilder _fadeRoute(Widget page) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(opacity: animation, child: child);
+      },
     );
-  },
-};
-
-Route<dynamic>? Function(RouteSettings)? onGenerateRoute = (final settings) {
-  final builder =
-      _routes[settings.name] ??
-      (_, _) => const Scaffold(body: Center(child: Text('Page not found')));
-  return PageRouteBuilder(
-    settings: settings,
-    pageBuilder: (context, animation, secondaryAnimation) => 
-        builder(context, settings.arguments),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      const begin = Offset(0.0, 0.05);
-      const end = Offset.zero;
-      const curve = Curves.easeOutCubic;
-
-      final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-      final offsetAnimation = animation.drive(tween);
-
-      return FadeTransition(
-        opacity: animation,
-        child: SlideTransition(
-          position: offsetAnimation,
-          child: child,
-        ),
-      );
-    },
-    transitionDuration: const Duration(milliseconds: 300),
-  );
-};
+  }
+}

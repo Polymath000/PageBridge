@@ -92,7 +92,7 @@ class _AuthBodyState extends State<AuthBody>
         if (state is AuthFailure) {
           customShowSnackBar(message: state.message, context: context);
         } else if (state is AuthSuccess) {
-          AppRoutes.homeView(context);
+          Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home, (_) => false);
         }
       },
       builder: (context, state) {
