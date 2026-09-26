@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pagebridge/config/themes/app_colors.dart';
+import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:pagebridge/config/themes/app_text_style.dart';
 import 'package:pagebridge/core/helpers/custom_back_arrow.dart';
 import 'package:pagebridge/core/utls/get_icon_depends_on_property_type.dart';

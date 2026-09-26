@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pagebridge/config/themes/app_colors.dart';
 
 class PageIndicator extends StatelessWidget {
   final ValueNotifier<int> pageIndex;
@@ -14,7 +13,7 @@ class PageIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final activeColor = isDark ? AppColors.white : AppColors.spaceBlack;
+    final activeColor = Theme.of(context).colorScheme.onSurface;
     final inactiveColor = activeColor.withValues(alpha: isDark ? 0.45 : 0.3);
     return ValueListenableBuilder<int>(
       valueListenable: pageIndex,

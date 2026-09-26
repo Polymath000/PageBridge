@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pagebridge/config/themes/app_colors.dart';
 import 'package:pagebridge/feature/onStartedViews/presentation/widgets/preview_database_card.dart';
 import 'package:pagebridge/feature/onStartedViews/presentation/widgets/preview_field.dart';
 
@@ -9,7 +8,7 @@ class WorkflowVisual extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final foreground = isDark ? AppColors.white : AppColors.spaceBlack;
+    final foreground = Theme.of(context).colorScheme.onSurface;
     final fillColor = foreground.withValues(alpha: isDark ? 0.12 : 0.08);
     final borderColor = foreground.withValues(alpha: isDark ? 0.18 : 0.14);
     final textTheme = Theme.of(context).textTheme;

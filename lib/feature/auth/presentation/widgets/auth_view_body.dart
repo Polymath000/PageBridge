@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:pagebridge/config/routes/on_generate_routes.dart';
-import 'package:pagebridge/config/themes/app_colors.dart';
+import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:pagebridge/core/helpers/custom_show_snack_bar.dart';
 import 'package:pagebridge/config/themes/app_images.dart';
 import 'package:url_launcher/url_launcher.dart';

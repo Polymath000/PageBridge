@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:pagebridge/config/routes/on_generate_routes.dart';
-import 'package:pagebridge/config/themes/app_colors.dart';
+import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:pagebridge/config/themes/app_text_style.dart';
 import 'package:pagebridge/config/themes/app_icons.dart';
-import 'package:pagebridge/config/themes/theme_config.dart';
+
 import 'package:pagebridge/core/helpers/custom_show_snack_bar.dart';
 import 'package:pagebridge/config/themes/app_images.dart';
 import 'package:pagebridge/feature/databases/domain/entities/database_entity.dart';
@@ -15,7 +15,7 @@ class DatabaseCard extends StatelessWidget {
   final DatabaseEntity database;
   @override
   Widget build(BuildContext context) {
-    final modernSlate = Theme.of(context).extension<ModernSlateColors>()!;
+    final colorScheme = Theme.of(context).colorScheme;
     final hasCover = database.cover?.url != null;
     return SizedBox(
       width: double.infinity,
@@ -59,7 +59,7 @@ class DatabaseCard extends StatelessWidget {
           },
           child: Card(
             margin: const EdgeInsets.only(bottom: 16.0, right: 0),
-            color: modernSlate.card,
+            color: colorScheme.surface,
             clipBehavior: Clip.antiAlias,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -98,14 +98,14 @@ class DatabaseCard extends StatelessWidget {
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.titleLarge!.copyWith(
-                            color: modernSlate.primaryText,
+                            color: colorScheme.onSurface,
                             fontSize: 20.sp,
                           ),
                         ),
                       ),
                       Icon(
                         AppIcons.arrowForward,
-                        color: modernSlate.secondaryText,
+                        color: colorScheme.onSurfaceVariant,
                       ),
                     ],
                   ),

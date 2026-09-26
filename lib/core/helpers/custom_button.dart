@@ -21,7 +21,7 @@ class _CustomButtonState extends State<CustomButton> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     const Color lBase = Color(0xFFE8E8E8);
     const Color lShadowDark = Color(0xFFC5C5C5);

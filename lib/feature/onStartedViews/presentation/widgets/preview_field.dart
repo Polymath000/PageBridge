@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pagebridge/config/themes/app_colors.dart';
+import 'package:pagebridge/core/theme/app_colors.dart';
 
 class PreviewField extends StatelessWidget {
   final String label;
@@ -15,7 +15,7 @@ class PreviewField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final foreground = isDark ? AppColors.white : AppColors.spaceBlack;
+    final foreground = Theme.of(context).colorScheme.onSurface;
     final fillColor = foreground.withValues(alpha: isDark ? 0.08 : 0.06);
     final borderColor = foreground.withValues(alpha: isDark ? 0.14 : 0.12);
     final labelColor =

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pagebridge/config/themes/app_colors.dart';
 import 'package:pagebridge/feature/databases/domain/entities/page_entity.dart';
 import 'package:pagebridge/feature/databases/presentation/widgets/database_card_for_relation_search.dart';
 
@@ -22,7 +21,7 @@ class ListOfDatabasesFoRelationSearch extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 8.h),
       decoration: BoxDecoration(
         color: isSelected
-            ? AppColors.primary.withValues(alpha: 0.1)
+            ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.1)
             : Colors.transparent,
         borderRadius: BorderRadius.circular(12.r),
       ),

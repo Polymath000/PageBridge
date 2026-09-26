@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pagebridge/config/themes/app_colors.dart';
 
 class OnboardingHeader extends StatelessWidget {
   final ValueNotifier<int> pageIndex;
@@ -9,8 +8,7 @@ class OnboardingHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final foreground = isDark ? AppColors.white : AppColors.spaceBlack;
+    final foreground = Theme.of(context).colorScheme.onSurface;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
       child: Row(

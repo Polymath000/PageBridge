@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pagebridge/config/themes/app_colors.dart';
+import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:pagebridge/config/themes/app_text_style.dart';
 
 class PropertyTypeText extends StatefulWidget {
@@ -25,9 +25,7 @@ class _PropertyTypeTextState extends State<PropertyTypeText> {
         border: InputBorder.none,
         hintText: "Empty",
         hintStyle: AppTextStyles.titleMedium!.copyWith(
-          color: Theme.of(context).brightness == Brightness.light
-              ? AppColors.grey
-              : AppColors.white,
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
           fontSize: 16.sp,
         ),
       ),

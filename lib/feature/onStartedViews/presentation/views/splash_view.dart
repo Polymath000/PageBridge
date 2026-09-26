@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pagebridge/config/routes/on_generate_routes.dart';
-import 'package:pagebridge/config/themes/app_colors.dart';
+import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:pagebridge/core/constants/constants.dart';
 import 'package:pagebridge/core/database/cache/secure_storage.dart';
 import 'package:pagebridge/core/services/shared_preferences_singleton.dart';

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pagebridge/config/themes/theme_config.dart';
+
 
 class CustomSearchTextField extends StatefulWidget {
   const CustomSearchTextField({
@@ -41,11 +41,11 @@ class _CustomSearchTextFieldState extends State<CustomSearchTextField> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final modernSlate = theme.extension<ModernSlateColors>()!;
+    final colorScheme = theme.colorScheme;
 
-    final Color fillColor = modernSlate.searchBarFill;
-    final Color iconColor = modernSlate.secondaryText;
-    final Color textColor = modernSlate.primaryText;
+    final Color fillColor = colorScheme.surfaceContainerHighest;
+    final Color iconColor = colorScheme.onSurfaceVariant;
+    final Color textColor = colorScheme.onSurface;
 
     return ValueListenableBuilder<TextEditingValue>(
       valueListenable: searchController,
@@ -73,7 +73,7 @@ class _CustomSearchTextFieldState extends State<CustomSearchTextField> {
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.r),
               borderSide: BorderSide(
-                color: modernSlate.border,
+                color: colorScheme.outline,
                 width: 0.9,
               ),
             ),

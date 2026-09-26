@@ -28,7 +28,7 @@ class _RelationTypeWidgetBodyState extends State<RelationTypeWidgetBody> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final Color fieldBg = isDark ? const Color(0xFF2A2A2A) : Colors.white;
     final Color borderColor = isDark
         ? const Color(0xFF3A3A3A)

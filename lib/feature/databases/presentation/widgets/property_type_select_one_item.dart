@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pagebridge/config/themes/app_colors.dart';
+import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:pagebridge/config/themes/app_text_style.dart';
 import 'package:pagebridge/core/utls/get_color.dart';
 import 'package:pagebridge/feature/databases/presentation/widgets/property_type.dart';
@@ -30,9 +30,7 @@ class PropertyTypeSelectOneItem extends StatelessWidget {
             border: InputBorder.none,
             hintText: "Empty",
             hintStyle: AppTextStyles.titleMedium!.copyWith(
-              color: Theme.of(context).brightness == Brightness.light
-                  ? AppColors.grey
-                  : AppColors.white,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
               fontSize: 16.sp,
             ),
           ),
@@ -50,9 +48,7 @@ class PropertyTypeSelectOneItem extends StatelessWidget {
                     child: Text(
                       "Empty",
                       style: AppTextStyles.titleMedium!.copyWith(
-                        color: Theme.of(context).brightness == Brightness.light
-                            ? AppColors.grey
-                            : AppColors.white,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
                         fontSize: 16.sp,
                       ),
                     ),

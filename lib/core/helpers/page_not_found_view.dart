@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pagebridge/config/themes/app_colors.dart';
 import 'package:pagebridge/config/themes/app_icons.dart';
 import 'package:pagebridge/config/themes/app_text_style.dart';
 import 'package:pagebridge/config/routes/on_generate_routes.dart';
@@ -10,11 +9,11 @@ class PageNotFoundView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Ensure styles are initialized if not already
-    AppColors.init(context);
+    
     AppTextStyles.init(context);
 
     return Scaffold(
-      backgroundColor: AppColors.surface,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -29,19 +28,19 @@ class PageNotFoundView extends StatelessWidget {
                     shape: BoxShape.circle,
                     gradient: LinearGradient(
                       colors: [
-                        AppColors.primary.withValues(alpha: 0.35),
-                        AppColors.secondary.withValues(alpha: 0.15),
+                        Theme.of(context).colorScheme.primary.withValues(alpha: 0.35),
+                        Theme.of(context).colorScheme.secondary.withValues(alpha: 0.15),
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
                     border: Border.all(
-                      color: AppColors.primary.withValues(alpha: 0.5),
+                      color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.5),
                       width: 2,
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.primary.withValues(alpha: 0.3),
+                        color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
                         blurRadius: 28,
                         spreadRadius: 4,
                       ),
@@ -50,7 +49,7 @@ class PageNotFoundView extends StatelessWidget {
                   child: Icon(
                     AppIcons.errorIcon,
                     size: 44,
-                    color: AppColors.primary,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
                 const SizedBox(height: 24),
@@ -60,17 +59,17 @@ class PageNotFoundView extends StatelessWidget {
                     vertical: 6,
                   ),
                   decoration: BoxDecoration(
-                    color: AppColors.primary.withValues(alpha: 0.2),
+                    color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
-                      color: AppColors.primary.withValues(alpha: 0.4),
+                      color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.4),
                       width: 1,
                     ),
                   ),
                   child: Text(
                     '404 NOT FOUND',
                     style: AppTextStyles.labelMedium?.copyWith(
-                      color: AppColors.primary,
+                      color: Theme.of(context).colorScheme.primary,
                       letterSpacing: 1.2,
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
@@ -94,8 +93,8 @@ class PageNotFoundView extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      foregroundColor: AppColors.onPrimary,
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      foregroundColor: Theme.of(context).colorScheme.onPrimary,
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),

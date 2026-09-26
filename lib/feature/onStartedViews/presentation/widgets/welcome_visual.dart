@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pagebridge/config/themes/app_colors.dart';
+import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:pagebridge/config/themes/app_images.dart';
 
 class WelcomeVisual extends StatelessWidget {

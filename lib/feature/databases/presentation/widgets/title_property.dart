@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pagebridge/config/themes/app_colors.dart';
+import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:pagebridge/config/themes/app_text_style.dart';
 
 class TitleProperty extends StatelessWidget {
@@ -10,8 +10,7 @@ class TitleProperty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLight = Theme.of(context).brightness == Brightness.light;
-    final textColor = isLight ? AppColors.spaceBlack : AppColors.white;
+    final textColor = Theme.of(context).colorScheme.onSurface;
 
     return TextField(
       onChanged: onChanged,

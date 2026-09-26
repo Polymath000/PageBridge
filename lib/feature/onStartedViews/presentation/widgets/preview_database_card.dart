@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pagebridge/config/themes/app_colors.dart';
+import 'package:pagebridge/core/theme/app_colors.dart';
 
 class PreviewDatabaseCard extends StatelessWidget {
   final String title;
@@ -10,8 +10,8 @@ class PreviewDatabaseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final backgroundColor = isDark ? AppColors.spaceBlack : AppColors.white;
-    final foregroundColor = isDark ? AppColors.white : AppColors.spaceBlack;
+    final backgroundColor = Theme.of(context).colorScheme.surface;
+    final foregroundColor = Theme.of(context).colorScheme.onSurface;
     final borderColor = isDark
         ? AppColors.transparent
         : AppColors.spaceBlack.withValues(alpha: 0.08);

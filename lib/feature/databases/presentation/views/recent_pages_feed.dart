@@ -71,7 +71,7 @@ class _RecentPagesFeedState extends State<RecentPagesFeed> {
                                   elevation: 0,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12),
-                                    side: BorderSide(color: Colors.grey.withOpacity(0.2)),
+                                    side: BorderSide(color: Colors.grey.withValues(alpha: 0.2)),
                                   ),
                                   child: ListTile(
                                     leading: const Icon(Icons.description),
@@ -117,7 +117,7 @@ class _RecentPagesFeedState extends State<RecentPagesFeed> {
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
-                                  side: BorderSide(color: Colors.grey.withOpacity(0.2)),
+                                  side: BorderSide(color: Colors.grey.withValues(alpha: 0.2)),
                                 ),
                                 child: ListTile(
                                   leading: page.iconEmoji != null

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pagebridge/config/themes/app_colors.dart';
 
 class PrivacyVisual extends StatelessWidget {
   const PrivacyVisual({super.key});
@@ -7,7 +6,7 @@ class PrivacyVisual extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final foreground = isDark ? AppColors.white : AppColors.spaceBlack;
+    final foreground = Theme.of(context).colorScheme.onSurface;
     final fillColor = foreground.withValues(alpha: isDark ? 0.12 : 0.08);
     final borderColor = foreground.withValues(alpha: isDark ? 0.35 : 0.2);
     return Container(

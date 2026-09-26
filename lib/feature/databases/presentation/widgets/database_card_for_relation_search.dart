@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pagebridge/config/themes/app_colors.dart';
 import 'package:pagebridge/config/themes/app_text_style.dart';
 import 'package:pagebridge/feature/databases/domain/entities/page_entity.dart';
 
@@ -23,11 +22,11 @@ class DatabaseCardForRelationSearch extends StatelessWidget {
         page.title,
         style: AppTextStyles.titleMedium!.copyWith(
           fontSize: 15.sp,
-          color: isSelected ? AppColors.primary : null,
+          color: isSelected ? Theme.of(context).colorScheme.primary : null,
         ),
       ),
       value: isSelected,
-      activeColor: AppColors.primary,
+      activeColor: Theme.of(context).colorScheme.primary,
       checkColor: Colors.white,
       controlAffinity: ListTileControlAffinity.trailing,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),

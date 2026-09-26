@@ -1,7 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pagebridge/config/themes/app_colors.dart';
+import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:pagebridge/config/themes/app_text_style.dart';
 import 'package:pagebridge/core/helpers/custom_show_snack_bar.dart';
 
@@ -62,9 +62,7 @@ class _PropertyTypeFileState extends State<PropertyTypeFile> {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: ColoredBox(
-                      color: Theme.of(context).brightness == Brightness.light
-                          ? AppColors.grey
-                          : AppColors.white,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                       child: Text(
                         " ${selectedFile![index].name} ",
                         style: AppTextStyles.titleMedium!.copyWith(
@@ -78,9 +76,7 @@ class _PropertyTypeFileState extends State<PropertyTypeFile> {
             : Text(
                 'Empty',
                 style: AppTextStyles.titleMedium!.copyWith(
-                  color: Theme.of(context).brightness == Brightness.light
-                      ? AppColors.grey
-                      : AppColors.white,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
                   fontSize: 16.sp,
                 ),
               ),

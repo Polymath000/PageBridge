@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagebridge/config/routes/on_generate_routes.dart';
-import 'package:pagebridge/config/themes/app_colors.dart';
+import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:pagebridge/config/themes/app_text_style.dart';
 import 'package:pagebridge/feature/databases/domain/entities/page_entity.dart';
 import 'package:pagebridge/feature/databases/domain/entities/property_entity.dart';
@@ -76,7 +76,7 @@ class _RelationTypeWidgetState extends State<RelationTypeWidget> {
                           page.title,
                           style: const TextStyle(color: Colors.white),
                         ),
-                        backgroundColor: AppColors.primary,
+                        backgroundColor: Theme.of(context).colorScheme.primary,
                         onDeleted: () {
                           setState(() {
                             _selectedPages.removeWhere((p) => p.id == page.id);

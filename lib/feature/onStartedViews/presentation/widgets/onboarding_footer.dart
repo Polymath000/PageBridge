@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pagebridge/config/themes/app_colors.dart';
 import 'package:pagebridge/feature/onStartedViews/presentation/widgets/page_indicator.dart';
 
 class OnboardingFooter extends StatelessWidget {
@@ -18,9 +17,8 @@ class OnboardingFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final buttonBackground = isDark ? AppColors.white : AppColors.spaceBlack;
-    final buttonForeground = isDark ? AppColors.spaceBlack : AppColors.white;
+    final buttonBackground = Theme.of(context).colorScheme.onSurface;
+    final buttonForeground = Theme.of(context).colorScheme.surface;
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
       child: Column(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pagebridge/config/themes/app_colors.dart';
+import 'package:pagebridge/core/theme/app_colors.dart';
 
 class OnboardingPage extends StatelessWidget {
   final String title;
@@ -15,7 +15,7 @@ class OnboardingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final titleColor = isDark ? AppColors.white : AppColors.spaceBlack;
+    final titleColor = Theme.of(context).colorScheme.onSurface;
     final bodyColor =
         isDark ? AppColors.white.withValues(alpha: 0.75) : AppColors.darkGrey;
     final textTheme = Theme.of(context).textTheme;

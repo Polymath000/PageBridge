@@ -1,11 +1,9 @@
-import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagebridge/config/routes/on_generate_routes.dart';
 import 'package:pagebridge/config/themes/app_icons.dart';
 import 'package:pagebridge/config/themes/app_text_style.dart';
-import 'package:pagebridge/config/themes/theme_config.dart';
 import 'package:pagebridge/core/constants/constants.dart';
 import 'package:pagebridge/core/database/cache/secure_storage.dart';
 import 'package:pagebridge/core/helpers/custom_confirm_dialog.dart';
@@ -24,10 +22,11 @@ class HomeAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final modernSlate = Theme.of(context).extension<ModernSlateColors>()!;
+    final theme = Theme.of(context);
     final ownerAvatarUrl = SharedPreferencesSingleton.getString(
       'ownerAvatarUrl',
     );
+    final isLight = theme.brightness == Brightness.light;
 
     return SliverAppBar(
       toolbarHeight: 70,
@@ -37,9 +36,9 @@ class HomeAppBar extends StatelessWidget {
         borderRadius: BorderRadius.vertical(bottom: Radius.circular(24)),
       ),
       clipBehavior: Clip.antiAlias,
-      backgroundColor: modernSlate.card,
-      shadowColor: modernSlate.border,
-      surfaceTintColor: modernSlate.card,
+      backgroundColor: theme.colorScheme.surface,
+      shadowColor: theme.colorScheme.outline,
+      surfaceTintColor: theme.colorScheme.surface,
       expandedHeight: showActions ? 110 : 80,
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
@@ -58,7 +57,7 @@ class HomeAppBar extends StatelessWidget {
               child: Text(
                 title,
                 style: AppTextStyles.titleLarge?.copyWith(
-                  color: modernSlate.primaryText,
+                  color: theme.colorScheme.onSurface,
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -76,13 +75,9 @@ class HomeAppBar extends StatelessWidget {
                 ),
                 gradient: LinearGradient(
                   colors: [
-                    Theme.of(context).brightness == Brightness.light
-                        ? const Color.fromARGB(255, 226, 236, 246)
-                        : modernSlate.searchBarFill,
-                    modernSlate.card,
-                    Theme.of(context).brightness == Brightness.light
-                        ? const Color.fromARGB(255, 226, 236, 246)
-                        : modernSlate.searchBarFill,
+                    isLight ? const Color.fromARGB(255, 226, 236, 246) : theme.colorScheme.secondary,
+                    theme.colorScheme.surface,
+                    isLight ? const Color.fromARGB(255, 226, 236, 246) : theme.colorScheme.secondary,
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -96,30 +91,11 @@ class HomeAppBar extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    ThemeSwitcher.withTheme(
-                      clipper: const ThemeSwitcherCircleClipper(),
-                      builder: (context, switcher, theme) {
-                        final isLight = theme.brightness == Brightness.light;
-                        return Row(
-                          children: [
-                            DayNightSwitch(
-                              value: !isLight,
-                              scale: 0.7,
-                              onChanged: (bool value) {
-                                final nextTheme = value
-                                    ? const ThemeConfig().dark
-                                    : const ThemeConfig().light;
-                                switcher.changeTheme(
-                                  theme: nextTheme ?? theme,
-                                  isReversed: value,
-                                );
-                                context.read<ThemeModeCubit>().changeThemeMode(
-                                  context,
-                                );
-                              },
-                            ),
-                          ],
-                        );
+                    DayNightSwitch(
+                      value: !isLight,
+                      scale: 0.7,
+                      onChanged: (bool value) {
+                        context.read<ThemeModeCubit>().changeThemeMode(context);
                       },
                     ),
                     IconButton(

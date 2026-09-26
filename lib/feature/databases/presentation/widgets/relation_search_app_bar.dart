@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pagebridge/config/themes/app_colors.dart';
+import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:pagebridge/config/themes/app_text_style.dart';
-import 'package:pagebridge/config/themes/theme_config.dart';
+
 import 'package:pagebridge/core/helpers/custom_back_arrow.dart';
 import 'package:pagebridge/feature/databases/domain/entities/page_entity.dart';
 
@@ -12,7 +12,7 @@ PreferredSizeWidget relationSearchAppBar({
   required List<PageEntity> selectedPages,
   ValueChanged<List<PageEntity>>? onSelectionConfirmed,
 }) {
-  final modernSlate = Theme.of(context).extension<ModernSlateColors>()!;
+  final colorScheme = Theme.of(context).colorScheme;
   final isLight = Theme.of(context).brightness == Brightness.light;
   final topPadding = MediaQuery.of(context).padding.top;
   const toolbarHeight = 70.0;
@@ -23,9 +23,9 @@ PreferredSizeWidget relationSearchAppBar({
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            isLight ? const Color(0xFFE2E8F0) : modernSlate.searchBarFill,
-            modernSlate.card,
-            isLight ? const Color(0xFFF1F5F9) : modernSlate.searchBarFill,
+            isLight ? const Color(0xFFE2E8F0) : colorScheme.surfaceContainerHighest,
+            colorScheme.surface,
+            isLight ? const Color(0xFFF1F5F9) : colorScheme.surfaceContainerHighest,
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -38,7 +38,7 @@ PreferredSizeWidget relationSearchAppBar({
           child: SizedBox(
             height: toolbarHeight,
             child: IconTheme(
-              data: IconThemeData(color: modernSlate.primaryText),
+              data: IconThemeData(color: colorScheme.onSurface),
               child: Row(
                 children: [
                   const CustomBackArrow(),
@@ -49,7 +49,7 @@ PreferredSizeWidget relationSearchAppBar({
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyles.titleMedium?.copyWith(
                         fontSize: 18.sp,
-                        color: modernSlate.primaryText,
+                        color: colorScheme.onSurface,
                       ),
                     ),
                   ),
@@ -61,7 +61,7 @@ PreferredSizeWidget relationSearchAppBar({
                     child: Text(
                       "Done",
                       style: AppTextStyles.titleMedium?.copyWith(
-                        color: modernSlate.primaryText,
+                        color: colorScheme.onSurface,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
