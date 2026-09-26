@@ -24,10 +24,12 @@ class RecentPagesCubit extends Cubit<RecentPagesState> {
 
     result.fold(
       (failure) {
+        if (isClosed) return;
         if (failure.message.toLowerCase().contains('cancel')) return;
         emit(RecentPagesFailure(message: failure.message));
       },
       (data) {
+        if (isClosed) return;
         emit(
           RecentPagesSuccess(
             pages: data['pages'],
@@ -56,10 +58,12 @@ class RecentPagesCubit extends Cubit<RecentPagesState> {
 
     result.fold(
       (failure) {
+        if (isClosed) return;
         if (failure.message.toLowerCase().contains('cancel')) return;
         emit(RecentPagesFailure(message: failure.message));
       },
       (data) {
+        if (isClosed) return;
         final List<PageEntity> pages = List.from(currentState.pages)
           ..addAll(data["pages"]);
         emit(

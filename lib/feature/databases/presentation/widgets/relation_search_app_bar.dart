@@ -13,7 +13,6 @@ PreferredSizeWidget relationSearchAppBar({
   ValueChanged<List<PageEntity>>? onSelectionConfirmed,
 }) {
   final colorScheme = Theme.of(context).colorScheme;
-  final isLight = Theme.of(context).brightness == Brightness.light;
   final topPadding = MediaQuery.of(context).padding.top;
   const toolbarHeight = 70.0;
 
@@ -23,9 +22,9 @@ PreferredSizeWidget relationSearchAppBar({
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            isLight ? const Color(0xFFE2E8F0) : colorScheme.surfaceContainerHighest,
+            colorScheme.secondaryContainer,
             colorScheme.surface,
-            isLight ? const Color(0xFFF1F5F9) : colorScheme.surfaceContainerHighest,
+            colorScheme.secondaryContainer,
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,

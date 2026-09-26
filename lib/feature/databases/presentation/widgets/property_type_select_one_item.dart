@@ -22,9 +22,7 @@ class PropertyTypeSelectOneItem extends StatelessWidget {
             color: AppColors.grey,
             fontSize: 16.sp,
           ),
-          dropdownColor: Theme.of(context).brightness == Brightness.light
-              ? AppColors.darkGrey
-              : AppColors.grey,
+          dropdownColor: Theme.of(context).colorScheme.surface,
           iconSize: 0,
           decoration: InputDecoration(
             border: InputBorder.none,

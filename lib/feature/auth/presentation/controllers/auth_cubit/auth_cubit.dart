@@ -15,8 +15,12 @@ class AuthCubit extends Cubit<AuthState> {
     emit(const AuthLoading());
     final result = await signInWithNotion();
     result.fold(
-      (failure) => emit(AuthFailure(message: failure.message)),
-      (token) => emit(AuthSuccess(token: token)),
+      (failure) {
+        if (!isClosed) emit(AuthFailure(message: failure.message));
+      },
+      (token) {
+        if (!isClosed) emit(AuthSuccess(token: token));
+      },
     );
   }
 }

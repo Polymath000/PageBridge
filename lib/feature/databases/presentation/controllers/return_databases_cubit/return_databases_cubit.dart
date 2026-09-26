@@ -25,20 +25,24 @@ class DatabasesCubit extends Cubit<DatabasesState> {
 
     result.fold(
       (failure) {
+        if (isClosed) return;
         if (failure.message.toLowerCase().contains('cancel')) {
           return;
         }
 
         emit(DatabasesFailure(message: failure.message));
       },
-      (data) => emit(
-        DatabasesSuccess(
-          databases: data['databases'],
-          hasMore: data['has_more'],
-          nextCursor: data['next_cursor'],
-          query: query,
-        ),
-      ),
+      (data) {
+        if (isClosed) return;
+        emit(
+          DatabasesSuccess(
+            databases: data['databases'],
+            hasMore: data['has_more'],
+            nextCursor: data['next_cursor'],
+            query: query,
+          ),
+        );
+      },
     );
   }
 
@@ -61,10 +65,12 @@ class DatabasesCubit extends Cubit<DatabasesState> {
 
     result.fold(
       (failure) {
+        if (isClosed) return;
         if (failure.message.toLowerCase().contains('cancel')) return;
         emit(DatabasesFailure(message: failure.message));
       },
       (data) {
+        if (isClosed) return;
         final List<DatabaseEntity> updatedList = List.from(
           currentState.databases,
         )..addAll(data['databases']);

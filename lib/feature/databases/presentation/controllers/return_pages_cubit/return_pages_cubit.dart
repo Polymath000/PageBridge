@@ -28,12 +28,14 @@ class ReturnPagesCubit extends Cubit<ReturnPagesState> {
 
     return result.fold(
       (failure) {
+        if (isClosed) return;
         if (failure.message.toLowerCase().contains('cancel')) {
           return;
         }
         emit(ReturnPagesFailure(message: failure.message));
       },
       (data) {
+        if (isClosed) return;
         emit(
           ReturnPagesSuccess(
             pages: data['pages'],
@@ -64,10 +66,12 @@ class ReturnPagesCubit extends Cubit<ReturnPagesState> {
 
     result.fold(
       (failure) {
+        if (isClosed) return;
         if (failure.message.toLowerCase().contains('cancel')) return;
         emit(ReturnPagesFailure(message: failure.message));
       },
       (data) {
+        if (isClosed) return;
         final List<PageEntity> pages = List.from(currentState.pages)
           ..addAll(data["pages"]);
         emit(

@@ -48,10 +48,12 @@ class NewPageCubit extends Cubit<NewPageState> {
     );
     return result.fold(
       (failure) {
+        if (isClosed) return null;
         emit(NewPageFailure(message: failure.message));
         return null;
       },
       (url) {
+        if (isClosed) return null;
         emit(NewPageSuccess());
         return url;
       },
