@@ -39,4 +39,10 @@ class AppColors {
   static const Color textGray = Color(0xFF9CA3AF);
   static const Color lightSurfaceLegacy = Color(0xFFF5F5F5);
   static const Color spaceBlack = Color(0xff23262b);
+
+  static const Color blueAccent = Colors.blueAccent;
+  static const Color black87 = Colors.black87;
+  static const Color notionDark = Color(0xFF121212);
+  static const Color notionLight = Color(0xFFF0F0F0);
+  static const Color lightBorder = Color(0xFFE0E0E0);
 }

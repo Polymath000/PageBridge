@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:pagebridge/config/routes/on_generate_routes.dart';
-import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:pagebridge/core/constants/constants.dart';
 import 'package:pagebridge/core/database/cache/secure_storage.dart';
 import 'package:pagebridge/core/services/shared_preferences_singleton.dart';
-import 'package:pagebridge/config/themes/app_images.dart';
-import 'package:pagebridge/core/utls/custom_loading_indecator.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:pagebridge/core/theme/app_colors.dart';
+import 'package:pagebridge/feature/onStartedViews/presentation/widgets/animated_document_card.dart';
+import 'package:pagebridge/feature/onStartedViews/presentation/widgets/app_title_and_loader.dart';
+import 'package:pagebridge/feature/onStartedViews/presentation/widgets/glowing_link_indicator.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -15,25 +17,68 @@ class SplashView extends StatefulWidget {
   State<SplashView> createState() => _SplashViewState();
 }
 
-class _SplashViewState extends State<SplashView> {
+class _SplashViewState extends State<SplashView>
+    with SingleTickerProviderStateMixin {
   String? token;
+  late AnimationController _animationController;
+  late Animation<double> _slideAnimation;
+  late Animation<double> _scaleAnimation;
+  late Animation<double> _opacityAnimation;
+
   @override
   void initState() {
-    _checkAuthentication();
     super.initState();
+    _initializeAnimations();
+    _checkAuthenticationStatus();
   }
 
-  void _checkAuthentication() async {
-    await Future.delayed(const Duration(seconds: 1));
+  void _initializeAnimations() {
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
+    );
+
+    _slideAnimation = CurvedAnimation(
+      parent: _animationController,
+      curve: const Interval(0.0, 0.6, curve: Curves.easeOutCubic),
+    );
+
+    _scaleAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(0.5, 0.8, curve: Curves.elasticOut),
+      ),
+    );
+
+    _opacityAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(0.7, 1.0, curve: Curves.easeIn),
+      ),
+    );
+
+    _animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  void _checkAuthenticationStatus() async {
+    await Future.delayed(const Duration(milliseconds: 2500));
     if (!mounted) return;
+
     token = await SecureStorage.readData(key: AppConstants.tokenKey);
-    final seenOnboarding =
+    final hasSeenOnboarding =
         SharedPreferencesSingleton.getBool(AppConstants.onboardingSeenKey) ??
         false;
+
     if (token != null) {
       // ignore: use_build_context_synchronously
       Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home, (_) => false);
-    } else if (!seenOnboarding) {
+    } else if (!hasSeenOnboarding) {
       // ignore: use_build_context_synchronously
       Navigator.pushNamedAndRemoveUntil(
         context,
@@ -48,38 +93,53 @@ class _SplashViewState extends State<SplashView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.white,
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xffDDE1E7),
-              Color(0xffC7CBD1),
-              AppColors.mediumGray,
-            ],
-          ),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Image.asset(
-                  Assets.assetsImagesPageBridgeBrandLogo,
-                  width: 340,
-                  fit: BoxFit.contain,
-                ),
-              ),
-              const SizedBox(height: 40),
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final backgroundColor = isDarkMode
+        ? AppColors.darkBackground
+        : AppColors.lightBackground;
+    final textColor = isDarkMode ? AppColors.white : AppColors.lightText;
+    final localDocumentColor = isDarkMode
+        ? AppColors.darkSurface
+        : AppColors.white;
+    final notionDocumentColor = isDarkMode
+        ? AppColors.notionDark
+        : AppColors.notionLight;
 
-              CustomLoadingIndecator(height: 40),
-            ],
+    return Scaffold(
+      backgroundColor: backgroundColor,
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Center(
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                AnimatedDocumentCard(
+                  slideAnimation: _slideAnimation,
+                  backgroundColor: localDocumentColor,
+                  icon: FontAwesomeIcons.fileLines.data,
+                  rotationAngle: -0.15,
+                  startOffsetX: -150.0,
+                  finalOffsetX: -30.0,
+                ),
+                AnimatedDocumentCard(
+                  slideAnimation: _slideAnimation,
+                  backgroundColor: notionDocumentColor,
+                  icon: FontAwesomeIcons.n.data,
+                  rotationAngle: 0.1,
+                  startOffsetX: 150.0,
+                  finalOffsetX: 25.0,
+                ),
+                GlowingLinkIndicator(scaleAnimation: _scaleAnimation),
+              ],
+            ),
           ),
-        ),
+          AppTitleAndLoader(
+            opacityAnimation: _opacityAnimation,
+            slideAnimationController: _animationController,
+            textColor: textColor,
+          ),
+        ],
       ),
     );
   }
