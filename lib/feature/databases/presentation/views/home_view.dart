@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:pagebridge/config/themes/app_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pagebridge/core/services/shared_preferences_singleton.dart';
+import "package:pagebridge/feature/main_layout/presentation/cubit/main_layout_cubit.dart";
 import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:pagebridge/core/utls/setup_service_locator_getit.dart';
 import 'package:pagebridge/feature/auth/presentation/widgets/custom_animation_background.dart';
@@ -50,29 +49,34 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    final workspaceName = SharedPreferencesSingleton.getString('workspaceName');
-    final databasesTitle = workspaceName ?? 'Databases';
-
     return Scaffold(
-      body: Stack(
-        children: [
-          const CustomAnimationBackground(),
-          BlocProvider(
-            create: (context) =>
-                DatabasesCubit(databaseRepo: getit.get<DatabaseRepo>()),
-            child: Builder(
-              builder: (context) {
-                return CustomScrollView(
-                  controller: _databasesScrollController,
-                  slivers: [
-                    HomeAppBar(title: databasesTitle),
-                    HomeViewBody(scrollController: _databasesScrollController),
-                  ],
-                );
-              },
+      body: SafeArea(
+        child: Stack(
+          children: [
+            const CustomAnimationBackground(),
+            BlocProvider(
+              create: (context) =>
+                  DatabasesCubit(databaseRepo: getit.get<DatabaseRepo>()),
+              child: Builder(
+                builder: (context) {
+                  final workspaceName = context
+                      .read<MainLayoutCubit>()
+                      .workspaceName;
+                  final databasesTitle = workspaceName ?? 'Databases';
+                  return CustomScrollView(
+                    controller: _databasesScrollController,
+                    slivers: [
+                      HomeAppBar(title: databasesTitle),
+                      HomeViewBody(
+                        scrollController: _databasesScrollController,
+                      ),
+                    ],
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: _showFab
           ? Padding(

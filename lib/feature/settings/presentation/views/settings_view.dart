@@ -16,59 +16,58 @@ class SettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final isLight = Theme.of(context).brightness == Brightness.light;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Settings'),
-        centerTitle: false,
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(24),
-        children: [
-          _SettingsGroup(
-            title: 'Preferences',
-            children: [
-              _SettingsItem(
-                icon: isLight ? AppIcons.lightMode : AppIcons.darkMode,
-                title: 'Theme',
-                subtitle: 'Switch between light and dark mode',
-                trailing: DayNightSwitch(
-                  value: !isLight,
-                  scale: 0.8,
-                  onChanged: (bool value) {
-                    context.read<ThemeModeCubit>().changeThemeMode(context);
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(title: const Text('Settings'), centerTitle: false),
+        body: ListView(
+          padding: const EdgeInsets.all(24),
+          children: [
+            _SettingsGroup(
+              title: 'Preferences',
+              children: [
+                _SettingsItem(
+                  icon: isLight ? AppIcons.lightMode : AppIcons.darkMode,
+                  title: 'Theme',
+                  subtitle: 'Switch between light and dark mode',
+                  trailing: DayNightSwitch(
+                    value: !isLight,
+                    scale: 0.8,
+                    onChanged: (bool value) {
+                      context.read<ThemeModeCubit>().changeThemeMode(context);
+                    },
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 32),
+            _SettingsGroup(
+              title: 'Account',
+              children: [
+                _SettingsItem(
+                  icon: AppIcons.logout,
+                  title: 'Log Out',
+                  subtitle: 'Disconnect your Notion account',
+                  isDestructive: true,
+                  onTap: () async {
+                    final bool shouldLogout = await showAppConfirmDialog(
+                      context: context,
+                      title: 'Confirm Logout',
+                      message: 'Are you sure you want to log out?',
+                    );
+                    if (!context.mounted || !shouldLogout) return;
+                    await SecureStorage.deleteData(key: AppConstants.tokenKey);
+                    if (!context.mounted) return;
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      AppRoutes.auth,
+                      (_) => false,
+                    );
                   },
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 32),
-          _SettingsGroup(
-            title: 'Account',
-            children: [
-              _SettingsItem(
-                icon: AppIcons.logout,
-                title: 'Log Out',
-                subtitle: 'Disconnect your Notion account',
-                isDestructive: true,
-                onTap: () async {
-                  final bool shouldLogout = await showAppConfirmDialog(
-                    context: context,
-                    title: 'Confirm Logout',
-                    message: 'Are you sure you want to log out?',
-                  );
-                  if (!context.mounted || !shouldLogout) return;
-                  await SecureStorage.deleteData(key: AppConstants.tokenKey);
-                  if (!context.mounted) return;
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    AppRoutes.auth,
-                    (_) => false,
-                  );
-                },
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -99,10 +98,7 @@ class _SettingsGroup extends StatelessWidget {
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(24),
-            border: Border.all(
-              color: Theme.of(context).dividerColor,
-              width: 1,
-            ),
+            border: Border.all(color: Theme.of(context).dividerColor, width: 1),
           ),
           child: Column(
             children: [
@@ -142,10 +138,9 @@ class _SettingsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color =
-        isDestructive
-            ? Theme.of(context).colorScheme.error
-            : Theme.of(context).colorScheme.onSurface;
+    final color = isDestructive
+        ? Theme.of(context).colorScheme.error
+        : Theme.of(context).colorScheme.onSurface;
 
     return ListTile(
       onTap: onTap,
@@ -165,23 +160,22 @@ class _SettingsItem extends StatelessWidget {
           fontWeight: FontWeight.w600,
         ),
       ),
-      subtitle:
-          subtitle != null
-              ? Text(
-                subtitle!,
-                style: AppTextStyles.bodyMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                ),
-              )
-              : null,
+      subtitle: subtitle != null
+          ? Text(
+              subtitle!,
+              style: AppTextStyles.bodyMedium?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+            )
+          : null,
       trailing:
           trailing ??
           (onTap != null
               ? Icon(
-                AppIcons.arrowForwardRounded,
-                size: 16,
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              )
+                  AppIcons.arrowForwardRounded,
+                  size: 16,
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                )
               : null),
     );
   }

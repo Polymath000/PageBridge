@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import "package:flutter_bloc/flutter_bloc.dart";
+import "package:pagebridge/feature/main_layout/presentation/cubit/main_layout_cubit.dart";
 import 'package:pagebridge/config/themes/app_text_style.dart';
-import 'package:pagebridge/core/services/shared_preferences_singleton.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({
@@ -15,13 +16,11 @@ class HomeAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final ownerAvatarUrl = SharedPreferencesSingleton.getString(
-      'ownerAvatarUrl',
-    );
+    final ownerAvatarUrl = context.read<MainLayoutCubit>().ownerAvatarUrl;
 
     return SliverAppBar(
       toolbarHeight: 70,
-      pinned: true,
+      pinned: false,
       automaticallyImplyLeading: false,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(bottom: Radius.circular(24)),
@@ -30,7 +29,7 @@ class HomeAppBar extends StatelessWidget {
       backgroundColor: theme.colorScheme.surface,
       shadowColor: theme.colorScheme.outline,
       surfaceTintColor: theme.colorScheme.surface,
-      expandedHeight: showActions ? 110 : 80,
+      expandedHeight: 80,
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: const EdgeInsets.only(left: 16, bottom: 16),
         title: Row(
@@ -75,7 +74,7 @@ class HomeAppBar extends StatelessWidget {
                 ),
               ),
             ),
-          ]
+          ],
         ),
       ),
     );

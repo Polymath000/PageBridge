@@ -16,71 +16,82 @@ class MainLayoutView extends StatelessWidget {
       builder: (context, currentIndex) {
         return Scaffold(
           extendBody: true,
-          body: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 250),
-            switchInCurve: Curves.easeInOut,
-            switchOutCurve: Curves.easeInOut,
-            transitionBuilder: (child, animation) {
-              return FadeTransition(
-                opacity: animation,
-                child: SlideTransition(
-                  position: Tween<Offset>(
-                    begin: const Offset(0, 0.05),
-                    end: Offset.zero,
-                  ).animate(animation),
-                  child: child,
-                ),
-              );
-            },
-            child: _buildPage(currentIndex),
-          ),
-          bottomNavigationBar: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 24, right: 24, bottom: 8),
-              child: Container(
-                height: 64,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).bottomAppBarTheme.color,
-                  borderRadius: BorderRadius.circular(32),
-                  border: Border.all(
-                    color: Theme.of(context).dividerColor,
-                    width: 1,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color:
-                          Theme.of(context).bottomAppBarTheme.shadowColor ??
-                          Colors.black26,
-                      blurRadius: 24,
-                      offset: const Offset(0, 8),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    BootomNavItem(
-                      icon: AppIcons.storageRounded,
-                      label: 'Databases',
-                      isSelected: currentIndex == 0,
-                      onTap: () => context.read<MainLayoutCubit>().changeTab(0),
-                    ),
-                    BootomNavItem(
-                      icon: AppIcons.historyRounded,
-                      label: 'Recent',
-                      isSelected: currentIndex == 1,
-                      onTap: () => context.read<MainLayoutCubit>().changeTab(1),
-                    ),
-                    BootomNavItem(
-                      icon: AppIcons.displaySettings,
-                      label: 'Settings',
-                      isSelected: currentIndex == 2,
-                      onTap: () => context.read<MainLayoutCubit>().changeTab(2),
-                    ),
-                  ],
+          body: Stack(
+            children: [
+              Positioned.fill(
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 250),
+                  switchInCurve: Curves.easeInOut,
+                  switchOutCurve: Curves.easeInOut,
+                  transitionBuilder: (child, animation) {
+                    return FadeTransition(
+                      opacity: animation,
+                      child: SlideTransition(
+                        position: Tween<Offset>(
+                          begin: const Offset(0, 0.05),
+                          end: Offset.zero,
+                        ).animate(animation),
+                        child: child,
+                      ),
+                    );
+                  },
+                  child: _buildPage(currentIndex),
                 ),
               ),
-            ),
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: SafeArea(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 24, right: 24, bottom: 8),
+                    child: Container(
+                      height: 64,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).bottomAppBarTheme.color,
+                        borderRadius: BorderRadius.circular(32),
+                        border: Border.all(
+                          color: Theme.of(context).dividerColor,
+                          width: 1,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color:
+                                Theme.of(context).bottomAppBarTheme.shadowColor ??
+                                Colors.black26,
+                            blurRadius: 24,
+                            offset: const Offset(0, 8),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          BootomNavItem(
+                            icon: AppIcons.storageRounded,
+                            label: 'Databases',
+                            isSelected: currentIndex == 0,
+                            onTap: () => context.read<MainLayoutCubit>().changeTab(0),
+                          ),
+                          BootomNavItem(
+                            icon: AppIcons.historyRounded,
+                            label: 'Recent',
+                            isSelected: currentIndex == 1,
+                            onTap: () => context.read<MainLayoutCubit>().changeTab(1),
+                          ),
+                          BootomNavItem(
+                            icon: AppIcons.displaySettings,
+                            label: 'Settings',
+                            isSelected: currentIndex == 2,
+                            onTap: () => context.read<MainLayoutCubit>().changeTab(2),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         );
       },
