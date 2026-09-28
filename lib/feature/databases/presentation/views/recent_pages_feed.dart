@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:pagebridge/config/themes/app_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,23 +28,24 @@ class _RecentPagesFeedState extends State<RecentPagesFeed> {
               ..fetchRecentPages(),
         child: Builder(
           builder: (context) {
-            return NotificationListener<ScrollNotification>(
-              onNotification: (ScrollNotification scrollInfo) {
-                if (scrollInfo.metrics.pixels >=
-                    scrollInfo.metrics.maxScrollExtent * 0.9) {
-                  context.read<RecentPagesCubit>().fetchMore();
-                }
-                return false;
+            return RefreshIndicator(
+              onRefresh: () async {
+                await context.read<RecentPagesCubit>().fetchRecentPages();
               },
-              child: CustomScrollView(
-                controller: widget.scrollController,
-                slivers: [
-                  HomeAppBar(title: 'Recent Pages', showActions: false),
-                  CupertinoSliverRefreshControl(
-                    onRefresh: () async {
-                      await context.read<RecentPagesCubit>().fetchRecentPages();
-                    },
-                  ),
+              color: Theme.of(context).colorScheme.primary,
+              backgroundColor: Theme.of(context).colorScheme.surface,
+              child: NotificationListener<ScrollNotification>(
+                onNotification: (ScrollNotification scrollInfo) {
+                  if (scrollInfo.metrics.pixels >=
+                      scrollInfo.metrics.maxScrollExtent * 0.9) {
+                    context.read<RecentPagesCubit>().fetchMore();
+                  }
+                  return false;
+                },
+                child: CustomScrollView(
+                  controller: widget.scrollController,
+                  slivers: [
+                    HomeAppBar(title: 'Recent Pages', showActions: false),
                   SliverPadding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 16.0,
@@ -208,8 +208,9 @@ class _RecentPagesFeedState extends State<RecentPagesFeed> {
                   ),
                 ],
               ),
-            );
-          },
+            ),
+          );
+        },
         ),
       ),
     );

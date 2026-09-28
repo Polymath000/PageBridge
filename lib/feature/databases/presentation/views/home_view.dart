@@ -62,15 +62,23 @@ class _HomeViewState extends State<HomeView> {
                       .read<MainLayoutCubit>()
                       .workspaceName;
                   final databasesTitle = workspaceName ?? 'Databases';
-                  return CustomScrollView(
-                    controller: _databasesScrollController,
-                    slivers: [
-                      HomeAppBar(title: databasesTitle),
-                      HomeViewBody(
-                        scrollController: _databasesScrollController,
-                      ),
-                      const SliverToBoxAdapter(child: SizedBox(height: 60)),
-                    ],
+                  final theme = Theme.of(context);
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      await context.read<DatabasesCubit>().returnDatabases();
+                    },
+                    color: theme.colorScheme.primary,
+                    backgroundColor: theme.colorScheme.surface,
+                    child: CustomScrollView(
+                      controller: _databasesScrollController,
+                      slivers: [
+                        HomeAppBar(title: databasesTitle),
+                        HomeViewBody(
+                          scrollController: _databasesScrollController,
+                        ),
+                        const SliverToBoxAdapter(child: SizedBox(height: 60)),
+                      ],
+                    ),
                   );
                 },
               ),
