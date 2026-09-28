@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/foundation.dart' show immutable;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -40,7 +38,6 @@ class NotionOAuthConfig {
     if (clientSecret.isEmpty) missing.add('NOTION_CLIENT_SECRET');
     if (redirectUri.isEmpty) missing.add('NOTION_REDIRECT_URI');
     if (missing.isNotEmpty) {
-      log('Missing OAuth config: ${missing.join(', ')}. ');
       throw StateError(
         'There is an error. Please try again later and we will fix the problem.',
       );

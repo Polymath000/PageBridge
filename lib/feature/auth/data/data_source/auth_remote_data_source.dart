@@ -75,12 +75,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         'code': code,
         'redirect_uri': config.redirectUri,
       },
-      options: Options(
-        headers: {
-          'Authorization': _basicAuthHeader(),
-          'Content-Type': 'application/json',
-        },
-      ),
+      options: Options(headers: {'Authorization': _basicAuthHeader()}),
     );
 
     final data = response.data;

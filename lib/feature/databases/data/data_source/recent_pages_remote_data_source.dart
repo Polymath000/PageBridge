@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:pagebridge/core/constants/constants.dart';
 import 'package:pagebridge/core/database/api/dio_consumer.dart';
 import 'package:pagebridge/core/database/api/end_ponits.dart';
-import 'package:pagebridge/core/database/cache/secure_storage.dart';
 import 'package:pagebridge/feature/databases/data/model/page_model.dart';
 import 'package:pagebridge/feature/databases/domain/entities/page_entity.dart';
 
@@ -24,11 +23,9 @@ class RecentPagesRemoteDataSourceImpl implements RecentPagesRemoteDataSource {
     String? query,
     CancelToken? cancelToken,
   }) async {
-    final token = await SecureStorage.readData(key: AppConstants.tokenKey);
 
     var data = await dioConsumer.post(
       EndPoint.search,
-      options: headers(token: token ?? "", notionVersion: "2022-06-28"),
       cancelToken: cancelToken,
       data: {
         'page_size': AppConstants.pageSizeOfTheAPI,

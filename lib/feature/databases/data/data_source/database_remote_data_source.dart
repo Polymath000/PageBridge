@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:pagebridge/core/constants/constants.dart';
 import 'package:pagebridge/core/database/api/dio_consumer.dart';
 import 'package:pagebridge/core/database/api/end_ponits.dart';
-import 'package:pagebridge/core/database/cache/secure_storage.dart';
 import 'package:pagebridge/feature/databases/data/model/database_model.dart';
 import 'package:pagebridge/feature/databases/domain/entities/database_entity.dart';
 
@@ -25,12 +24,10 @@ class DatabaseRemoteDataSourceImpl implements DatabaseRemoteDataSource {
     String? startCursor, {
     CancelToken? cancelToken,
   }) async {
-    final token = await SecureStorage.readData(key: AppConstants.tokenKey);
     var data = await dioConsumer.post(
       EndPoint.search,
       cancelToken: cancelToken,
 
-      options: headers(token: token ?? ""),
       data: {
         if (query != null && query.isNotEmpty) "query": query,
         "filter": {"value": "database", "property": "object"},

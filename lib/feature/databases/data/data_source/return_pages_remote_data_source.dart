@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:pagebridge/core/constants/constants.dart';
 import 'package:pagebridge/core/database/api/dio_consumer.dart';
 import 'package:pagebridge/core/database/api/end_ponits.dart';
-import 'package:pagebridge/core/database/cache/secure_storage.dart';
 import 'package:pagebridge/feature/databases/data/model/page_model.dart';
 import 'package:pagebridge/feature/databases/domain/entities/page_entity.dart';
 
@@ -27,11 +26,9 @@ class ReturnPagesRemoteDataSourceImpl implements ReturnPagesRemoteDataSource {
     CancelToken? cancelToken,
   }) async {
     EndPoint endPoint = EndPoint(dataSourceId: databaseId);
-    final token = await SecureStorage.readData(key: AppConstants.tokenKey);
 
     var data = await dioConsumer.post(
       endPoint.returnPages,
-      options: headers(token: token ?? "", notionVersion: "2025-09-03"),
       cancelToken: cancelToken,
       data: {
         'page_size': AppConstants.pageSizeOfTheAPI,

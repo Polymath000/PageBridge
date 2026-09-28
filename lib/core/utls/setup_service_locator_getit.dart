@@ -1,3 +1,4 @@
+import "package:pagebridge/core/network/dio_factory.dart";
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -38,7 +39,7 @@ setUpServiceLocator() {
   );
 
   /// Data Sources
-  getit.registerLazySingleton<Dio>(() => Dio());
+  getit.registerLazySingleton<Dio>(() => DioFactory.getDio());
 
   getit.registerLazySingleton<NetworkInfo>(
     () => NetworkInfoImpl(Connectivity()),

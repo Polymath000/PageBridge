@@ -1,7 +1,5 @@
-import 'package:pagebridge/core/constants/constants.dart';
 import 'package:pagebridge/core/database/api/dio_consumer.dart';
 import 'package:pagebridge/core/database/api/end_ponits.dart';
-import 'package:pagebridge/core/database/cache/secure_storage.dart';
 import 'package:pagebridge/feature/databases/data/model/property_model.dart';
 
 abstract class CreateNewPageDataSource {
@@ -21,7 +19,6 @@ class CreateNewPageDataSourceImpl implements CreateNewPageDataSource {
     required List<PropertyModel> properties,
     String? content,
   }) async {
-    final token = await SecureStorage.readData(key: AppConstants.tokenKey);
     final Map<String, dynamic> mappedProperties = {};
     for (var prop in properties) {
       final json = prop.toJson();
@@ -55,7 +52,6 @@ class CreateNewPageDataSourceImpl implements CreateNewPageDataSource {
     final response = await dioConsumer.post(
       EndPoint.addNewPage,
       data: requestData,
-      options: headers(token: token!),
     );
     return response.data['url'] as String;
   }
