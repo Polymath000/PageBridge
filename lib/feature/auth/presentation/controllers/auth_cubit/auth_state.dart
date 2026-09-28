@@ -17,7 +17,7 @@ final class AuthLoading extends AuthState {
 
 /// Emitted when sign-in succeeds.
 final class AuthSuccess extends AuthState {
-  final AuthTokenEntity token;
+  final UserEntity token;
   const AuthSuccess({required this.token});
 }
 

@@ -10,7 +10,7 @@ import 'package:pagebridge/core/services/notion_oauth_config.dart';
 import '../models/auth_token_model.dart';
 
 abstract class AuthRemoteDataSource {
-  Future<AuthTokenModel> signInWithNotion();
+  Future<UserModel> signInWithNotion();
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -23,14 +23,14 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   });
 
   @override
-  Future<AuthTokenModel> signInWithNotion() async {
+  Future<UserModel> signInWithNotion() async {
     config.validate();
     final state = _generateState();
     final authorizeUri = _buildAuthorizeUri(state);
     final callbackUrl = await _authenticate(authorizeUri);
     final code = _extractCode(callbackUrl, state);
     final data = await _exchangeCodeForToken(code);
-    return AuthTokenModel.fromJson(data);
+    return UserModel.fromJson(data);
   }
 
   Uri _buildAuthorizeUri(String state) =>

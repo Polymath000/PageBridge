@@ -1,8 +1,8 @@
 import '../../domain/entities/auth_token_entity.dart';
 
 /// Data model for Notion OAuth token response.
-class AuthTokenModel extends AuthTokenEntity {
-  const AuthTokenModel({
+class UserModel extends UserEntity {
+  const UserModel({
     required super.accessToken,
     super.workspaceId,
     super.workspaceName,
@@ -12,7 +12,7 @@ class AuthTokenModel extends AuthTokenEntity {
     super.ownerAvatarUrl,
   });
 
-  factory AuthTokenModel.fromJson(Map<String, dynamic> json) {
+  factory UserModel.fromJson(Map<String, dynamic> json) {
     final accessToken = json['access_token'] as String?;
     if (accessToken == null || accessToken.isEmpty) {
       throw StateError('Notion token response missing access_token.');
@@ -21,7 +21,7 @@ class AuthTokenModel extends AuthTokenEntity {
     final owner = json['owner'] as Map<String, dynamic>?;
     final user = owner?['user'] as Map<String, dynamic>?;
 
-    return AuthTokenModel(
+    return UserModel(
       accessToken: accessToken,
       workspaceId: json['workspace_id'] as String?,
       workspaceName: json['workspace_name'] as String?,

@@ -1,4 +1,4 @@
-class AuthTokenEntity {
+class UserEntity {
   final String accessToken;
   final String? workspaceId;
   final String? workspaceName;
@@ -7,7 +7,7 @@ class AuthTokenEntity {
   final String? ownerName;
   final String? ownerAvatarUrl;
 
-  const AuthTokenEntity({
+  const UserEntity({
     required this.accessToken,
     this.workspaceId,
     this.workspaceName,

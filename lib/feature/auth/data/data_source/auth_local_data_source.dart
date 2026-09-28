@@ -5,14 +5,14 @@ import 'package:pagebridge/core/services/shared_preferences_singleton.dart';
 import 'package:pagebridge/feature/auth/domain/entities/auth_token_entity.dart';
 
 abstract class AuthLocalDataSource {
-  Future<void> saveToken(AuthTokenEntity token);
+  Future<void> saveToken(UserEntity token);
 }
 
 class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   const AuthLocalDataSourceImpl();
 
   @override
-  Future<void> saveToken(AuthTokenEntity token) async {
+  Future<void> saveToken(UserEntity token) async {
     await SecureStorage.writeData(
       key: AppConstants.tokenKey,
       value: token.accessToken,

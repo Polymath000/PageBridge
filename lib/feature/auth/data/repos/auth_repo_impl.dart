@@ -8,7 +8,6 @@ import '../../domain/repo/auth_repository.dart';
 import '../data_source/auth_local_data_source.dart';
 import '../data_source/auth_remote_data_source.dart';
 
-/// Coordinates Notion OAuth via remote and local data sources.
 class AuthRepositoryImpl extends AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
   final AuthLocalDataSource localDataSource;
@@ -21,21 +20,21 @@ class AuthRepositoryImpl extends AuthRepository {
   });
 
   @override
-  Future<Either<Failure, AuthTokenEntity>> signInWithNotion() async {
+  Future<Either<Failure, UserEntity>> signInWithNotion() async {
     try {
       if (await networkInfo.isConnected) {
-        final token = await remoteDataSource.signInWithNotion();
-        await localDataSource.saveToken(token);
+        final userModel = await remoteDataSource.signInWithNotion();
+        await localDataSource.saveToken(userModel);
 
         return right(
-          AuthTokenEntity(
-            accessToken: token.accessToken,
-            workspaceId: token.workspaceId,
-            workspaceName: token.workspaceName,
-            workspaceIcon: token.workspaceIcon,
-            botId: token.botId,
-            ownerName: token.ownerName,
-            ownerAvatarUrl: token.ownerAvatarUrl,
+          UserEntity(
+            accessToken: userModel.accessToken,
+            workspaceId: userModel.workspaceId,
+            workspaceName: userModel.workspaceName,
+            workspaceIcon: userModel.workspaceIcon,
+            botId: userModel.botId,
+            ownerName: userModel.ownerName,
+            ownerAvatarUrl: userModel.ownerAvatarUrl,
           ),
         );
       } else {
