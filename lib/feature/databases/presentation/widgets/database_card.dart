@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:pagebridge/config/routes/on_generate_routes.dart';
@@ -57,60 +58,82 @@ class DatabaseCard extends StatelessWidget {
               );
             }
           },
-          child: Card(
-            margin: const EdgeInsets.only(bottom: 16.0, right: 0),
-            color: colorScheme.surface,
-            clipBehavior: Clip.antiAlias,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                if (hasCover)
-                  SizedBox(
-                    height: 72,
-                    child: Image.network(
-                      database.cover!.url!,
-                      fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 12.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: colorScheme.surface.withValues(alpha: 0.55),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: colorScheme.outlineVariant.withValues(alpha: 0.35),
+                      width: 0.5,
                     ),
                   ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12.0,
-                    vertical: 16,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      (database.icon?.emoji?.isEmpty ?? true)
-                          ? SizedBox(
-                              height: 16.h,
-                              child: Image(
-                                image: AssetImage(
-                                  Assets.assetsImagesDatabaseicon,
-                                ),
-                              ),
-                            )
-                          : Text(database.icon?.emoji ?? ""),
-                      SizedBox(
-                        width: MediaQuery.sizeOf(context).width * 0.7,
-                        child: Text(
-                          database.title,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.titleLarge!.copyWith(
-                            color: colorScheme.onSurface,
-                            fontSize: 20.sp,
+                      if (hasCover)
+                        SizedBox(
+                          height: 72,
+                          child: Image.network(
+                            database.cover!.url!,
+                            fit: BoxFit.cover,
+                            errorBuilder: (_, __, ___) =>
+                                const SizedBox.shrink(),
                           ),
                         ),
-                      ),
-                      Icon(
-                        AppIcons.arrowForward,
-                        color: colorScheme.onSurfaceVariant,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 14.0,
+                          vertical: 18,
+                        ),
+                        child: Row(
+                          children: [
+                            (database.icon?.emoji?.isEmpty ?? true)
+                                ? SizedBox(
+                                    height: 22.h,
+                                    width: 22.h,
+                                    child: Image(
+                                      image: AssetImage(
+                                        Assets.assetsImagesDatabaseicon,
+                                      ),
+                                    ),
+                                  )
+                                : Text(
+                                    database.icon?.emoji ?? "",
+                                    style: TextStyle(fontSize: 20.sp),
+                                  ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Text(
+                                database.title,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTextStyles.titleLarge!.copyWith(
+                                  color: colorScheme.onSurface,
+                                  fontSize: 17.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Icon(
+                              AppIcons.arrowForward,
+                              color: colorScheme.onSurfaceVariant
+                                  .withValues(alpha: 0.5),
+                              size: 18,
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ],
+              ),
             ),
           ),
         ),
