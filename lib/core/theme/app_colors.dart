@@ -12,6 +12,8 @@ class AppColors {
   static const darkBackground = Color(0xFF141218);
   static const darkSurface = Color(0xFF211F26);
   static const darkText = Color(0xFFE6E1E5);
+  static const Color floatingActionLight = Color(0xFF1E1E1E);
+  static const Color floatingActionDark = Color(0xFFF5F5F5);
 
   // General colors kept for compatibility
   static const Color amber = Colors.amber;

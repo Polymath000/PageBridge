@@ -3,6 +3,7 @@ import 'package:pagebridge/config/themes/app_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pagebridge/core/services/shared_preferences_singleton.dart';
+import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:pagebridge/core/utls/setup_service_locator_getit.dart';
 import 'package:pagebridge/feature/auth/presentation/widgets/custom_animation_background.dart';
 import 'package:pagebridge/feature/databases/domain/repo/database_repo.dart';
@@ -65,11 +66,6 @@ class _HomeViewState extends State<HomeView> {
                   controller: _databasesScrollController,
                   slivers: [
                     HomeAppBar(title: databasesTitle),
-                    CupertinoSliverRefreshControl(
-                      onRefresh: () async {
-                        await context.read<DatabasesCubit>().returnDatabases();
-                      },
-                    ),
                     HomeViewBody(scrollController: _databasesScrollController),
                   ],
                 );
@@ -79,12 +75,15 @@ class _HomeViewState extends State<HomeView> {
         ],
       ),
       floatingActionButton: _showFab
-          ? FloatingActionButton(
-              onPressed: _scrollToTop,
-              backgroundColor: Theme.of(context).primaryColor,
-              foregroundColor: Colors.white,
-              tooltip: 'scroll up',
-              child: Icon(AppIcons.arrowUp),
+          ? Padding(
+              padding: const EdgeInsets.only(bottom: 70.0),
+              child: FloatingActionButton(
+                onPressed: _scrollToTop,
+                backgroundColor: AppColors.darkGrey,
+                foregroundColor: AppColors.topaz,
+                tooltip: 'scroll up',
+                child: Icon(AppIcons.arrowUp),
+              ),
             )
           : null,
     );

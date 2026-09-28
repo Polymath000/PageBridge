@@ -16,6 +16,11 @@ class AppTheme {
     dividerColor: AppColors.lightBorder.withValues(alpha: 0.8),
     scaffoldBackgroundColor: AppColors.lightBackground,
 
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      backgroundColor: AppColors.floatingActionLight,
+      foregroundColor: AppColors.white,
+      elevation: 4,
+    ),
     bottomAppBarTheme: BottomAppBarThemeData(
       color: AppColors.lightBorder,
       elevation: 8,
@@ -66,6 +71,11 @@ class AppTheme {
     dividerColor: AppColors.lightBorder.withValues(alpha: 0.8),
     scaffoldBackgroundColor: AppColors.darkBackground,
 
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+      backgroundColor: AppColors.floatingActionDark,
+      foregroundColor: AppColors.floatingActionLight,
+      elevation: 4,
+    ),
     bottomAppBarTheme: BottomAppBarThemeData(
       color: AppColors.notionDark,
       elevation: 8,

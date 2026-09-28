@@ -75,9 +75,9 @@ class HomeAppBar extends StatelessWidget {
                 ),
                 gradient: LinearGradient(
                   colors: [
-                    isLight ? const Color.fromARGB(255, 226, 236, 246) : theme.colorScheme.secondary,
+                    theme.colorScheme.primaryContainer,
                     theme.colorScheme.surface,
-                    isLight ? const Color.fromARGB(255, 226, 236, 246) : theme.colorScheme.secondary,
+                    theme.colorScheme.primaryContainer,
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -112,7 +112,11 @@ class HomeAppBar extends StatelessWidget {
                           key: AppConstants.tokenKey,
                         );
                         if (!context.mounted) return;
-                        Navigator.pushNamedAndRemoveUntil(context, AppRoutes.auth, (_) => false);
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          AppRoutes.auth,
+                          (_) => false,
+                        );
                       },
                     ),
                   ],
