@@ -18,7 +18,13 @@ class SettingsView extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(title: const Text('Settings'), centerTitle: false),
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          title: const Text('Settings'),
+          centerTitle: false,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
         body: ListView(
           padding: const EdgeInsets.all(24),
           children: [

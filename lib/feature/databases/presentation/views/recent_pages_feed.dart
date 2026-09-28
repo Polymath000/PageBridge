@@ -203,6 +203,9 @@ class _RecentPagesFeedState extends State<RecentPagesFeed> {
                       return const SliverToBoxAdapter(child: SizedBox.shrink());
                     },
                   ),
+                  const SliverToBoxAdapter(
+                    child: SizedBox(height: 100),
+                  ),
                 ],
               ),
             );
