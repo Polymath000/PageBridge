@@ -5,7 +5,6 @@ class AppTheme {
   static ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     useMaterial3: true,
-
     colorScheme: ColorScheme.fromSeed(
       seedColor: AppColors.lightPrimary,
       brightness: Brightness.light,
@@ -14,7 +13,21 @@ class AppTheme {
       primary: AppColors.lightPrimary,
     ),
 
+    dividerColor: AppColors.lightBorder.withValues(alpha: 0.8),
     scaffoldBackgroundColor: AppColors.lightBackground,
+
+    bottomAppBarTheme: BottomAppBarThemeData(
+      color: AppColors.lightBorder,
+      elevation: 8,
+      shadowColor: AppColors.spaceBlack.withValues(alpha: 0.08),
+      height: 64,
+      shape: AutomaticNotchedShape(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(32),
+          side: BorderSide(color: AppColors.darkSurface, width: 1),
+        ),
+      ),
+    ),
 
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.lightBackground,
@@ -50,7 +63,24 @@ class AppTheme {
       primary: AppColors.darkPrimary,
     ),
 
+    dividerColor: AppColors.lightBorder.withValues(alpha: 0.8),
     scaffoldBackgroundColor: AppColors.darkBackground,
+
+    bottomAppBarTheme: BottomAppBarThemeData(
+      color: AppColors.notionDark,
+      elevation: 8,
+      shadowColor: AppColors.black,
+      height: 64,
+      shape: AutomaticNotchedShape(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(32),
+          side: BorderSide(
+            color: AppColors.lightBorder.withValues(alpha: 0.2),
+            width: 1,
+          ),
+        ),
+      ),
+    ),
 
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.darkBackground,

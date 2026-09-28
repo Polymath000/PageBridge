@@ -7,7 +7,8 @@ import 'package:pagebridge/feature/databases/domain/entities/database_entity.dar
 import 'package:pagebridge/feature/databases/domain/entities/page_entity.dart';
 import 'package:pagebridge/feature/databases/domain/entities/property_entity.dart';
 import 'package:pagebridge/feature/databases/presentation/controllers/return_pages_cubit/return_pages_cubit.dart';
-import 'package:pagebridge/feature/databases/presentation/views/home_view.dart';
+import "package:pagebridge/feature/main_layout/presentation/views/main_layout_view.dart";
+import "package:pagebridge/feature/main_layout/presentation/cubit/main_layout_cubit.dart";
 import 'package:pagebridge/feature/databases/presentation/views/new_page_view.dart';
 import 'package:pagebridge/feature/databases/presentation/views/relation_search_view.dart';
 import 'package:pagebridge/feature/onStartedViews/presentation/views/onboarding_view.dart';
@@ -31,7 +32,7 @@ sealed class AppRoutes {
       case auth:
         return _fadeRoute(const AuthView());
       case home:
-        return _fadeRoute(HomeView());
+        return _fadeRoute(BlocProvider(create: (_) => MainLayoutCubit(), child: const MainLayoutView()));
       case newPage:
         final data = settings.arguments! as DatabaseEntity;
         return _fadeRoute(NewPageView(database: data));

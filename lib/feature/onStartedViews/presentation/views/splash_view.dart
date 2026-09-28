@@ -93,17 +93,10 @@ class _SplashViewState extends State<SplashView>
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    final backgroundColor = isDarkMode
-        ? AppColors.darkBackground
-        : AppColors.lightBackground;
-    final textColor = isDarkMode ? AppColors.white : AppColors.lightText;
-    final localDocumentColor = isDarkMode
-        ? AppColors.darkSurface
-        : AppColors.white;
-    final notionDocumentColor = isDarkMode
-        ? AppColors.notionDark
-        : AppColors.notionLight;
+    const backgroundColor = AppColors.darkBackground;
+    const textColor = AppColors.white;
+    const localDocumentColor = AppColors.white; // Light card
+    const notionDocumentColor = AppColors.darkGrey; // Dark card
 
     return Scaffold(
       backgroundColor: backgroundColor,
