@@ -7,10 +7,10 @@ import 'package:pagebridge/feature/auth/presentation/widgets/custom_animation_ba
 import 'package:pagebridge/core/helpers/custom_search_text_field.dart';
 import 'package:pagebridge/feature/databases/domain/entities/page_entity.dart';
 import 'package:pagebridge/feature/databases/domain/entities/property_entity.dart';
-import 'package:pagebridge/feature/databases/presentation/controllers/return_pages_cubit/return_pages_cubit.dart';
-import 'package:pagebridge/feature/databases/presentation/widgets/list_of_databases_fo_relation_search.dart';
-import 'package:pagebridge/feature/databases/presentation/widgets/relation_search_app_bar.dart';
-import 'package:pagebridge/feature/databases/presentation/widgets/relation_search_card_skeleton.dart';
+import 'package:pagebridge/feature/add_new_page/presentation/controllers/return_pages_cubit/return_pages_cubit.dart';
+import 'package:pagebridge/feature/add_new_page/presentation/widgets/list_of_databases_fo_relation_search.dart';
+import 'package:pagebridge/feature/add_new_page/presentation/widgets/relation_search_app_bar.dart';
+import 'package:pagebridge/feature/add_new_page/presentation/widgets/relation_search_card_skeleton.dart';
 
 class RelationSearchView extends StatefulWidget {
   static const String routeName = 'relation_search_view';

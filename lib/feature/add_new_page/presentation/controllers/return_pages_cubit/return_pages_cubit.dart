@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:pagebridge/feature/databases/domain/entities/page_entity.dart';
-import 'package:pagebridge/feature/databases/domain/repo/return_pages_repo.dart';
+import 'package:pagebridge/feature/add_new_page/domain/repo/return_pages_repo.dart';
 
 part 'return_pages_state.dart';
 

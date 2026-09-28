@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pagebridge/core/helpers/custom_button.dart';
 import 'package:pagebridge/core/helpers/custom_confirm_dialog.dart';
 import 'package:pagebridge/feature/databases/domain/entities/database_entity.dart';
-import 'package:pagebridge/feature/databases/presentation/controllers/new_page_cubit/new_page_cubit.dart';
+import 'package:pagebridge/feature/add_new_page/presentation/controllers/new_page_cubit/new_page_cubit.dart';
 import 'package:pagebridge/feature/databases/presentation/widgets/property_widget.dart';
 
 class NewPageViewBody extends StatelessWidget {

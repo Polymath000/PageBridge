@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:pagebridge/feature/databases/data/model/property_model.dart';
 
-import 'package:pagebridge/feature/databases/domain/repo/create_new_page_repo.dart';
+import 'package:pagebridge/feature/add_new_page/domain/repo/create_new_page_repo.dart';
 
 part 'new_page_state.dart';
 

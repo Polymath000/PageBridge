@@ -3,8 +3,8 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:pagebridge/core/errors/failure.dart';
 import 'package:pagebridge/core/network/network_info.dart';
-import 'package:pagebridge/feature/databases/data/data_source/return_pages_remote_data_source.dart';
-import 'package:pagebridge/feature/databases/domain/repo/return_pages_repo.dart';
+import 'package:pagebridge/feature/add_new_page/data/data_source/return_pages_remote_data_source.dart';
+import 'package:pagebridge/feature/add_new_page/domain/repo/return_pages_repo.dart';
 
 class ReturnPagesRepoImpl extends ReturnPagesRepo {
   ReturnPagesRemoteDataSource returnPagesRemoteDataSource;

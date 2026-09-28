@@ -5,7 +5,7 @@ import 'package:pagebridge/feature/databases/presentation/widgets/property_type_
 import 'package:pagebridge/feature/databases/presentation/widgets/property_type_notion_date_widget.dart';
 import 'package:pagebridge/feature/databases/presentation/widgets/property_type_select_one_item.dart';
 import 'package:pagebridge/feature/databases/presentation/widgets/property_type_text.dart';
-import 'package:pagebridge/feature/databases/presentation/widgets/relation_type_widget.dart';
+import 'package:pagebridge/feature/add_new_page/presentation/widgets/relation_type_widget.dart';
 
 class PropertyType extends StatefulWidget {
   const PropertyType({super.key, required this.property, this.onChanged});

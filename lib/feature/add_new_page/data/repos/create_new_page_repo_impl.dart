@@ -2,10 +2,10 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:pagebridge/core/errors/failure.dart';
 import 'package:pagebridge/core/network/network_info.dart';
-import 'package:pagebridge/feature/databases/data/data_source/create_new_page_data_source.dart';
+import 'package:pagebridge/feature/add_new_page/data/data_source/create_new_page_data_source.dart';
 import 'package:pagebridge/feature/databases/data/model/property_model.dart';
 
-import 'package:pagebridge/feature/databases/domain/repo/create_new_page_repo.dart';
+import 'package:pagebridge/feature/add_new_page/domain/repo/create_new_page_repo.dart';
 
 class CreateNewPageRepoImpl extends CreateNewPageRepo {
   final CreateNewPageDataSource createNewPageDataSource;
