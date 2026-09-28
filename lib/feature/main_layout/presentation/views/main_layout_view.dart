@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pagebridge/config/themes/app_icons.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import "package:pagebridge/feature/settings/presentation/views/settings_view.dart";
 import 'package:pagebridge/feature/databases/presentation/views/home_view.dart';
 import 'package:pagebridge/feature/databases/presentation/views/recent_pages_feed.dart';
 import 'package:pagebridge/feature/main_layout/presentation/widgets/bootom_nav_item.dart';
@@ -70,6 +71,12 @@ class MainLayoutView extends StatelessWidget {
                       isSelected: currentIndex == 1,
                       onTap: () => context.read<MainLayoutCubit>().changeTab(1),
                     ),
+                    BootomNavItem(
+                      icon: AppIcons.displaySettings,
+                      label: 'Settings',
+                      isSelected: currentIndex == 2,
+                      onTap: () => context.read<MainLayoutCubit>().changeTab(2),
+                    ),
                   ],
                 ),
               ),
@@ -89,6 +96,8 @@ class MainLayoutView extends StatelessWidget {
           key: const ValueKey(1),
           scrollController: ScrollController(),
         );
+      case 2:
+        return const SettingsView(key: ValueKey(2));
       default:
         return const HomeView(key: ValueKey(0));
     }

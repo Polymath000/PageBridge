@@ -1,15 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pagebridge/config/routes/on_generate_routes.dart';
-import 'package:pagebridge/config/themes/app_icons.dart';
 import 'package:pagebridge/config/themes/app_text_style.dart';
-import 'package:pagebridge/core/constants/constants.dart';
-import 'package:pagebridge/core/database/cache/secure_storage.dart';
-import 'package:pagebridge/core/helpers/custom_confirm_dialog.dart';
-import 'package:pagebridge/core/helpers/day_night_switch.dart';
 import 'package:pagebridge/core/services/shared_preferences_singleton.dart';
-import 'package:pagebridge/feature/databases/presentation/controllers/theme_mode_cubit/theme_mode_cubit.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({
@@ -26,7 +18,6 @@ class HomeAppBar extends StatelessWidget {
     final ownerAvatarUrl = SharedPreferencesSingleton.getString(
       'ownerAvatarUrl',
     );
-    final isLight = theme.brightness == Brightness.light;
 
     return SliverAppBar(
       toolbarHeight: 70,
@@ -84,45 +75,7 @@ class HomeAppBar extends StatelessWidget {
                 ),
               ),
             ),
-            if (showActions)
-              Positioned(
-                top: MediaQuery.paddingOf(context).top + 10,
-                right: 8,
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    DayNightSwitch(
-                      value: !isLight,
-                      scale: 0.7,
-                      onChanged: (bool value) {
-                        context.read<ThemeModeCubit>().changeThemeMode(context);
-                      },
-                    ),
-                    IconButton(
-                      tooltip: 'Logout',
-                      icon: Icon(AppIcons.logout),
-                      onPressed: () async {
-                        final bool shouldLogout = await showAppConfirmDialog(
-                          context: context,
-                          title: 'Confirm',
-                          message: 'Are you sure you want to log out?',
-                        );
-                        if (!context.mounted || !shouldLogout) return;
-                        await SecureStorage.deleteData(
-                          key: AppConstants.tokenKey,
-                        );
-                        if (!context.mounted) return;
-                        Navigator.pushNamedAndRemoveUntil(
-                          context,
-                          AppRoutes.auth,
-                          (_) => false,
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-          ],
+          ]
         ),
       ),
     );

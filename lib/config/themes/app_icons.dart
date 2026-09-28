@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class AppIcons {
   AppIcons._();
   static final IconData share = FontAwesomeIcons.shareNodes.data;
-  static final IconData displaySettings = FontAwesomeIcons.sliders.data;
+  static final IconData displaySettings = Icons.settings;
   static final IconData download = FontAwesomeIcons.download.data;
   static final IconData save = FontAwesomeIcons.bookmark.data;
   static final IconData delete = FontAwesomeIcons.trash.data;
