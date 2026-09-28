@@ -5,4 +5,5 @@ class AppConstants {
   static const String userKey = "user";
   static const String onboardingSeenKey = 'onboardingSeen';
   static const int pageSizeOfTheAPI = 18;
+  static const String appName = "PageBridge";
 }

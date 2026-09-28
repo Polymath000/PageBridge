@@ -1,19 +1,18 @@
 import 'package:bloc/bloc.dart';
+import 'package:pagebridge/feature/auth/domain/repo/auth_repository.dart';
 
 import '../../../domain/entities/auth_token_entity.dart';
-import '../../../domain/usecases/sign_in_with_notion_usecase.dart';
 
 part 'auth_state.dart';
 
-/// Controls Notion OAuth sign-in flow.
 class AuthCubit extends Cubit<AuthState> {
-  final SignInWithNotionUseCase signInWithNotion;
+  final AuthRepository authRep;
 
-  AuthCubit({required this.signInWithNotion}) : super(const AuthInitial());
+  AuthCubit({required this.authRep}) : super(const AuthInitial());
 
   Future<void> signIn() async {
     emit(const AuthLoading());
-    final result = await signInWithNotion();
+    final result = await authRep.signInWithNotion();
     result.fold(
       (failure) {
         if (!isClosed) emit(AuthFailure(message: failure.message));

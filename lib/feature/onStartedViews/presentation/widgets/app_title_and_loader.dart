@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pagebridge/core/constants/constants.dart';
 import 'package:pagebridge/core/theme/app_colors.dart';
 
 class AppTitleAndLoader extends StatelessWidget {
@@ -34,7 +35,7 @@ class AppTitleAndLoader extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                'PageBridge',
+                AppConstants.appName,
                 style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,

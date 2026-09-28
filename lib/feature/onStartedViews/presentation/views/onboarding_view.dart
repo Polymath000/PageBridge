@@ -24,25 +24,23 @@ class _OnboardingViewState extends State<OnboardingView> {
 
   final List<OnboardingPageData> _pages = const [
     OnboardingPageData(
-      title: 'Welcome to PageBridge',
+      title: 'Bridge the Gap to Notion',
       description:
-          'Capture ideas fast and sync them to your Notion workspace in '
-          'seconds.',
-      primaryActionLabel: 'Get started',
+          'Capture ideas instantly to your Notion databases without opening the full app.',
+      primaryActionLabel: 'Next',
       visualBuilder: WelcomeVisual.new,
     ),
     OnboardingPageData(
-      title: 'Private by design',
-      description: 'Your activity is for your eyes only.',
-      primaryActionLabel: 'Continue',
+      title: 'Your Data, Your Notion',
+      description: 'Your data stays yours. Sign in securely via OAuth directly to your Notion workspace.',
+      primaryActionLabel: 'Next',
       visualBuilder: PrivacyVisual.new,
     ),
     OnboardingPageData(
-      title: 'Pick a database. Create a page.',
+      title: 'Frictionless Capture',
       description:
-          'Tap a database to open a quick form. Supports text, select, dates, '
-          'and relations.',
-      primaryActionLabel: 'Start creating',
+          'Choose a database, fill properties, and save. We handle text, dates, and relations seamlessly.',
+      primaryActionLabel: 'Connect to Notion',
       visualBuilder: WorkflowVisual.new,
     ),
   ];
@@ -95,10 +93,38 @@ class _OnboardingViewState extends State<OnboardingView> {
                     onPageChanged: (index) => _pageIndex.value = index,
                     itemBuilder: (context, index) {
                       final page = _pages[index];
-                      return OnboardingPage(
-                        title: page.title,
-                        description: page.description,
-                        visualBuilder: page.visualBuilder,
+                      return AnimatedBuilder(
+                        animation: _pageController,
+                        builder: (context, child) {
+                          double pageOffset = 0.0;
+                          if (_pageController.position.haveDimensions) {
+                            pageOffset = _pageController.page! - index;
+                          } else {
+                            pageOffset = _pageIndex.value.toDouble() - index;
+                          }
+
+                          // Calculate opacity and scale based on how far the page is from the center
+                          final opacity = (1 - pageOffset.abs()).clamp(0.0, 1.0);
+                          final scale = 0.85 + (0.15 * opacity);
+                          // Slight vertical parallax effect
+                          final translateY = pageOffset.abs() * 50.0;
+
+                          return Opacity(
+                            opacity: opacity,
+                            child: Transform(
+                              transform: Matrix4.identity()
+                                ..translate(0.0, translateY)
+                                ..scale(scale, scale),
+                              alignment: Alignment.center,
+                              child: child,
+                            ),
+                          );
+                        },
+                        child: OnboardingPage(
+                          title: page.title,
+                          description: page.description,
+                          visualBuilder: page.visualBuilder,
+                        ),
                       );
                     },
                   ),
