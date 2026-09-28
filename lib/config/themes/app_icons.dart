@@ -30,4 +30,25 @@ class AppIcons {
   static final IconData lightMode = Icons.light_mode_rounded;
   static final IconData search = FontAwesomeIcons.magnifyingGlass.data;
   static final IconData logout = Icons.logout_rounded;
+
+  // New additions
+  static final IconData arrowBack = Icons.arrow_back_ios_new;
+  static final IconData inbox = Icons.inbox_outlined;
+  static final IconData materialSearch = Icons.search;
+  static final IconData clear = Icons.clear;
+  static final IconData star = Icons.star;
+  static final IconData circle = Icons.circle;
+  static final IconData checkBoxMaterial = Icons.check_box;
+  static final IconData checkBoxBlank = Icons.check_box_outline_blank;
+  static final IconData searchOff = Icons.search_off;
+  static final IconData lock = Icons.lock;
+  static final IconData lockOutline = Icons.lock_outline_rounded;
+  static final IconData arrowUp = Icons.arrow_upward;
+  static final IconData description = Icons.description;
+  static final IconData openInNew = Icons.open_in_new;
+  static final IconData storageOutlined = Icons.storage_outlined;
+  static final IconData storageRounded = Icons.storage_rounded;
+  static final IconData historyRounded = Icons.history_rounded;
+  static final IconData materialLink = Icons.link;
+  static final IconData arrowForwardRounded = Icons.arrow_forward_ios_rounded;
 }

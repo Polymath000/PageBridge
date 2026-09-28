@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pagebridge/config/themes/app_icons.dart';
 
 class DayNightSwitch extends StatefulWidget {
   final bool value;
@@ -318,27 +319,27 @@ class _DayNightSwitchState extends State<DayNightSwitch>
           Positioned(
             top: 0,
             left: 0.5 * em,
-            child: Icon(Icons.star, color: _starsColor, size: 0.5 * em),
+            child: Icon(AppIcons.star, color: _starsColor, size: 0.5 * em),
           ),
           Positioned(
             top: 1 * em,
             left: 2 * em,
-            child: Icon(Icons.star, color: _starsColor, size: 0.4 * em),
+            child: Icon(AppIcons.star, color: _starsColor, size: 0.4 * em),
           ),
           Positioned(
             top: 2 * em,
             left: 0 * em,
-            child: Icon(Icons.star, color: _starsColor, size: 0.3 * em),
+            child: Icon(AppIcons.star, color: _starsColor, size: 0.3 * em),
           ),
           Positioned(
             top: 1.5 * em,
             left: 1 * em,
-            child: Icon(Icons.circle, color: _starsColor, size: 0.15 * em),
+            child: Icon(AppIcons.circle, color: _starsColor, size: 0.15 * em),
           ),
           Positioned(
             top: 0.5 * em,
             left: 1.5 * em,
-            child: Icon(Icons.circle, color: _starsColor, size: 0.15 * em),
+            child: Icon(AppIcons.circle, color: _starsColor, size: 0.15 * em),
           ),
         ],
       ),

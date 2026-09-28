@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pagebridge/config/themes/app_icons.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pagebridge/core/helpers/custom_empty_state.dart';
 import 'package:pagebridge/core/utls/error_widget.dart';
@@ -62,9 +63,9 @@ class _DatabasesListState extends State<DatabasesList> {
         if (state is DatabasesSuccess) {
           final items = state.databases;
           if (items.isEmpty) {
-            return const SliverToBoxAdapter(
+            return SliverToBoxAdapter(
               child: CustomEmptyState(
-                icon: Icons.storage_outlined,
+                icon: AppIcons.storageOutlined,
                 title: 'No databases found',
                 subtitle:
                     'Connect a database in Notion to get started,\nor try a different search.',
@@ -88,7 +89,7 @@ class _DatabasesListState extends State<DatabasesList> {
             }, childCount: items.length + (state.isPaginating ? 1 : 0)),
           );
         }
-        return const SliverToBoxAdapter(child: SizedBox.shrink());
+        return SliverToBoxAdapter(child: SizedBox.shrink());
       },
     );
   }

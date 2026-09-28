@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pagebridge/config/themes/app_icons.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pagebridge/feature/databases/presentation/views/home_view.dart';
 import 'package:pagebridge/feature/databases/presentation/views/recent_pages_feed.dart';
@@ -58,13 +59,13 @@ class MainLayoutView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     BootomNavItem(
-                      icon: Icons.storage_rounded,
+                      icon: AppIcons.storageRounded,
                       label: 'Databases',
                       isSelected: currentIndex == 0,
                       onTap: () => context.read<MainLayoutCubit>().changeTab(0),
                     ),
                     BootomNavItem(
-                      icon: Icons.history_rounded,
+                      icon: AppIcons.historyRounded,
                       label: 'Recent',
                       isSelected: currentIndex == 1,
                       onTap: () => context.read<MainLayoutCubit>().changeTab(1),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pagebridge/config/themes/app_icons.dart';
 import 'package:pagebridge/config/themes/app_text_style.dart';
 
 
@@ -11,12 +12,12 @@ class CustomEmptyState extends StatelessWidget {
     super.key,
     required this.title,
     this.subtitle,
-    this.icon = Icons.inbox_outlined,
+    this.icon,
   });
 
   final String title;
   final String? subtitle;
-  final IconData icon;
+  final IconData? icon;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class CustomEmptyState extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 56, color: colorScheme.onSurfaceVariant),
+            Icon(icon ?? AppIcons.inbox, size: 56, color: colorScheme.onSurfaceVariant),
             const SizedBox(height: 16),
             Text(
               title,

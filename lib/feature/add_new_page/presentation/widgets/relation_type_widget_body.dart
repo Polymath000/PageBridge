@@ -96,7 +96,7 @@ class _RelationTypeWidgetBodyState extends State<RelationTypeWidgetBody> {
                   selectedBackgroundColor: selectedBg,
                   textColor: textColor,
                   selectedIcon: Icon(AppIcons.checkbox, color: accentColor),
-                  disabledIcon: Icon(Icons.lock, color: hintColor),
+                  disabledIcon: Icon(AppIcons.lock, color: hintColor),
                 ),
               ),
 

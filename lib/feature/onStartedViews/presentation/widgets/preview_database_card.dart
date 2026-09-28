@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pagebridge/config/themes/app_icons.dart';
 import 'package:pagebridge/core/theme/app_colors.dart';
 
 class PreviewDatabaseCard extends StatelessWidget {
@@ -37,7 +38,7 @@ class PreviewDatabaseCard extends StatelessWidget {
             ),
           ),
           Icon(
-            Icons.arrow_forward_ios_rounded,
+            AppIcons.arrowForwardRounded,
             size: 14,
             color: foregroundColor.withValues(alpha: 0.7),
           ),

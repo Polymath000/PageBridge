@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:pagebridge/config/themes/app_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pagebridge/config/themes/app_text_style.dart';
@@ -74,12 +75,12 @@ class _RecentPagesFeedState extends State<RecentPagesFeed> {
                                     side: BorderSide(color: Colors.grey.withValues(alpha: 0.2)),
                                   ),
                                   child: ListTile(
-                                    leading: const Icon(Icons.description),
+                                    leading: Icon(AppIcons.description),
                                     title: Text(
                                       'Loading Recent Page Title...',
                                       style: AppTextStyles.titleMedium?.copyWith(fontSize: 15),
                                     ),
-                                    trailing: const Icon(Icons.open_in_new, size: 20, color: Colors.grey),
+                                    trailing: Icon(AppIcons.openInNew, size: 20, color: Colors.grey),
                                   ),
                                 ),
                               );
@@ -128,14 +129,14 @@ class _RecentPagesFeedState extends State<RecentPagesFeed> {
                                               width: 24,
                                               height: 24,
                                               errorBuilder: (context, error, stackTrace) =>
-                                                  const Icon(Icons.description),
+                                                  Icon(AppIcons.description),
                                             )
-                                          : const Icon(Icons.description),
+                                          : Icon(AppIcons.description),
                                   title: Text(
                                     page.title,
                                     style: AppTextStyles.titleMedium?.copyWith(fontSize: 15),
                                   ),
-                                  trailing: const Icon(Icons.open_in_new, size: 20, color: Colors.grey),
+                                  trailing: Icon(AppIcons.openInNew, size: 20, color: Colors.grey),
                                   onTap: () {
                                     if (page.url.isNotEmpty) {
                                       launchUrl(

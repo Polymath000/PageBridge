@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pagebridge/config/themes/app_icons.dart';
 
 class PrivacyVisual extends StatelessWidget {
   const PrivacyVisual({super.key});
@@ -21,7 +22,7 @@ class PrivacyVisual extends StatelessWidget {
         ),
       ),
       child: Icon(
-        Icons.lock_outline_rounded,
+        AppIcons.lockOutline,
         size: 62,
         color: foreground,
       ),

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:pagebridge/config/themes/app_icons.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -59,10 +60,10 @@ class _CustomSearchTextFieldState extends State<CustomSearchTextField> {
             hintStyle: TextStyle(color: iconColor),
             filled: true,
             fillColor: fillColor,
-            prefixIcon: Icon(Icons.search, color: iconColor),
+            prefixIcon: Icon(AppIcons.materialSearch, color: iconColor),
             suffixIcon: value.text.isNotEmpty
                 ? IconButton(
-                    icon: Icon(Icons.clear, color: iconColor),
+                    icon: Icon(AppIcons.clear, color: iconColor),
                     onPressed: () {
                       searchController.clear();
                       _debounce?.cancel();

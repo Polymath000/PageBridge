@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pagebridge/config/themes/app_icons.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagebridge/core/theme/app_colors.dart';
@@ -174,7 +175,7 @@ class _RelationSearchViewState extends State<RelationSearchView> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.search_off, size: 64.sp, color: AppColors.grey),
+          Icon(AppIcons.searchOff, size: 64.sp, color: AppColors.grey),
           SizedBox(height: 16.h),
           Text(
             "No pages found",

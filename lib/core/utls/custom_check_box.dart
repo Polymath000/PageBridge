@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pagebridge/config/themes/app_icons.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagebridge/core/theme/app_colors.dart';
 
@@ -41,7 +42,7 @@ class _CustomCheckBoxState extends State<CustomCheckBox> {
             widget.onChanged?.call(isButtonPressed);
           },
           child: Icon(
-            isButtonPressed ? Icons.check_box : Icons.check_box_outline_blank,
+            isButtonPressed ? AppIcons.checkBoxMaterial : AppIcons.checkBoxBlank,
             color: isButtonPressed ? AppColors.darkBlue : AppColors.grey,
             size: 22.sp,
             fontWeight: FontWeight.w100,

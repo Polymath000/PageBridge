@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:pagebridge/config/themes/app_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pagebridge/core/services/shared_preferences_singleton.dart';
@@ -38,8 +39,11 @@ class _HomeViewState extends State<HomeView> {
 
   void _scrollToTop() {
     if (_databasesScrollController.hasClients) {
-      _databasesScrollController.animateTo(0,
-          duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
+      _databasesScrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
     }
   }
 
@@ -79,7 +83,8 @@ class _HomeViewState extends State<HomeView> {
               onPressed: _scrollToTop,
               backgroundColor: Theme.of(context).primaryColor,
               foregroundColor: Colors.white,
-              child: const Icon(Icons.arrow_upward),
+              tooltip: 'scroll up',
+              child: Icon(AppIcons.arrowUp),
             )
           : null,
     );
@@ -92,4 +97,3 @@ class _HomeViewState extends State<HomeView> {
     super.dispose();
   }
 }
-

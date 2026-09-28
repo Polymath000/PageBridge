@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pagebridge/config/themes/app_icons.dart';
 
 class MultiSelectItem<T> {
   final T value;
@@ -208,7 +209,7 @@ class _CustomMultiDropdownState<T> extends State<CustomMultiDropdown<T>> {
         decoration: InputDecoration(
           hintText: 'Search...',
 
-          prefixIcon: const Icon(Icons.search),
+          prefixIcon: Icon(AppIcons.materialSearch),
 
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
         ),
