@@ -9,10 +9,14 @@ on:
         options:
           - staging 
           - production
+  repository_dispatch:
+    types:
+      - incident_report 
+      
 
 jobs: 
   deploy:
     runs-on: ubuntu-latest
     steps:
       - name: deploy app
-        run: echo "deploying the app..."
+        run: echo "deploying the app to ${{inputs.environment}}"
