@@ -75,14 +75,12 @@ class _DatabasesListState extends State<DatabasesList> {
           return SliverList(
             delegate: SliverChildBuilderDelegate((context, index) {
               if (index >= items.length) {
-                return SizedBox(
-                  height: MediaQuery.sizeOf(context).height,
-                  child: Column(
-                    children: List.generate(
-                      (MediaQuery.sizeOf(context).height * 0.012).toInt(),
-                      (index) => CustomSkeletonizerDatabase(),
-                    ),
-                  ),
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CustomSkeletonizerDatabase(),
+                    CustomSkeletonizerDatabase(),
+                  ],
                 );
               }
               return DatabaseCard(database: items[index]);

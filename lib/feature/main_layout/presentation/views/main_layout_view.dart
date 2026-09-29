@@ -15,7 +15,13 @@ class MainLayoutView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<MainLayoutCubit, int>(
       builder: (context, currentIndex) {
-        return SafeArea(
+        return PopScope(
+          canPop: currentIndex == 0,
+          onPopInvokedWithResult: (didPop, result) {
+            if (didPop) return;
+            context.read<MainLayoutCubit>().changeTab(0);
+          },
+          child: SafeArea(
           child: Scaffold(
             extendBody: true,
             resizeToAvoidBottomInset: false,
@@ -24,23 +30,13 @@ class MainLayoutView extends StatelessWidget {
                 const CustomAnimationBackground(),
 
                 Positioned.fill(
-                  child: AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 250),
-                    switchInCurve: Curves.easeInOut,
-                    switchOutCurve: Curves.easeInOut,
-                    transitionBuilder: (child, animation) {
-                      return FadeTransition(
-                        opacity: animation,
-                        child: SlideTransition(
-                          position: Tween<Offset>(
-                            begin: const Offset(0, 0.05),
-                            end: Offset.zero,
-                          ).animate(animation),
-                          child: child,
-                        ),
-                      );
-                    },
-                    child: _buildPage(currentIndex),
+                  child: IndexedStack(
+                    index: currentIndex,
+                    children: [
+                      const HomeView(),
+                      const RecentPagesFeed(),
+                      const SettingsView(),
+                    ],
                   ),
                 ),
                 Positioned(
@@ -108,24 +104,10 @@ class MainLayoutView extends StatelessWidget {
               ],
             ),
           ),
+        ),
         );
       },
     );
   }
 
-  Widget _buildPage(int index) {
-    switch (index) {
-      case 0:
-        return const HomeView(key: ValueKey(0));
-      case 1:
-        return RecentPagesFeed(
-          key: const ValueKey(1),
-          scrollController: ScrollController(),
-        );
-      case 2:
-        return const SettingsView(key: ValueKey(2));
-      default:
-        return const HomeView(key: ValueKey(0));
-    }
-  }
 }

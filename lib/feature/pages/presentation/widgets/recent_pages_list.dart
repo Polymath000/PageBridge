@@ -73,18 +73,16 @@ class _RecentPagesListState extends State<RecentPagesList> {
           return SliverList(
             delegate: SliverChildBuilderDelegate((context, index) {
               if (index >= items.length) {
-                return SizedBox(
-                  height: MediaQuery.sizeOf(context).height,
-                  child: Column(
-                    children: List.generate(
-                      (MediaQuery.sizeOf(context).height * 0.012).toInt(),
-                      (index) => const CustomSkeletonizerRecentPage(),
-                    ),
-                  ),
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const CustomSkeletonizerRecentPage(),
+                    const CustomSkeletonizerRecentPage(),
+                  ],
                 );
               }
               return RecentPageCard(page: items[index]);
-            }, childCount: items.length + (state.hasMore ? 1 : 0)),
+            }, childCount: items.length + (state.isPaginating ? 1 : 0)),
           );
         }
         return const SliverToBoxAdapter(child: SizedBox.shrink());

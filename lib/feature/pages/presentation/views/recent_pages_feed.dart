@@ -8,8 +8,7 @@ import 'package:pagebridge/core/helpers/custom_floating_action_button.dart';
 import 'package:pagebridge/feature/pages/presentation/widgets/recent_pages_feed_body.dart';
 
 class RecentPagesFeed extends StatefulWidget {
-  const RecentPagesFeed({super.key, required this.scrollController});
-  final ScrollController scrollController;
+  const RecentPagesFeed({super.key});
 
   @override
   State<RecentPagesFeed> createState() => _RecentPagesFeedState();
@@ -17,26 +16,28 @@ class RecentPagesFeed extends StatefulWidget {
 
 class _RecentPagesFeedState extends State<RecentPagesFeed> {
   final ValueNotifier<bool> _showFab = ValueNotifier<bool>(false);
+  late final ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
-    widget.scrollController.addListener(_scrollListener);
+    _scrollController = ScrollController();
+    _scrollController.addListener(_scrollListener);
   }
 
   void _scrollListener() {
-    if (widget.scrollController.hasClients) {
-      if (widget.scrollController.offset > 200 && !_showFab.value) {
+    if (_scrollController.hasClients) {
+      if (_scrollController.offset > 200 && !_showFab.value) {
         _showFab.value = true;
-      } else if (widget.scrollController.offset <= 200 && _showFab.value) {
+      } else if (_scrollController.offset <= 200 && _showFab.value) {
         _showFab.value = false;
       }
     }
   }
 
   void _scrollToTop() {
-    if (widget.scrollController.hasClients) {
-      widget.scrollController.animateTo(
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
         0,
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
@@ -47,7 +48,8 @@ class _RecentPagesFeedState extends State<RecentPagesFeed> {
   @override
   void dispose() {
     _showFab.dispose();
-    widget.scrollController.removeListener(_scrollListener);
+    _scrollController.removeListener(_scrollListener);
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -69,11 +71,11 @@ class _RecentPagesFeedState extends State<RecentPagesFeed> {
                 color: Theme.of(context).colorScheme.primary,
                 backgroundColor: Theme.of(context).colorScheme.surface,
                 child: CustomScrollView(
-                  controller: widget.scrollController,
+                  controller: _scrollController,
                   slivers: [
                     CustomAppBar(title: 'Recent Pages', showActions: false),
                     RecentPagesFeedBody(
-                      scrollController: widget.scrollController,
+                      scrollController: _scrollController,
                     ),
                     const SliverToBoxAdapter(child: SizedBox(height: 100)),
                   ],
