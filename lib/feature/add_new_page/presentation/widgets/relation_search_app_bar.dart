@@ -4,7 +4,7 @@ import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:pagebridge/config/themes/app_text_style.dart';
 
 import 'package:pagebridge/core/helpers/custom_back_arrow.dart';
-import 'package:pagebridge/feature/databases/domain/entities/page_entity.dart';
+import 'package:pagebridge/feature/pages/domain/entities/page_entity.dart';
 
 PreferredSizeWidget relationSearchAppBar({
   required BuildContext context,

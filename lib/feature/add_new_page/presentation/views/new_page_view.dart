@@ -6,10 +6,10 @@ import 'package:pagebridge/core/helpers/custom_show_snack_bar.dart';
 import 'package:pagebridge/core/utls/custom_loading_indecator.dart';
 import 'package:pagebridge/core/utls/setup_service_locator_getit.dart';
 import 'package:pagebridge/feature/add_new_page/domain/repo/create_new_page_repo.dart';
-import 'package:pagebridge/feature/add_new_page/domain/repo/return_pages_repo.dart';
+import 'package:pagebridge/feature/pages/domain/repo/return_pages_repo.dart';
 import 'package:pagebridge/feature/databases/domain/entities/database_entity.dart';
 import 'package:pagebridge/feature/add_new_page/presentation/controllers/new_page_cubit/new_page_cubit.dart';
-import 'package:pagebridge/feature/add_new_page/presentation/controllers/return_pages_cubit/return_pages_cubit.dart';
+import 'package:pagebridge/feature/pages/presentation/controllers/return_pages_cubit/return_pages_cubit.dart';
 import 'package:pagebridge/feature/add_new_page/presentation/widgets/new_page_view_body.dart';
 
 class NewPageView extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pagebridge/config/themes/app_icons.dart';
 import 'package:pagebridge/config/themes/app_text_style.dart';
-import 'package:pagebridge/feature/databases/domain/entities/page_entity.dart';
+import 'package:pagebridge/feature/pages/domain/entities/page_entity.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class RecentPageCard extends StatelessWidget {

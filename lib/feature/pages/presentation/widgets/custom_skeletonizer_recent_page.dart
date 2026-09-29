@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pagebridge/feature/databases/domain/entities/page_entity.dart';
-import 'package:pagebridge/feature/databases/presentation/widgets/recent_page_card.dart';
+import 'package:pagebridge/feature/pages/domain/entities/page_entity.dart';
+import 'package:pagebridge/feature/pages/presentation/widgets/recent_page_card.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class CustomSkeletonizerRecentPage extends StatelessWidget {

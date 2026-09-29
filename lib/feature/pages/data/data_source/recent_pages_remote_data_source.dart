@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:pagebridge/core/constants/constants.dart';
 import 'package:pagebridge/core/database/api/dio_consumer.dart';
 import 'package:pagebridge/core/database/api/end_ponits.dart';
-import 'package:pagebridge/feature/databases/data/model/page_model.dart';
-import 'package:pagebridge/feature/databases/domain/entities/page_entity.dart';
+import 'package:pagebridge/feature/pages/data/model/page_model.dart';
+import 'package:pagebridge/feature/pages/domain/entities/page_entity.dart';
 
 abstract class RecentPagesRemoteDataSource {
   Future<Map<String, dynamic>> getRecentPages({

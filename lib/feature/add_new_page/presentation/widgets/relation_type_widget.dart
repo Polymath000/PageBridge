@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagebridge/config/routes/on_generate_routes.dart';
 import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:pagebridge/config/themes/app_text_style.dart';
-import 'package:pagebridge/feature/databases/domain/entities/page_entity.dart';
+import 'package:pagebridge/feature/pages/domain/entities/page_entity.dart';
 import 'package:pagebridge/feature/databases/domain/entities/property_entity.dart';
 
 class RelationTypeWidget extends StatefulWidget {

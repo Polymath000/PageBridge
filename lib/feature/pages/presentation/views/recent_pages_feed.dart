@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pagebridge/core/utls/setup_service_locator_getit.dart';
-import 'package:pagebridge/feature/databases/domain/repo/recent_pages_repo.dart';
-import 'package:pagebridge/feature/databases/presentation/controllers/recent_pages_cubit/recent_pages_cubit.dart';
-import 'package:pagebridge/feature/databases/presentation/widgets/home_app_bar.dart';
-import 'package:pagebridge/feature/databases/presentation/widgets/custom_floating_action_button.dart';
-import 'package:pagebridge/feature/databases/presentation/widgets/recent_pages_feed_body.dart';
+import 'package:pagebridge/feature/pages/domain/repo/recent_pages_repo.dart';
+import 'package:pagebridge/feature/pages/presentation/controllers/recent_pages_cubit/recent_pages_cubit.dart';
+import 'package:pagebridge/core/helpers/custom_app_bar.dart';
+import 'package:pagebridge/core/helpers/custom_floating_action_button.dart';
+import 'package:pagebridge/feature/pages/presentation/widgets/recent_pages_feed_body.dart';
 
 class RecentPagesFeed extends StatefulWidget {
   const RecentPagesFeed({super.key, required this.scrollController});
@@ -71,7 +71,7 @@ class _RecentPagesFeedState extends State<RecentPagesFeed> {
                 child: CustomScrollView(
                   controller: widget.scrollController,
                   slivers: [
-                    HomeAppBar(title: 'Recent Pages', showActions: false),
+                    CustomAppBar(title: 'Recent Pages', showActions: false),
                     RecentPagesFeedBody(
                       scrollController: widget.scrollController,
                     ),

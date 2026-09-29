@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pagebridge/config/themes/app_icons.dart';
 import 'package:pagebridge/core/helpers/custom_empty_state.dart';
 import 'package:pagebridge/core/utls/error_widget.dart';
-import 'package:pagebridge/feature/databases/presentation/controllers/recent_pages_cubit/recent_pages_cubit.dart';
-import 'package:pagebridge/feature/databases/presentation/widgets/custom_skeletonizer_recent_page.dart';
-import 'package:pagebridge/feature/databases/presentation/widgets/recent_page_card.dart';
+import 'package:pagebridge/feature/pages/presentation/controllers/recent_pages_cubit/recent_pages_cubit.dart';
+import 'package:pagebridge/feature/pages/presentation/widgets/custom_skeletonizer_recent_page.dart';
+import 'package:pagebridge/feature/pages/presentation/widgets/recent_page_card.dart';
 
 class RecentPagesList extends StatefulWidget {
   final ScrollController controller;

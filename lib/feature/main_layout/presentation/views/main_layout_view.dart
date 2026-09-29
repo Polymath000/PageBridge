@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pagebridge/feature/auth/presentation/widgets/custom_animation_background.dart';
 import "package:pagebridge/feature/settings/presentation/views/settings_view.dart";
 import 'package:pagebridge/feature/databases/presentation/views/home_view.dart';
-import 'package:pagebridge/feature/databases/presentation/views/recent_pages_feed.dart';
+import 'package:pagebridge/feature/pages/presentation/views/recent_pages_feed.dart';
 import 'package:pagebridge/feature/main_layout/presentation/widgets/bootom_nav_item.dart';
 import '../cubit/main_layout_cubit.dart';
 

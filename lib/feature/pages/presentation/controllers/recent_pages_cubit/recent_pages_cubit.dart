@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:pagebridge/feature/databases/domain/entities/page_entity.dart';
-import 'package:pagebridge/feature/databases/domain/repo/recent_pages_repo.dart';
+import 'package:pagebridge/feature/pages/domain/entities/page_entity.dart';
+import 'package:pagebridge/feature/pages/domain/repo/recent_pages_repo.dart';
 
 part 'recent_pages_state.dart';
 

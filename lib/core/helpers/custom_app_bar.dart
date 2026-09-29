@@ -5,8 +5,8 @@ import "package:flutter_bloc/flutter_bloc.dart";
 import "package:pagebridge/feature/main_layout/presentation/cubit/main_layout_cubit.dart";
 import 'package:pagebridge/config/themes/app_text_style.dart';
 
-class HomeAppBar extends StatelessWidget {
-  const HomeAppBar({
+class CustomAppBar extends StatelessWidget {
+  const CustomAppBar({
     super.key,
     this.title = 'Databases',
     this.showActions = true,
@@ -30,9 +30,7 @@ class HomeAppBar extends StatelessWidget {
       elevation: 0,
       expandedHeight: 120,
       flexibleSpace: ClipRRect(
-        borderRadius: const BorderRadius.vertical(
-          bottom: Radius.circular(24),
-        ),
+        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(24)),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
           child: Container(

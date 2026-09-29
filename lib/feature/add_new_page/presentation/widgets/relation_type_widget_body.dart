@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:multi_dropdown/multi_dropdown.dart';
 import 'package:pagebridge/config/themes/app_icons.dart';
 import 'package:pagebridge/feature/databases/domain/entities/property_entity.dart';
-import 'package:pagebridge/feature/add_new_page/presentation/controllers/return_pages_cubit/return_pages_cubit.dart';
+import 'package:pagebridge/feature/pages/presentation/controllers/return_pages_cubit/return_pages_cubit.dart';
 
 class RelationTypeWidgetBody extends StatefulWidget {
   const RelationTypeWidgetBody({

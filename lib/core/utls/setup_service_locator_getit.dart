@@ -11,16 +11,16 @@ import 'package:pagebridge/feature/auth/data/data_source/auth_remote_data_source
 import 'package:pagebridge/feature/auth/data/repos/auth_repo_impl.dart';
 import 'package:pagebridge/feature/add_new_page/data/data_source/create_new_page_data_source.dart';
 import 'package:pagebridge/feature/databases/data/data_source/database_remote_data_source.dart';
-import 'package:pagebridge/feature/databases/data/data_source/recent_pages_remote_data_source.dart';
-import 'package:pagebridge/feature/add_new_page/data/data_source/return_pages_remote_data_source.dart';
+import 'package:pagebridge/feature/pages/data/data_source/recent_pages_remote_data_source.dart';
+import 'package:pagebridge/feature/pages/data/data_source/return_pages_remote_data_source.dart';
 import 'package:pagebridge/feature/add_new_page/data/repos/create_new_page_repo_impl.dart';
 import 'package:pagebridge/feature/databases/data/repos/database_repo_impl.dart';
-import 'package:pagebridge/feature/databases/data/repos/recent_pages_repo_impl.dart';
-import 'package:pagebridge/feature/add_new_page/data/repos/return_pages_repo_impl.dart';
+import 'package:pagebridge/feature/pages/data/repos/recent_pages_repo_impl.dart';
+import 'package:pagebridge/feature/pages/data/repos/return_pages_repo_impl.dart';
 import 'package:pagebridge/feature/add_new_page/domain/repo/create_new_page_repo.dart';
 import 'package:pagebridge/feature/databases/domain/repo/database_repo.dart';
-import 'package:pagebridge/feature/databases/domain/repo/recent_pages_repo.dart';
-import 'package:pagebridge/feature/add_new_page/domain/repo/return_pages_repo.dart';
+import 'package:pagebridge/feature/pages/domain/repo/recent_pages_repo.dart';
+import 'package:pagebridge/feature/pages/domain/repo/return_pages_repo.dart';
 
 final getit = GetIt.instance;
 

@@ -2,8 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:pagebridge/core/errors/failure.dart';
 import 'package:pagebridge/core/network/network_info.dart';
-import 'package:pagebridge/feature/databases/data/data_source/recent_pages_remote_data_source.dart';
-import 'package:pagebridge/feature/databases/domain/repo/recent_pages_repo.dart';
+import 'package:pagebridge/feature/pages/data/data_source/recent_pages_remote_data_source.dart';
+import 'package:pagebridge/feature/pages/domain/repo/recent_pages_repo.dart';
 
 class RecentPagesRepoImpl extends RecentPagesRepo {
   final RecentPagesRemoteDataSource remoteDataSource;

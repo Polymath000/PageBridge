@@ -4,9 +4,9 @@ import "package:pagebridge/feature/main_layout/presentation/cubit/main_layout_cu
 import 'package:pagebridge/core/utls/setup_service_locator_getit.dart';
 import 'package:pagebridge/feature/databases/domain/repo/database_repo.dart';
 import 'package:pagebridge/feature/databases/presentation/controllers/return_databases_cubit/return_databases_cubit.dart';
-import 'package:pagebridge/feature/databases/presentation/widgets/home_app_bar.dart';
+import 'package:pagebridge/core/helpers/custom_app_bar.dart';
 import 'package:pagebridge/feature/databases/presentation/widgets/home_view_body.dart';
-import 'package:pagebridge/feature/databases/presentation/widgets/custom_floating_action_button.dart';
+import 'package:pagebridge/core/helpers/custom_floating_action_button.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -79,7 +79,7 @@ class _HomeViewState extends State<HomeView> {
                     child: CustomScrollView(
                       controller: _databasesScrollController,
                       slivers: [
-                        HomeAppBar(title: databasesTitle),
+                        CustomAppBar(title: databasesTitle),
                         HomeViewBody(
                           scrollController: _databasesScrollController,
                         ),

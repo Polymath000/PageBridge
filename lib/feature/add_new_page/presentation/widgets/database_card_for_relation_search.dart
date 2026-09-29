@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagebridge/config/themes/app_text_style.dart';
-import 'package:pagebridge/feature/databases/domain/entities/page_entity.dart';
+import 'package:pagebridge/feature/pages/domain/entities/page_entity.dart';
 
 class DatabaseCardForRelationSearch extends StatelessWidget {
   const DatabaseCardForRelationSearch({
