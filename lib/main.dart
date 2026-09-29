@@ -4,7 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:pagebridge/core/database/cache/secure_storage.dart';
 import 'package:pagebridge/core/services/shared_preferences_singleton.dart';
 import 'package:pagebridge/core/utls/setup_service_locator_getit.dart';
-import 'package:pagebridge/feature/databases/presentation/controllers/theme_mode_cubit/theme_mode_cubit.dart';
+import 'package:pagebridge/feature/settings/presentation/controllers/theme_mode_cubit/theme_mode_cubit.dart';
 import 'package:pagebridge/main_app.dart';
 
 void main() async {

@@ -6,7 +6,7 @@ import 'package:pagebridge/config/routes/on_generate_routes.dart';
 import 'package:pagebridge/core/services/shared_preferences_singleton.dart';
 import 'package:pagebridge/core/theme/app_theme.dart';
 import 'package:pagebridge/config/themes/app_text_style.dart';
-import 'package:pagebridge/feature/databases/presentation/controllers/theme_mode_cubit/theme_mode_cubit.dart';
+import 'package:pagebridge/feature/settings/presentation/controllers/theme_mode_cubit/theme_mode_cubit.dart';
 
 class PageBridgeApp extends StatelessWidget {
   const PageBridgeApp({super.key});

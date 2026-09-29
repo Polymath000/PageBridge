@@ -7,7 +7,7 @@ import 'package:pagebridge/core/constants/constants.dart';
 import 'package:pagebridge/core/database/cache/secure_storage.dart';
 import 'package:pagebridge/core/helpers/custom_confirm_dialog.dart';
 import 'package:pagebridge/core/helpers/day_night_switch.dart';
-import 'package:pagebridge/feature/databases/presentation/controllers/theme_mode_cubit/theme_mode_cubit.dart';
+import 'package:pagebridge/feature/settings/presentation/controllers/theme_mode_cubit/theme_mode_cubit.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
