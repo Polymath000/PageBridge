@@ -3,12 +3,12 @@ import 'package:pagebridge/config/routes/on_generate_routes.dart';
 import 'package:pagebridge/core/constants/constants.dart';
 import 'package:pagebridge/core/services/shared_preferences_singleton.dart';
 import 'package:pagebridge/feature/auth/presentation/widgets/custom_animation_background.dart';
-import 'package:pagebridge/feature/onStartedViews/presentation/widgets/onboarding_footer.dart';
-import 'package:pagebridge/feature/onStartedViews/presentation/widgets/onboarding_header.dart';
-import 'package:pagebridge/feature/onStartedViews/presentation/widgets/onboarding_page.dart';
-import 'package:pagebridge/feature/onStartedViews/presentation/widgets/privacy_visual.dart';
-import 'package:pagebridge/feature/onStartedViews/presentation/widgets/welcome_visual.dart';
-import 'package:pagebridge/feature/onStartedViews/presentation/widgets/workflow_visual.dart';
+import 'package:pagebridge/feature/on_started_views/presentation/widgets/onboarding_footer.dart';
+import 'package:pagebridge/feature/on_started_views/presentation/widgets/onboarding_header.dart';
+import 'package:pagebridge/feature/on_started_views/presentation/widgets/onboarding_page.dart';
+import 'package:pagebridge/feature/on_started_views/presentation/widgets/privacy_visual.dart';
+import 'package:pagebridge/feature/on_started_views/presentation/widgets/welcome_visual.dart';
+import 'package:pagebridge/feature/on_started_views/presentation/widgets/workflow_visual.dart';
 
 class OnboardingView extends StatefulWidget {
   const OnboardingView({super.key});
@@ -32,7 +32,8 @@ class _OnboardingViewState extends State<OnboardingView> {
     ),
     OnboardingPageData(
       title: 'Your Data, Your Notion',
-      description: 'Your data stays yours. Sign in securely via OAuth directly to your Notion workspace.',
+      description:
+          'Your data stays yours. Sign in securely via OAuth directly to your Notion workspace.',
       primaryActionLabel: 'Next',
       visualBuilder: PrivacyVisual.new,
     ),
@@ -104,7 +105,10 @@ class _OnboardingViewState extends State<OnboardingView> {
                           }
 
                           // Calculate opacity and scale based on how far the page is from the center
-                          final opacity = (1 - pageOffset.abs()).clamp(0.0, 1.0);
+                          final opacity = (1 - pageOffset.abs()).clamp(
+                            0.0,
+                            1.0,
+                          );
                           final scale = 0.85 + (0.15 * opacity);
                           // Slight vertical parallax effect
                           final translateY = pageOffset.abs() * 50.0;

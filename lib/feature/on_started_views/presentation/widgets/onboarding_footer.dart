@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pagebridge/feature/onStartedViews/presentation/widgets/page_indicator.dart';
+import 'package:pagebridge/feature/on_started_views/presentation/widgets/page_indicator.dart';
 
 class OnboardingFooter extends StatelessWidget {
   final ValueNotifier<int> pageIndex;

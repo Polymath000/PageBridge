@@ -11,8 +11,8 @@ import "package:pagebridge/feature/main_layout/presentation/views/main_layout_vi
 import "package:pagebridge/feature/main_layout/presentation/cubit/main_layout_cubit.dart";
 import 'package:pagebridge/feature/add_new_page/presentation/views/new_page_view.dart';
 import 'package:pagebridge/feature/add_new_page/presentation/views/relation_search_view.dart';
-import 'package:pagebridge/feature/onStartedViews/presentation/views/onboarding_view.dart';
-import 'package:pagebridge/feature/onStartedViews/presentation/views/splash_view.dart';
+import 'package:pagebridge/feature/on_started_views/presentation/views/onboarding_view.dart';
+import 'package:pagebridge/feature/on_started_views/presentation/views/splash_view.dart';
 import 'package:pagebridge/core/helpers/page_not_found_view.dart';
 
 sealed class AppRoutes {
@@ -32,7 +32,12 @@ sealed class AppRoutes {
       case auth:
         return _fadeRoute(const AuthView());
       case home:
-        return _fadeRoute(BlocProvider(create: (_) => MainLayoutCubit(), child: const MainLayoutView()));
+        return _fadeRoute(
+          BlocProvider(
+            create: (_) => MainLayoutCubit(),
+            child: const MainLayoutView(),
+          ),
+        );
       case newPage:
         final data = settings.arguments! as DatabaseEntity;
         return _fadeRoute(NewPageView(database: data));
@@ -44,9 +49,11 @@ sealed class AppRoutes {
                 ReturnPagesCubit(repo: getit.get<ReturnPagesRepo>()),
             child: RelationSearchView(
               property: data['property'] as PropertyEntity,
-              initialSelectedPages: data['initialSelectedPages'] as List<PageEntity>,
+              initialSelectedPages:
+                  data['initialSelectedPages'] as List<PageEntity>,
               onSelectionConfirmed:
-                  data['onSelectionConfirmed'] as ValueChanged<List<PageEntity>>?,
+                  data['onSelectionConfirmed']
+                      as ValueChanged<List<PageEntity>>?,
             ),
           ),
         );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pagebridge/core/theme/app_colors.dart';
-import 'package:pagebridge/feature/onStartedViews/presentation/widgets/preview_database_card.dart';
+import 'package:pagebridge/feature/on_started_views/presentation/widgets/preview_database_card.dart';
 
 class WorkflowVisual extends StatefulWidget {
   const WorkflowVisual({super.key});
@@ -48,13 +48,13 @@ class _WorkflowVisualState extends State<WorkflowVisual>
         animation: _controller,
         builder: (context, child) {
           final time = _controller.value; // 0.0 to 1.0
-          
+
           // Compute staggers
           final showCard = time > 0.05;
           final titleProgress = ((time - 0.1) / 0.15).clamp(0.0, 1.0);
           final statusProgress = ((time - 0.3) / 0.15).clamp(0.0, 1.0);
           final dueProgress = ((time - 0.5) / 0.15).clamp(0.0, 1.0);
-          
+
           final showSaveButton = time > 0.7;
           final saveScale = showSaveButton ? 1.0 : 0.0;
           final buttonPulse = time > 0.75 && time < 0.9 ? 1.2 : 1.0;
@@ -64,7 +64,10 @@ class _WorkflowVisualState extends State<WorkflowVisual>
               AnimatedOpacity(
                 duration: const Duration(milliseconds: 300),
                 opacity: showCard ? 1.0 : 0.0,
-                child: const PreviewDatabaseCard(title: 'Ideas Database', icon: '💡'),
+                child: const PreviewDatabaseCard(
+                  title: 'Ideas Database',
+                  icon: '💡',
+                ),
               ),
               const SizedBox(height: 14),
               _AnimatedGhostField(
@@ -88,7 +91,7 @@ class _WorkflowVisualState extends State<WorkflowVisual>
                 textTheme: textTheme,
               ),
               const SizedBox(height: 14),
-              
+
               // The "Save" button that pops in
               AnimatedScale(
                 scale: saveScale * buttonPulse,
@@ -146,8 +149,9 @@ class _AnimatedGhostField extends StatelessWidget {
     final foreground = Theme.of(context).colorScheme.onSurface;
     final fillColor = foreground.withValues(alpha: isDark ? 0.08 : 0.06);
     final borderColor = foreground.withValues(alpha: isDark ? 0.14 : 0.12);
-    final labelColor =
-        isDark ? AppColors.white.withValues(alpha: 0.6) : AppColors.darkGrey;
+    final labelColor = isDark
+        ? AppColors.white.withValues(alpha: 0.6)
+        : AppColors.darkGrey;
 
     // Calculate how many characters of the value to show based on progress
     final charCount = (value.length * progress).round();
@@ -165,9 +169,7 @@ class _AnimatedGhostField extends StatelessWidget {
         children: [
           Text(
             label,
-            style: textTheme.labelMedium?.copyWith(
-              color: labelColor,
-            ),
+            style: textTheme.labelMedium?.copyWith(color: labelColor),
           ),
           const Spacer(),
           Text(

@@ -5,9 +5,9 @@ import 'package:pagebridge/core/database/cache/secure_storage.dart';
 import 'package:pagebridge/core/services/shared_preferences_singleton.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pagebridge/core/theme/app_colors.dart';
-import 'package:pagebridge/feature/onStartedViews/presentation/widgets/animated_document_card.dart';
-import 'package:pagebridge/feature/onStartedViews/presentation/widgets/app_title_and_loader.dart';
-import 'package:pagebridge/feature/onStartedViews/presentation/widgets/glowing_link_indicator.dart';
+import 'package:pagebridge/feature/on_started_views/presentation/widgets/animated_document_card.dart';
+import 'package:pagebridge/feature/on_started_views/presentation/widgets/app_title_and_loader.dart';
+import 'package:pagebridge/feature/on_started_views/presentation/widgets/glowing_link_indicator.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
