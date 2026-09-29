@@ -12,7 +12,6 @@ import 'package:pagebridge/feature/on_started_views/presentation/widgets/workflo
 
 class OnboardingView extends StatefulWidget {
   const OnboardingView({super.key});
-  static const String routeName = 'onboarding_view';
 
   @override
   State<OnboardingView> createState() => _OnboardingViewState();

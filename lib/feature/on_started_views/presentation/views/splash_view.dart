@@ -11,7 +11,6 @@ import 'package:pagebridge/feature/on_started_views/presentation/widgets/glowing
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
-  static const routeName = "splash";
 
   @override
   State<SplashView> createState() => _SplashViewState();

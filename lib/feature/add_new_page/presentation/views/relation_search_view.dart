@@ -14,7 +14,6 @@ import 'package:pagebridge/feature/add_new_page/presentation/widgets/relation_se
 import 'package:pagebridge/feature/add_new_page/presentation/widgets/relation_search_card_skeleton.dart';
 
 class RelationSearchView extends StatefulWidget {
-  static const String routeName = 'relation_search_view';
   final PropertyEntity property;
   final List<PageEntity> initialSelectedPages;
   final ValueChanged<List<PageEntity>>? onSelectionConfirmed;

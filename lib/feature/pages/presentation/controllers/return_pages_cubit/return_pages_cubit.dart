@@ -16,10 +16,8 @@ class ReturnPagesCubit extends Cubit<ReturnPagesState> {
     _cancelToken?.cancel("New search initiated");
     _cancelToken = CancelToken();
     emit(ReturnPagesLoading());
-    // final tokenfromDB = await SecureStorage.readData(key: AppConstants.tokenKey);
 
     final result = await repo.returnPages(
-      // token ?? tokenfromDB!,
       query,
       null,
       databaseId,
