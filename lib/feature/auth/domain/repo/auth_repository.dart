@@ -6,4 +6,5 @@ import '../entities/auth_token_entity.dart';
 
 abstract class AuthRepository {
   Future<Either<Failure, UserEntity>> signInWithNotion();
+  Future<void> logout();
 }

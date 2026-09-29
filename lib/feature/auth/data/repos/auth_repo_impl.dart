@@ -46,4 +46,9 @@ class AuthRepositoryImpl extends AuthRepository {
       return left(Failure(message: "Notion authentication failed."));
     }
   }
+
+  @override
+  Future<void> logout() async {
+    await localDataSource.deleteToken();
+  }
 }

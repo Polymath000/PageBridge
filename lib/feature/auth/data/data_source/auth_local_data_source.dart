@@ -6,6 +6,7 @@ import 'package:pagebridge/feature/auth/domain/entities/auth_token_entity.dart';
 
 abstract class AuthLocalDataSource {
   Future<void> saveToken(UserEntity token);
+  Future<void> deleteToken();
 }
 
 class AuthLocalDataSourceImpl implements AuthLocalDataSource {
@@ -38,5 +39,14 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
         token.ownerAvatarUrl!,
       );
     }
+  }
+
+  @override
+  Future<void> deleteToken() async {
+    await SecureStorage.deleteData(key: AppConstants.tokenKey);
+    await SharedPreferencesSingleton.remove('workspaceName');
+    await SharedPreferencesSingleton.remove('workspaceIcon');
+    await SharedPreferencesSingleton.remove('ownerName');
+    await SharedPreferencesSingleton.remove('ownerAvatarUrl');
   }
 }

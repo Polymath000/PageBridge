@@ -9,6 +9,7 @@ import 'package:pagebridge/core/services/notion_oauth_config.dart';
 import 'package:pagebridge/feature/auth/data/data_source/auth_local_data_source.dart';
 import 'package:pagebridge/feature/auth/data/data_source/auth_remote_data_source.dart';
 import 'package:pagebridge/feature/auth/data/repos/auth_repo_impl.dart';
+import 'package:pagebridge/feature/auth/domain/repo/auth_repository.dart';
 import 'package:pagebridge/feature/add_new_page/data/data_source/create_new_page_data_source.dart';
 import 'package:pagebridge/feature/databases/data/data_source/database_remote_data_source.dart';
 import 'package:pagebridge/feature/pages/data/data_source/recent_pages_remote_data_source.dart';
@@ -83,7 +84,7 @@ setUpServiceLocator() {
     () => const AuthLocalDataSourceImpl(),
   );
 
-  getit.registerLazySingleton<AuthRepositoryImpl>(
+  getit.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(
       remoteDataSource: getit.get<AuthRemoteDataSource>(),
       localDataSource: getit.get<AuthLocalDataSource>(),
