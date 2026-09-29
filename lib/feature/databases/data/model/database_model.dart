@@ -13,11 +13,11 @@ class DatabaseModel extends DatabaseEntity {
   });
 
   factory DatabaseModel.fromJson(Map<String, dynamic> json) {
-    String parsedTitle = "No Title Found";
+    String parsedTitle = "DataBase";
     if (json['title'] != null && (json['title'] as List).isNotEmpty) {
       final titleList = json['title'] as List;
       parsedTitle = titleList.map((t) => t['plain_text'] ?? '').join();
-      if (parsedTitle.isEmpty) parsedTitle = "No Title Found";
+      if (parsedTitle.isEmpty) parsedTitle = "DataBase";
     }
 
     List<PropertyModel> parsedProperties = [];

@@ -9,6 +9,7 @@ import 'package:pagebridge/feature/databases/presentation/controllers/recent_pag
 import 'package:pagebridge/feature/databases/presentation/widgets/home_app_bar.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:pagebridge/feature/databases/presentation/widgets/custom_floating_action_button.dart';
 
 class RecentPagesFeed extends StatefulWidget {
   const RecentPagesFeed({super.key, required this.scrollController});
@@ -19,199 +20,252 @@ class RecentPagesFeed extends StatefulWidget {
 }
 
 class _RecentPagesFeedState extends State<RecentPagesFeed> {
+  final ValueNotifier<bool> _showFab = ValueNotifier<bool>(false);
+
+  @override
+  void initState() {
+    super.initState();
+    widget.scrollController.addListener(_scrollListener);
+  }
+
+  void _scrollListener() {
+    if (widget.scrollController.hasClients) {
+      if (widget.scrollController.offset > 200 && !_showFab.value) {
+        _showFab.value = true;
+      } else if (widget.scrollController.offset <= 200 && _showFab.value) {
+        _showFab.value = false;
+      }
+    }
+  }
+
+  void _scrollToTop() {
+    if (widget.scrollController.hasClients) {
+      widget.scrollController.animateTo(
+        0,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _showFab.dispose();
+    widget.scrollController.removeListener(_scrollListener);
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: BlocProvider(
-        create: (context) =>
-            RecentPagesCubit(repo: getit.get<RecentPagesRepo>())
-              ..fetchRecentPages(),
-        child: Builder(
-          builder: (context) {
-            return RefreshIndicator(
-              onRefresh: () async {
-                await context.read<RecentPagesCubit>().fetchRecentPages();
-              },
-              color: Theme.of(context).colorScheme.primary,
-              backgroundColor: Theme.of(context).colorScheme.surface,
-              child: NotificationListener<ScrollNotification>(
-                onNotification: (ScrollNotification scrollInfo) {
-                  if (scrollInfo.metrics.pixels >=
-                      scrollInfo.metrics.maxScrollExtent * 0.9) {
-                    context.read<RecentPagesCubit>().fetchMore();
-                  }
-                  return false;
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: SafeArea(
+        child: BlocProvider(
+          create: (context) =>
+              RecentPagesCubit(repo: getit.get<RecentPagesRepo>())
+                ..fetchRecentPages(),
+          child: Builder(
+            builder: (context) {
+              return RefreshIndicator(
+                onRefresh: () async {
+                  await context.read<RecentPagesCubit>().fetchRecentPages();
                 },
-                child: CustomScrollView(
-                  controller: widget.scrollController,
-                  slivers: [
-                    HomeAppBar(title: 'Recent Pages', showActions: false),
-                  SliverPadding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0,
-                      vertical: 8.0,
-                    ),
-                    sliver: SliverToBoxAdapter(
-                      child: CustomSearchTextField(
-                        hintText: "Search Recent Pages",
-                        getPages: (value) {
-                          context.read<RecentPagesCubit>().search(value);
+                color: Theme.of(context).colorScheme.primary,
+                backgroundColor: Theme.of(context).colorScheme.surface,
+                child: NotificationListener<ScrollNotification>(
+                  onNotification: (ScrollNotification scrollInfo) {
+                    if (scrollInfo.metrics.pixels >=
+                        scrollInfo.metrics.maxScrollExtent * 0.9) {
+                      context.read<RecentPagesCubit>().fetchMore();
+                    }
+                    return false;
+                  },
+                  child: CustomScrollView(
+                    controller: widget.scrollController,
+                    slivers: [
+                      HomeAppBar(title: 'Recent Pages', showActions: false),
+                      SliverPadding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0,
+                          vertical: 8.0,
+                        ),
+                        sliver: SliverToBoxAdapter(
+                          child: CustomSearchTextField(
+                            hintText: "Search Recent Pages",
+                            getPages: (value) {
+                              context.read<RecentPagesCubit>().search(value);
+                            },
+                          ),
+                        ),
+                      ),
+                      BlocBuilder<RecentPagesCubit, RecentPagesState>(
+                        builder: (context, state) {
+                          if (state is RecentPagesLoading) {
+                            return Skeletonizer.sliver(
+                              enabled: true,
+                              child: SliverPadding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16.0,
+                                  vertical: 8.0,
+                                ),
+                                sliver: SliverList(
+                                  delegate: SliverChildBuilderDelegate((
+                                    context,
+                                    index,
+                                  ) {
+                                    return Padding(
+                                      padding: const EdgeInsets.only(
+                                        bottom: 12.0,
+                                      ),
+                                      child: Card(
+                                        elevation: 0,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
+                                          side: BorderSide(
+                                            color: Colors.grey.withValues(
+                                              alpha: 0.2,
+                                            ),
+                                          ),
+                                        ),
+                                        child: ListTile(
+                                          leading: Icon(AppIcons.description),
+                                          title: Text(
+                                            'Loading Recent Page Title...',
+                                            style: AppTextStyles.titleMedium
+                                                ?.copyWith(fontSize: 15),
+                                          ),
+                                          trailing: Icon(
+                                            AppIcons.openInNew,
+                                            size: 20,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }, childCount: 6),
+                                ),
+                              ),
+                            );
+                          } else if (state is RecentPagesFailure) {
+                            return SliverFillRemaining(
+                              child: Center(child: Text(state.message)),
+                            );
+                          } else if (state is RecentPagesSuccess) {
+                            if (state.pages.isEmpty) {
+                              return const SliverFillRemaining(
+                                child: Center(
+                                  child: Text('No recent pages found.'),
+                                ),
+                              );
+                            }
+                            return SliverPadding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16.0,
+                                vertical: 8.0,
+                              ),
+                              sliver: SliverList(
+                                delegate: SliverChildBuilderDelegate(
+                                  (context, index) {
+                                    if (index >= state.pages.length) {
+                                      return const Padding(
+                                        padding: EdgeInsets.all(16.0),
+                                        child: Center(
+                                          child: CircularProgressIndicator(),
+                                        ),
+                                      );
+                                    }
+                                    final page = state.pages[index];
+                                    return Padding(
+                                      padding: const EdgeInsets.only(
+                                        bottom: 12.0,
+                                      ),
+                                      child: Card(
+                                        elevation: 0,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            12,
+                                          ),
+                                          side: BorderSide(
+                                            color: Colors.grey.withValues(
+                                              alpha: 0.2,
+                                            ),
+                                          ),
+                                        ),
+                                        child: ListTile(
+                                          leading: page.iconEmoji != null
+                                              ? Text(
+                                                  page.iconEmoji!,
+                                                  style: const TextStyle(
+                                                    fontSize: 24,
+                                                  ),
+                                                )
+                                              : page.iconUrl != null
+                                              ? Image.network(
+                                                  page.iconUrl!,
+                                                  width: 24,
+                                                  height: 24,
+                                                  errorBuilder:
+                                                      (
+                                                        context,
+                                                        error,
+                                                        stackTrace,
+                                                      ) => Icon(
+                                                        AppIcons.description,
+                                                      ),
+                                                )
+                                              : Icon(AppIcons.description),
+                                          title: Text(
+                                            page.title,
+                                            style: AppTextStyles.titleMedium
+                                                ?.copyWith(fontSize: 15),
+                                          ),
+                                          trailing: Icon(
+                                            AppIcons.openInNew,
+                                            size: 20,
+                                            color: Colors.grey,
+                                          ),
+                                          onTap: () {
+                                            if (page.url.isNotEmpty) {
+                                              launchUrl(
+                                                Uri.parse(page.url),
+                                                mode: LaunchMode
+                                                    .externalApplication,
+                                              );
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  childCount: state.hasMore
+                                      ? state.pages.length + 1
+                                      : state.pages.length,
+                                ),
+                              ),
+                            );
+                          }
+                          return const SliverToBoxAdapter(
+                            child: SizedBox.shrink(),
+                          );
                         },
                       ),
-                    ),
+                      const SliverToBoxAdapter(child: SizedBox(height: 100)),
+                    ],
                   ),
-                  BlocBuilder<RecentPagesCubit, RecentPagesState>(
-                    builder: (context, state) {
-                      if (state is RecentPagesLoading) {
-                        return Skeletonizer.sliver(
-                          enabled: true,
-                          child: SliverPadding(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0,
-                              vertical: 8.0,
-                            ),
-                            sliver: SliverList(
-                              delegate: SliverChildBuilderDelegate((
-                                context,
-                                index,
-                              ) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(bottom: 12.0),
-                                  child: Card(
-                                    elevation: 0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      side: BorderSide(
-                                        color: Colors.grey.withValues(
-                                          alpha: 0.2,
-                                        ),
-                                      ),
-                                    ),
-                                    child: ListTile(
-                                      leading: Icon(AppIcons.description),
-                                      title: Text(
-                                        'Loading Recent Page Title...',
-                                        style: AppTextStyles.titleMedium
-                                            ?.copyWith(fontSize: 15),
-                                      ),
-                                      trailing: Icon(
-                                        AppIcons.openInNew,
-                                        size: 20,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }, childCount: 6),
-                            ),
-                          ),
-                        );
-                      } else if (state is RecentPagesFailure) {
-                        return SliverFillRemaining(
-                          child: Center(child: Text(state.message)),
-                        );
-                      } else if (state is RecentPagesSuccess) {
-                        if (state.pages.isEmpty) {
-                          return const SliverFillRemaining(
-                            child: Center(
-                              child: Text('No recent pages found.'),
-                            ),
-                          );
-                        }
-                        return SliverPadding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 16.0,
-                            vertical: 8.0,
-                          ),
-                          sliver: SliverList(
-                            delegate: SliverChildBuilderDelegate(
-                              (context, index) {
-                                if (index >= state.pages.length) {
-                                  return const Padding(
-                                    padding: EdgeInsets.all(16.0),
-                                    child: Center(
-                                      child: CircularProgressIndicator(),
-                                    ),
-                                  );
-                                }
-                                final page = state.pages[index];
-                                return Padding(
-                                  padding: const EdgeInsets.only(bottom: 12.0),
-                                  child: Card(
-                                    elevation: 0,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      side: BorderSide(
-                                        color: Colors.grey.withValues(
-                                          alpha: 0.2,
-                                        ),
-                                      ),
-                                    ),
-                                    child: ListTile(
-                                      leading: page.iconEmoji != null
-                                          ? Text(
-                                              page.iconEmoji!,
-                                              style: const TextStyle(
-                                                fontSize: 24,
-                                              ),
-                                            )
-                                          : page.iconUrl != null
-                                          ? Image.network(
-                                              page.iconUrl!,
-                                              width: 24,
-                                              height: 24,
-                                              errorBuilder:
-                                                  (
-                                                    context,
-                                                    error,
-                                                    stackTrace,
-                                                  ) => Icon(
-                                                    AppIcons.description,
-                                                  ),
-                                            )
-                                          : Icon(AppIcons.description),
-                                      title: Text(
-                                        page.title,
-                                        style: AppTextStyles.titleMedium
-                                            ?.copyWith(fontSize: 15),
-                                      ),
-                                      trailing: Icon(
-                                        AppIcons.openInNew,
-                                        size: 20,
-                                        color: Colors.grey,
-                                      ),
-                                      onTap: () {
-                                        if (page.url.isNotEmpty) {
-                                          launchUrl(
-                                            Uri.parse(page.url),
-                                            mode:
-                                                LaunchMode.externalApplication,
-                                          );
-                                        }
-                                      },
-                                    ),
-                                  ),
-                                );
-                              },
-                              childCount: state.hasMore
-                                  ? state.pages.length + 1
-                                  : state.pages.length,
-                            ),
-                          ),
-                        );
-                      }
-                      return const SliverToBoxAdapter(child: SizedBox.shrink());
-                    },
-                  ),
-                  const SliverToBoxAdapter(
-                    child: SizedBox(height: 100),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
+                ),
+              );
+            },
+          ),
         ),
+      ),
+      floatingActionButton: ValueListenableBuilder<bool>(
+        valueListenable: _showFab,
+        builder: (context, show, child) {
+          if (!show) return const SizedBox.shrink();
+          return CustomFloatingActionButton(onPressed: _scrollToTop);
+        },
       ),
     );
   }

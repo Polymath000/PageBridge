@@ -18,6 +18,7 @@ class MainLayoutView extends StatelessWidget {
         return SafeArea(
           child: Scaffold(
             extendBody: true,
+            resizeToAvoidBottomInset: false,
             body: Stack(
               children: [
                 const CustomAnimationBackground(),

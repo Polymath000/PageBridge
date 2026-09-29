@@ -1,13 +1,12 @@
-import 'package:pagebridge/config/themes/app_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import "package:pagebridge/feature/main_layout/presentation/cubit/main_layout_cubit.dart";
-import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:pagebridge/core/utls/setup_service_locator_getit.dart';
 import 'package:pagebridge/feature/databases/domain/repo/database_repo.dart';
 import 'package:pagebridge/feature/databases/presentation/controllers/return_databases_cubit/return_databases_cubit.dart';
 import 'package:pagebridge/feature/databases/presentation/widgets/home_app_bar.dart';
 import 'package:pagebridge/feature/databases/presentation/widgets/home_view_body.dart';
+import 'package:pagebridge/feature/databases/presentation/widgets/custom_floating_action_button.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -18,7 +17,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   final ScrollController _databasesScrollController = ScrollController();
-  bool _showFab = false;
+  final ValueNotifier<bool> _showFab = ValueNotifier<bool>(false);
 
   @override
   void initState() {
@@ -28,10 +27,10 @@ class _HomeViewState extends State<HomeView> {
 
   void _scrollListener() {
     if (_databasesScrollController.hasClients) {
-      if (_databasesScrollController.offset > 200 && !_showFab) {
-        setState(() => _showFab = true);
-      } else if (_databasesScrollController.offset <= 200 && _showFab) {
-        setState(() => _showFab = false);
+      if (_databasesScrollController.offset > 200 && !_showFab.value) {
+        _showFab.value = true;
+      } else if (_databasesScrollController.offset <= 200 && _showFab.value) {
+        _showFab.value = false;
       }
     }
   }
@@ -44,6 +43,14 @@ class _HomeViewState extends State<HomeView> {
         curve: Curves.easeOut,
       );
     }
+  }
+
+  @override
+  void dispose() {
+    _showFab.dispose();
+    _databasesScrollController.removeListener(_scrollListener);
+    _databasesScrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -86,25 +93,13 @@ class _HomeViewState extends State<HomeView> {
           ],
         ),
       ),
-      floatingActionButton: _showFab
-          ? Padding(
-              padding: const EdgeInsets.only(bottom: 70.0),
-              child: FloatingActionButton(
-                onPressed: _scrollToTop,
-                backgroundColor: AppColors.darkGrey,
-                foregroundColor: AppColors.topaz,
-                tooltip: 'scroll up',
-                child: Icon(AppIcons.arrowUp),
-              ),
-            )
-          : null,
+      floatingActionButton: ValueListenableBuilder<bool>(
+        valueListenable: _showFab,
+        builder: (context, show, child) {
+          if (!show) return const SizedBox.shrink();
+          return CustomFloatingActionButton(onPressed: _scrollToTop);
+        },
+      ),
     );
-  }
-
-  @override
-  void dispose() {
-    _databasesScrollController.removeListener(_scrollListener);
-    _databasesScrollController.dispose();
-    super.dispose();
   }
 }

@@ -5,7 +5,6 @@ import 'package:pagebridge/config/themes/app_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
 class CustomSearchTextField extends StatefulWidget {
   const CustomSearchTextField({
     super.key,
@@ -78,7 +77,11 @@ class _CustomSearchTextFieldState extends State<CustomSearchTextField> {
                   filled: false,
                   prefixIcon: Padding(
                     padding: const EdgeInsets.only(left: 14, right: 8),
-                    child: Icon(AppIcons.materialSearch, color: iconColor, size: 20),
+                    child: Icon(
+                      AppIcons.materialSearch,
+                      color: iconColor,
+                      size: 20,
+                    ),
                   ),
                   prefixIconConstraints: const BoxConstraints(
                     minWidth: 40,
@@ -86,7 +89,11 @@ class _CustomSearchTextFieldState extends State<CustomSearchTextField> {
                   ),
                   suffixIcon: value.text.isNotEmpty
                       ? IconButton(
-                          icon: Icon(AppIcons.clear, color: iconColor, size: 18),
+                          icon: Icon(
+                            AppIcons.clear,
+                            color: iconColor,
+                            size: 18,
+                          ),
                           onPressed: () {
                             searchController.clear();
                             _debounce?.cancel();
