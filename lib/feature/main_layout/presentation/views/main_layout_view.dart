@@ -27,7 +27,7 @@ class MainLayoutView extends StatelessWidget {
             resizeToAvoidBottomInset: false,
             body: Stack(
               children: [
-                const CustomAnimationBackground(),
+                const CustomAnimationBackground(isAnimated: false),
 
                 Positioned.fill(
                   child: IndexedStack(

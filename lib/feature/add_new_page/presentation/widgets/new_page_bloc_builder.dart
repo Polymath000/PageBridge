@@ -37,7 +37,7 @@ class _NewPageBlocBuilderState extends State<NewPageBlocBuilder> {
         child: Scaffold(
           body: Stack(
             children: [
-              const CustomAnimationBackground(),
+              const CustomAnimationBackground(isAnimated: false),
               SafeArea(
                 child: SingleChildScrollView(
                   child: Padding(

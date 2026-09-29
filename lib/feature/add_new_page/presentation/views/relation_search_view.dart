@@ -85,7 +85,7 @@ class _RelationSearchViewState extends State<RelationSearchView> {
       ),
       body: Stack(
         children: [
-          const CustomAnimationBackground(),
+          const CustomAnimationBackground(isAnimated: false),
           Column(
             children: [
               Padding(

@@ -5,14 +5,16 @@ import 'package:pagebridge/core/theme/app_colors.dart';
 
 class CustomAnimationBackground extends StatefulWidget {
   final BackgroundMode mode;
+  final bool isAnimated;
 
-  const CustomAnimationBackground({super.key})
+  const CustomAnimationBackground({super.key, this.isAnimated = true})
       : mode = BackgroundMode.adaptive;
 
-  const CustomAnimationBackground.light({super.key})
+  const CustomAnimationBackground.light({super.key, this.isAnimated = true})
       : mode = BackgroundMode.light;
 
-  const CustomAnimationBackground.dark({super.key}) : mode = BackgroundMode.dark;
+  const CustomAnimationBackground.dark({super.key, this.isAnimated = true})
+      : mode = BackgroundMode.dark;
 
   @override
   State<CustomAnimationBackground> createState() =>
@@ -29,7 +31,24 @@ class _CustomAnimationBackgroundState extends State<CustomAnimationBackground>
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
-    )..repeat(reverse: true);
+    );
+    if (widget.isAnimated) {
+      _controller.repeat(reverse: true);
+    } else {
+      _controller.value = 0.5; // Set it to a nice static position
+    }
+  }
+
+  @override
+  void didUpdateWidget(CustomAnimationBackground oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.isAnimated != oldWidget.isAnimated) {
+      if (widget.isAnimated) {
+        _controller.repeat(reverse: true);
+      } else {
+        _controller.stop();
+      }
+    }
   }
 
   @override

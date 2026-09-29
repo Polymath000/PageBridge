@@ -18,16 +18,16 @@ class SettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final isLight = Theme.of(context).brightness == Brightness.light;
 
-    return SafeArea(
-      child: Scaffold(
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      appBar: AppBar(
+        title: const Text('Settings'),
+        centerTitle: false,
         backgroundColor: Colors.transparent,
-        appBar: AppBar(
-          title: const Text('Settings'),
-          centerTitle: false,
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-        ),
-        body: ListView(
+        elevation: 0,
+      ),
+      body: SafeArea(
+        child: ListView(
           padding: const EdgeInsets.all(24),
           children: [
             SettingsGroup(
