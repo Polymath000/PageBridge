@@ -44,3 +44,8 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 .env
+
+# Antigravity / AI Rules
+GEMINI.md
+.polymathrules
+polymath_rules.md

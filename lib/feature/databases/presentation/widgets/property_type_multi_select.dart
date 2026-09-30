@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:pagebridge/config/themes/app_text_style.dart';
-import 'package:pagebridge/core/utls/custom_check_box.dart';
 import 'package:pagebridge/core/utls/get_color.dart';
 import 'package:pagebridge/feature/databases/domain/entities/property_entity.dart';
 
@@ -28,98 +27,147 @@ class _PropertyTypeMultiSelectState extends State<PropertyTypeMultiSelect> {
     _selectedMultiSelectValues = [];
   }
 
-  @override
-  Widget build(BuildContext context) {
-    List<String> selectedMultiSelectValues = _selectedMultiSelectValues;
-
-    return GestureDetector(
-      onTap: () async {
-        final List<String>? results = await showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            List<String> tempSelected = List.from(selectedMultiSelectValues);
-            return Builder(
-              builder: (context) {
-                return AlertDialog(
-                  title: Text(
-                    "Select Options",
-                    style: TextStyle(fontSize: 16.sp),
+  void _showBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor:
+          Colors.transparent, // We wrap content in a rounded container
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setModalState) {
+            return Container(
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.sizeOf(context).height * 0.7,
+              ),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(24),
+                ),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Handle for dragging
+                  Center(
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 12, bottom: 12),
+                      width: 40,
+                      height: 5,
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade400,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
                   ),
-                  content: SizedBox(
-                    width: double.maxFinite,
-                    height: 300,
-                    child: SingleChildScrollView(
-                      child: ListBody(
-                        children: widget.property.selectOptions!.map((option) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Select Options",
+                        style: AppTextStyles.titleMedium!.copyWith(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Flexible(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20.0,
+                        vertical: 8.0,
+                      ),
+                      itemCount: widget.property.selectOptions?.length ?? 0,
+                      itemBuilder: (context, index) {
+                        final option = widget.property.selectOptions![index];
+                        final isSelected = _selectedMultiSelectValues.contains(
+                          option.name,
+                        );
+
+                        return InkWell(
+                          onTap: () {
+                            setModalState(() {
+                              if (isSelected) {
+                                _selectedMultiSelectValues.remove(option.name);
+                              } else {
+                                _selectedMultiSelectValues.add(option.name);
+                              }
+                            });
+                            setState(
+                              () {},
+                            ); // Update the main widget UI immediately
+                            widget.onChanged?.call(_selectedMultiSelectValues);
+                          },
+                          borderRadius: BorderRadius.circular(8),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 12.0,
+                              horizontal: 8.0,
+                            ),
                             child: Row(
                               children: [
-                                CustomCheckBox(
-                                  value: tempSelected.contains(option.name),
-                                  onChanged: (val) {
-                                    setState(() {
-                                      if (val == true) {
-                                        tempSelected.add(option.name);
-                                      } else {
-                                        tempSelected.remove(option.name);
-                                      }
-                                    });
-                                  },
-                                ),
-                                SizedBox(width: 8),
                                 Container(
                                   padding: const EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 2,
+                                    horizontal: 10,
+                                    vertical: 4,
                                   ),
                                   decoration: BoxDecoration(
                                     color: getColor(option.color),
-                                    borderRadius: BorderRadius.circular(4),
+                                    borderRadius: BorderRadius.circular(6),
                                   ),
                                   child: Text(
                                     option.name,
                                     style: AppTextStyles.titleMedium!.copyWith(
                                       color: AppColors.black,
+                                      fontSize: 14.sp,
                                     ),
                                   ),
                                 ),
+                                const Spacer(),
+                                if (isSelected)
+                                  Icon(
+                                    Icons.check,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.primary,
+                                    size: 20.sp,
+                                  ),
                               ],
                             ),
-                          );
-                        }).toList(),
-                      ),
+                          ),
+                        );
+                      },
                     ),
                   ),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pop(context, tempSelected);
-                      },
-                      child: Text("Done"),
-                    ),
-                  ],
-                );
-              },
+                  const SizedBox(height: 16),
+                ],
+              ),
             );
           },
         );
-        if (results != null) {
-          setState(() {
-            _selectedMultiSelectValues = results;
-          });
-          widget.onChanged?.call(results);
-        }
       },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => _showBottomSheet(context),
       child: InputDecorator(
         decoration: InputDecoration(
           border: InputBorder.none,
+          contentPadding: EdgeInsets.zero,
           hintText: "Empty",
           hintStyle: AppTextStyles.titleMedium!.copyWith(
             color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
         ),
-        child: selectedMultiSelectValues.isEmpty
+        child: _selectedMultiSelectValues.isEmpty
             ? Text(
                 "Empty",
                 style: AppTextStyles.titleMedium!.copyWith(
@@ -127,39 +175,43 @@ class _PropertyTypeMultiSelectState extends State<PropertyTypeMultiSelect> {
                   fontSize: 16.sp,
                 ),
               )
-            : SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: List.generate(selectedMultiSelectValues.length, (
-                    index,
-                  ) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 4),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 2,
-                        ),
-                        decoration: BoxDecoration(
-                          color:
-                              (widget.property.selectOptions != null &&
-                                  index < widget.property.selectOptions!.length)
-                              ? getColor(
-                                  widget.property.selectOptions![index].color,
-                                )
-                              : Colors.transparent,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Text(
-                          selectedMultiSelectValues[index],
-                          style: AppTextStyles.titleMedium!.copyWith(
-                            color: AppColors.black,
-                          ),
-                        ),
+            : Wrap(
+                spacing: 6.0,
+                runSpacing: 6.0,
+                children: _selectedMultiSelectValues.map((selectedValue) {
+                  // Find the original option to get the correct color
+                  SelectOptionEntity? matchedOption;
+                  final options = widget.property.selectOptions ?? [];
+                  for (var opt in options) {
+                    if (opt.name == selectedValue) {
+                      matchedOption = opt;
+                      break;
+                    }
+                  }
+                  if (matchedOption == null && options.isNotEmpty) {
+                    matchedOption = options.first;
+                  }
+
+                  return Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
+                    decoration: BoxDecoration(
+                      color: matchedOption != null
+                          ? getColor(matchedOption.color)
+                          : Colors.grey.shade300,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: Text(
+                      selectedValue,
+                      style: AppTextStyles.titleMedium!.copyWith(
+                        color: AppColors.black,
+                        fontSize: 14.sp,
                       ),
-                    );
-                  }),
-                ),
+                    ),
+                  );
+                }).toList(),
               ),
       ),
     );
