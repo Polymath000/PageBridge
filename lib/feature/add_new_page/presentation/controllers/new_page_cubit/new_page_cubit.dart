@@ -1,3 +1,4 @@
+import 'package:pagebridge/core/enums/notion_property_type.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:pagebridge/feature/databases/data/model/property_model.dart';
@@ -28,7 +29,7 @@ class NewPageCubit extends Cubit<NewPageState> {
   void addProperty({
     required String key,
     required dynamic value,
-    required String type,
+    required NotionPropertyType type,
   }) {
     final index = newPageProperties.indexWhere(
       (element) => element.name == key,

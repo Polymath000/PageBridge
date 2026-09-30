@@ -27,8 +27,8 @@ class _RelationTypeWidgetState extends State<RelationTypeWidget> {
     return GestureDetector(
       onTap: () async {
         await Navigator.pushNamed(
-          context, 
-          AppRoutes.relationSearch, 
+          context,
+          AppRoutes.relationSearch,
           arguments: {
             'property': widget.property,
             'initialSelectedPages': _selectedPages,
@@ -38,24 +38,18 @@ class _RelationTypeWidgetState extends State<RelationTypeWidget> {
               });
               widget.onChanged?.call(_selectedPages.map((e) => e.id).toList());
             },
-          }
+          },
         );
       },
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 4),
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
-          border: Border.all(
-            color: Theme.of(context).dividerColor,
-          ),
-          borderRadius: BorderRadius.circular(12),
-        ),
+        color: AppColors.transparent,
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
         child: _selectedPages.isEmpty
             ? Padding(
                 padding: const EdgeInsets.symmetric(vertical: 4.0),
                 child: Text(
-                  "Select items",
+                  "Select pages",
                   style: AppTextStyles.titleMedium?.copyWith(
                     color: AppColors.grey,
                     fontSize: 14.sp,
@@ -75,6 +69,9 @@ class _RelationTypeWidgetState extends State<RelationTypeWidget> {
                           ),
                         ),
                         backgroundColor: Theme.of(context).colorScheme.primary,
+                        deleteIconColor: Theme.of(
+                          context,
+                        ).colorScheme.onPrimary,
                         onDeleted: () {
                           setState(() {
                             _selectedPages.removeWhere((p) => p.id == page.id);

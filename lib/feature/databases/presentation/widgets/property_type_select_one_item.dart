@@ -1,3 +1,4 @@
+import 'package:pagebridge/core/enums/notion_property_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagebridge/core/theme/app_colors.dart';
@@ -19,7 +20,7 @@ class PropertyTypeSelectOneItem extends StatelessWidget {
           enableFeedback: true,
           padding: EdgeInsets.zero,
           style: AppTextStyles.titleMedium!.copyWith(
-            color: AppColors.grey,
+            color: Theme.of(context).colorScheme.onSurface,
             fontSize: 16.sp,
           ),
           dropdownColor: Theme.of(context).colorScheme.surface,
@@ -33,7 +34,7 @@ class PropertyTypeSelectOneItem extends StatelessWidget {
             ),
           ),
           initialValue:
-              widget.property.type == "status" &&
+              widget.property.type == NotionPropertyType.status &&
                   widget.property.selectOptions != null &&
                   widget.property.selectOptions!.isNotEmpty
               ? widget.property.selectOptions!.first.name

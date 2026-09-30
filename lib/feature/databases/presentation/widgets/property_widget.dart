@@ -1,3 +1,4 @@
+import 'package:pagebridge/core/enums/notion_property_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagebridge/core/theme/app_colors.dart';
@@ -47,7 +48,7 @@ class PropertyWidget extends StatelessWidget {
           SizedBox(height: 8.h),
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+            padding: const EdgeInsets.only(left: 12, top: 2),
             decoration: BoxDecoration(
               color: isDark ? AppColors.propertyCardDark : AppColors.white,
               borderRadius: BorderRadius.circular(12),
@@ -56,7 +57,7 @@ class PropertyWidget extends StatelessWidget {
                 width: 1,
               ),
             ),
-            child: property.type == "title"
+            child: property.type == NotionPropertyType.title
                 ? TitleProperty(onChanged: onChanged)
                 : PropertyType(property: property, onChanged: onChanged),
           ),

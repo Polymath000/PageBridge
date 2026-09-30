@@ -1,6 +1,8 @@
+import 'package:pagebridge/core/enums/notion_property_type.dart';
+
 class PropertyEntity {
   final String name;
-  final String type;
+  final NotionPropertyType type;
   final bool canEdit;
   final List<SelectOptionEntity>? selectOptions;
   final String? formulaExpression;

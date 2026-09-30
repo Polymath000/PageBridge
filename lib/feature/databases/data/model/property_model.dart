@@ -1,4 +1,5 @@
 import 'package:pagebridge/feature/databases/domain/entities/property_entity.dart';
+import 'package:pagebridge/core/enums/notion_property_type.dart';
 
 class PropertyModel extends PropertyEntity {
   const PropertyModel({
@@ -13,53 +14,54 @@ class PropertyModel extends PropertyEntity {
   });
 
   factory PropertyModel.fromJson(String name, Map<String, dynamic> json) {
-    final type = json['type'];
+    final String typeStr = json['type'] ?? "text";
+    final typeEnum = NotionPropertyType.fromString(typeStr);
 
-    bool isEditable = true;
-    const nonEditableTypes = [
-      'last_edited_time',
-      'last_edited_by',
-      'created_by',
-      'created_time',
-      'files',
-    ];
-    if (nonEditableTypes.contains(type)) {
-      isEditable = false;
-    }
+    final bool isEditable = switch (typeEnum) {
+      NotionPropertyType.lastEditedTime ||
+      NotionPropertyType.lastEditedBy ||
+      NotionPropertyType.createdBy ||
+      NotionPropertyType.createdTime ||
+      NotionPropertyType.files =>
+        false,
+      _ => true,
+    };
 
     List<SelectOptionModel>? options;
     String? expression;
     String? relatedDbId;
-    String? icon;
 
-    final config = json[type];
+    final config = json[typeStr]; // Keep typeStr here because the API payload key is still a string
 
     if (config != null && config is Map<String, dynamic>) {
-      if (['select', 'multi_select', 'status'].contains(type)) {
-        if (config['options'] != null) {
-          options = (config['options'] as List)
-              .map((e) => SelectOptionModel.fromJson(e))
-              .toList();
-        }
-      }
-
-      if (type == 'formula') {
-        expression = config['expression'];
-      }
-
-      if (type == 'relation') {
-        relatedDbId = config['data_source_id'];
+      switch (typeEnum) {
+        case NotionPropertyType.select:
+        case NotionPropertyType.multiSelect:
+        case NotionPropertyType.status:
+          if (config['options'] != null) {
+            options = (config['options'] as List)
+                .map((e) => SelectOptionModel.fromJson(e))
+                .toList();
+          }
+          break;
+        case NotionPropertyType.formula:
+          expression = config['expression'];
+          break;
+        case NotionPropertyType.relation:
+          relatedDbId = config['database_id'] ?? config['data_source_id'];
+          break;
+        default:
+          break;
       }
     }
 
     return PropertyModel(
       name: name,
-      type: type ?? "Text",
+      type: typeEnum,
       canEdit: isEditable,
       selectOptions: options,
       formulaExpression: expression,
       relationDatabaseId: relatedDbId,
-      icon: icon,
     );
   }
 
@@ -67,89 +69,69 @@ class PropertyModel extends PropertyEntity {
     if (value == null) return {};
 
     switch (type) {
-      // Different Types
-      case 'date':
+      case NotionPropertyType.date:
         return {
           'date': {'start': value},
         };
-      case 'files':
-        // Notion API requires external URL for creating files
+      case NotionPropertyType.files:
         return {
           'files': (value is List)
-              ? value
-                    .map(
-                      (file) => {
-                        'name': name,
-                        'external': {
-                          'url': file.toString(),
-                        },
-                      },
-                    )
-                    .toList()
+              ? value.map((file) => {
+                  'name': name,
+                  'external': {'url': file.toString()},
+                }).toList()
               : [],
         };
-      case 'checkbox':
+      case NotionPropertyType.checkbox:
         return {'checkbox': value as bool};
-
-      // Drop Menu
-      case 'status':
+      case NotionPropertyType.status:
         return {
           'status': {'name': value},
         };
-      case 'select':
+      case NotionPropertyType.select:
         return {
           'select': {'name': value},
         };
-      case 'multi_select':
-        // Assuming value is a list of names
+      case NotionPropertyType.multiSelect:
         return {
           'multi_select': (value is List)
-              ? value.map((name) => {'name': name}).toList()
+              ? value.map((n) => {'name': n}).toList()
               : [],
         };
-
-      // String
-      case 'url':
+      case NotionPropertyType.url:
         return {'url': value as String};
-      case 'rich_text':
+      case NotionPropertyType.richText:
         return {
           'rich_text': [
-            {
-              'text': {'content': value as String},
-            },
+            {'text': {'content': value as String}},
           ],
         };
-      case 'phone_number':
+      case NotionPropertyType.phoneNumber:
         return {'phone_number': value as String};
-      case 'email':
+      case NotionPropertyType.email:
         return {'email': value as String};
-      case 'number':
-        // Ensure it's a number
+      case NotionPropertyType.number:
         return {
           'number': value is num ? value : num.tryParse(value.toString()),
         };
-      case 'title':
+      case NotionPropertyType.title:
         return {
           'title': [
-            {
-              'text': {'content': value as String},
-            },
+            {'text': {'content': value as String}},
           ],
         };
-
-      case 'relation':
+      case NotionPropertyType.relation:
         return {
           'relation': (value is List)
               ? value.map((id) => {'id': id}).toList()
               : [],
         };
-
-      // Not Supported / Read-only (Ignore)
-      case 'created_time':
-      case 'place':
-      case 'created_by':
-      case 'formula':
-      case 'unique_id':
+      case NotionPropertyType.text:
+        return {
+          'rich_text': [
+            {'text': {'content': value as String}},
+          ],
+        };
       default:
         return {};
     }

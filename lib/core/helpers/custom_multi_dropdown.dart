@@ -277,7 +277,9 @@ class _CustomMultiDropdownState<T> extends State<CustomMultiDropdown<T>> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    final Color fieldBg = isDark ? AppColors.dropdownFieldDark : AppColors.white;
+    final Color fieldBg = isDark
+        ? AppColors.dropdownFieldDark
+        : AppColors.white;
 
     final Color borderColor = isDark
         ? AppColors.dropdownBorderDark
