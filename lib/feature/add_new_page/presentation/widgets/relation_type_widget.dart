@@ -45,13 +45,9 @@ class _RelationTypeWidgetState extends State<RelationTypeWidget> {
         margin: const EdgeInsets.symmetric(vertical: 4),
         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
         decoration: BoxDecoration(
-          color: Theme.of(context).brightness == Brightness.dark
-              ? const Color(0xFF2A2A2A)
-              : Colors.white,
+          color: Theme.of(context).colorScheme.surface,
           border: Border.all(
-            color: Theme.of(context).brightness == Brightness.dark
-                ? const Color(0xFF3A3A3A)
-                : const Color(0xFFDDDDDD),
+            color: Theme.of(context).dividerColor,
           ),
           borderRadius: BorderRadius.circular(12),
         ),
@@ -60,7 +56,7 @@ class _RelationTypeWidgetState extends State<RelationTypeWidget> {
                 padding: const EdgeInsets.symmetric(vertical: 4.0),
                 child: Text(
                   "Select items",
-                  style: AppTextStyles.titleMedium!.copyWith(
+                  style: AppTextStyles.titleMedium?.copyWith(
                     color: AppColors.grey,
                     fontSize: 14.sp,
                   ),
@@ -74,7 +70,9 @@ class _RelationTypeWidgetState extends State<RelationTypeWidget> {
                       (page) => Chip(
                         label: Text(
                           page.title,
-                          style: const TextStyle(color: Colors.white),
+                          style: AppTextStyles.bodyMedium?.copyWith(
+                            color: Theme.of(context).colorScheme.onPrimary,
+                          ),
                         ),
                         backgroundColor: Theme.of(context).colorScheme.primary,
                         onDeleted: () {

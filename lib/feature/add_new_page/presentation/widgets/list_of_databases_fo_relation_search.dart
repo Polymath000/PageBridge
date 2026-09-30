@@ -1,3 +1,4 @@
+import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagebridge/feature/pages/domain/entities/page_entity.dart';
@@ -22,7 +23,7 @@ class ListOfDatabasesFoRelationSearch extends StatelessWidget {
       decoration: BoxDecoration(
         color: isSelected
             ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.1)
-            : Colors.transparent,
+            : AppColors.transparent,
         borderRadius: BorderRadius.circular(12.r),
       ),
       child: DatabaseCardForRelationSearch(

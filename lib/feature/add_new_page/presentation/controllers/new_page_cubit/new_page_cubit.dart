@@ -13,6 +13,14 @@ class NewPageCubit extends Cubit<NewPageState> {
   List<PropertyModel> newPageProperties = [];
   String? pageContent;
 
+  bool get hasData {
+    final hasProperties = newPageProperties.any(
+      (p) => p.value != null && p.value.toString().isNotEmpty,
+    );
+    final hasContent = pageContent != null && pageContent!.trim().isNotEmpty;
+    return hasProperties || hasContent;
+  }
+
   void setContent(String? content) {
     pageContent = content;
   }

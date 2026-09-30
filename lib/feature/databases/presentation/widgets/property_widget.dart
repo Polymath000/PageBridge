@@ -15,7 +15,7 @@ class PropertyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Padding(
       padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 20.0),
       child: Column(
@@ -46,7 +46,6 @@ class PropertyWidget extends StatelessWidget {
             ],
           ),
           SizedBox(height: 8.h),
-          // INPUT INSIDE A SEPARATE BOX
           Container(
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),

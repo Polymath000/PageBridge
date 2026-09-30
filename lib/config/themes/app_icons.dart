@@ -51,4 +51,5 @@ class AppIcons {
   static final IconData materialLink = Icons.link;
   static final IconData arrowForwardRounded = Icons.arrow_forward_ios_rounded;
   static final IconData arrowUp = FontAwesomeIcons.angleUp.data;
+  static final IconData checkRounded = Icons.check_rounded;
 }
