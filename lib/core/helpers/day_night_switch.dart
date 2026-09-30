@@ -1,3 +1,4 @@
+import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:pagebridge/config/themes/app_icons.dart';
 
@@ -23,14 +24,14 @@ class _DayNightSwitchState extends State<DayNightSwitch>
   late Animation<double> _animation;
 
   // Colors based on the CSS variables
-  final Color _containerLightBg = const Color(0xFF3D7EAE);
-  final Color _containerNightBg = const Color(0xFF1D1F2C);
-  final Color _sunBg = const Color(0xFFECCA2F);
-  final Color _moonBg = const Color(0xFFC4C9D1);
-  final Color _spotColor = const Color(0xFF959DB1);
-  final Color _cloudsColor = const Color(0xFFF3FDFF);
-  final Color _backCloudsColor = const Color(0xFFAACADF);
-  final Color _starsColor = Colors.white;
+  final Color _containerLightBg = AppColors.dayNightContainerLight;
+  final Color _containerNightBg = AppColors.dayNightContainerDark;
+  final Color _sunBg = AppColors.dayNightSun;
+  final Color _moonBg = AppColors.dayNightMoon;
+  final Color _spotColor = AppColors.dayNightSpot;
+  final Color _cloudsColor = AppColors.dayNightClouds;
+  final Color _backCloudsColor = AppColors.dayNightBackClouds;
+  final Color _starsColor = AppColors.white;
 
   @override
   void initState() {
@@ -103,12 +104,12 @@ class _DayNightSwitchState extends State<DayNightSwitch>
                 ),
                 boxShadow: const [
                   BoxShadow(
-                    color: Colors.black26,
+                    color: AppColors.black26,
                     offset: Offset(0, -1.5),
                     blurRadius: 1.5,
                   ),
                   BoxShadow(
-                    color: Colors.white70,
+                    color: AppColors.white70,
                     offset: Offset(0, 1.5),
                     blurRadius: 3,
                   ),
@@ -125,7 +126,7 @@ class _DayNightSwitchState extends State<DayNightSwitch>
                         gradient: const LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
-                          colors: [Colors.black12, Colors.transparent],
+                          colors: [AppColors.black12, AppColors.transparent],
                         ),
                       ),
                     ),
@@ -161,9 +162,9 @@ class _DayNightSwitchState extends State<DayNightSwitch>
                         height: circleContainerSize,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.white.withValues(alpha: 0.1),
+                          color: AppColors.white.withValues(alpha: 0.1),
                           border: Border.all(
-                            color: Colors.white.withValues(alpha: 0.1),
+                            color: AppColors.white.withValues(alpha: 0.1),
                             width: 0.625 * em,
                           ),
                         ),
@@ -176,7 +177,7 @@ class _DayNightSwitchState extends State<DayNightSwitch>
                             color: _sunBg,
                             boxShadow: const [
                               BoxShadow(
-                                color: Colors.black26,
+                                color: AppColors.black26,
                                 offset: Offset(1.5, 3),
                                 blurRadius: 3,
                               ),

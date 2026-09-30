@@ -16,7 +16,7 @@ class WelcomeVisual extends StatelessWidget {
         gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [Color(0xFFF5F7FA), Color(0xFFD7DCE4)],
+          colors: [AppColors.welcomeGradientStart, AppColors.welcomeGradientEnd],
         ),
         boxShadow: [
           BoxShadow(

@@ -1,3 +1,4 @@
+import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pagebridge/core/utls/setup_service_locator_getit.dart';
@@ -56,7 +57,7 @@ class _RecentPagesFeedState extends State<RecentPagesFeed> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
       body: SafeArea(
         child: BlocProvider(
           create: (context) =>

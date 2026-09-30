@@ -1,3 +1,4 @@
+import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import "package:pagebridge/feature/main_layout/presentation/cubit/main_layout_cubit.dart";
@@ -55,7 +56,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
       body: SafeArea(
         child: Stack(
           children: [

@@ -61,7 +61,7 @@ class DatabaseCard extends StatelessWidget {
                       backgroundColor: AppColors.green,
                       action: SnackBarAction(
                         label: 'Open in Notion',
-                        textColor: Colors.white,
+                        textColor: AppColors.white,
                         onPressed: () {
                           launchUrl(
                             Uri.parse(result),

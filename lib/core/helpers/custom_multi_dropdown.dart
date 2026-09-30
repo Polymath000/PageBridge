@@ -1,3 +1,4 @@
+import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:pagebridge/config/themes/app_icons.dart';
 
@@ -150,7 +151,7 @@ class _CustomMultiDropdownState<T> extends State<CustomMultiDropdown<T>> {
               child: GestureDetector(
                 onTap: _hideOverlay,
 
-                child: Container(color: Colors.black.withValues(alpha: 0.5)),
+                child: Container(color: AppColors.black.withValues(alpha: 0.5)),
               ),
             ),
 
@@ -276,15 +277,15 @@ class _CustomMultiDropdownState<T> extends State<CustomMultiDropdown<T>> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    final Color fieldBg = isDark ? const Color(0xFF2A2A2A) : Colors.white;
+    final Color fieldBg = isDark ? AppColors.dropdownFieldDark : AppColors.white;
 
     final Color borderColor = isDark
-        ? const Color(0xFF3A3A3A)
-        : const Color(0xFFDDDDDD);
+        ? AppColors.dropdownBorderDark
+        : AppColors.dropdownBorderLight;
 
     final Color hintColor = isDark
-        ? const Color(0xFFA0A0A0)
-        : const Color(0xFF777777);
+        ? AppColors.dropdownHintDark
+        : AppColors.dropdownHintLight;
 
     return CompositedTransformTarget(
       link: _layerLink,
@@ -328,12 +329,12 @@ class _CustomMultiDropdownState<T> extends State<CustomMultiDropdown<T>> {
                             item.label,
 
                             style: TextStyle(
-                              color: widget.chipLabelColor ?? Colors.white,
+                              color: widget.chipLabelColor ?? AppColors.white,
                             ),
                           ),
 
                           backgroundColor:
-                              widget.chipColor ?? const Color(0xFF4CAF50),
+                              widget.chipColor ?? AppColors.dropdownAccent,
 
                           onDeleted: () {
                             setState(() {

@@ -115,7 +115,7 @@ class _WorkflowVisualState extends State<WorkflowVisual>
                     child: Text(
                       'Save to Notion',
                       style: textTheme.labelLarge?.copyWith(
-                        color: Colors.white,
+                        color: AppColors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

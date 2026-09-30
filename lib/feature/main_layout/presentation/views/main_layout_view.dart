@@ -1,3 +1,4 @@
+import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:pagebridge/config/themes/app_icons.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -65,7 +66,7 @@ class MainLayoutView extends StatelessWidget {
                                   Theme.of(
                                     context,
                                   ).bottomAppBarTheme.shadowColor ??
-                                  Colors.black26,
+                                  AppColors.black.withValues(alpha: 0.26),
                               blurRadius: 24,
                               offset: const Offset(0, 8),
                             ),

@@ -32,7 +32,7 @@ class _PropertyTypeMultiSelectState extends State<PropertyTypeMultiSelect> {
       context: context,
       isScrollControlled: true,
       backgroundColor:
-          Colors.transparent, // We wrap content in a rounded container
+          AppColors.transparent, // We wrap content in a rounded container
       builder: (BuildContext context) {
         return StatefulBuilder(
           builder: (context, setModalState) {
@@ -56,7 +56,7 @@ class _PropertyTypeMultiSelectState extends State<PropertyTypeMultiSelect> {
                       width: 40,
                       height: 5,
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade400,
+                        color: AppColors.grey400,
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
@@ -200,7 +200,7 @@ class _PropertyTypeMultiSelectState extends State<PropertyTypeMultiSelect> {
                     decoration: BoxDecoration(
                       color: matchedOption != null
                           ? getColor(matchedOption.color)
-                          : Colors.grey.shade300,
+                          : AppColors.grey300,
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Text(

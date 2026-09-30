@@ -50,10 +50,10 @@ class PropertyWidget extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
             decoration: BoxDecoration(
-              color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
+              color: isDark ? AppColors.propertyCardDark : AppColors.white,
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: isDark ? Colors.grey.shade800 : Colors.grey.shade300,
+                color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
                 width: 1,
               ),
             ),

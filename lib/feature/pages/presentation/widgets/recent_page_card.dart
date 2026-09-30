@@ -1,3 +1,4 @@
+import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:pagebridge/config/themes/app_icons.dart';
 import 'package:pagebridge/config/themes/app_text_style.dart';
@@ -17,7 +18,7 @@ class RecentPageCard extends StatelessWidget {
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
-          side: BorderSide(color: Colors.grey.withValues(alpha: 0.2)),
+          side: BorderSide(color: AppColors.grey.withValues(alpha: 0.2)),
         ),
         child: ListTile(
           leading: page.iconEmoji != null
@@ -35,7 +36,7 @@ class RecentPageCard extends StatelessWidget {
             page.title,
             style: AppTextStyles.titleMedium?.copyWith(fontSize: 15),
           ),
-          trailing: Icon(AppIcons.openInNew, size: 20, color: Colors.grey),
+          trailing: Icon(AppIcons.openInNew, size: 20, color: AppColors.grey),
           onTap: () {
             if (page.url.isNotEmpty) {
               launchUrl(

@@ -1,3 +1,4 @@
+import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 ScaffoldFeatureController<SnackBar, SnackBarClosedReason> customShowSnackBar({
@@ -17,7 +18,7 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason> customShowSnackBar({
         children: [
           if (icon != null) ...[icon, const SizedBox(width: 8)],
           Expanded(
-            child: Text(message, style: const TextStyle(color: Colors.black)),
+            child: Text(message, style: const TextStyle(color: AppColors.black)),
           ),
         ],
       ),

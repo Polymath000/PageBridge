@@ -1,3 +1,4 @@
+import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatefulWidget {
@@ -23,18 +24,18 @@ class _CustomButtonState extends State<CustomButton> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    const Color lBase = Color(0xFFE8E8E8);
-    const Color lShadowDark = Color(0xFFC5C5C5);
-    const Color lShadowLight = Color(0xFFFFFFFF);
+    const Color lBase = AppColors.neumorphicBaseLight;
+    const Color lShadowDark = AppColors.neumorphicShadowDarkLight;
+    const Color lShadowLight = AppColors.neumorphicShadowLightLight;
 
-    const Color dBase = Color(0xFF2E3239);
-    const Color dShadowDark = Color(0xFF1D2025);
-    const Color dShadowLight = Color(0xFF3E444D);
+    const Color dBase = AppColors.neumorphicBaseDark;
+    const Color dShadowDark = AppColors.neumorphicShadowDarkDark;
+    const Color dShadowLight = AppColors.neumorphicShadowLightDark;
 
     final Color baseColor = isDark ? dBase : lBase;
     final Color shadowDark = isDark ? dShadowDark : lShadowDark;
     final Color shadowLight = isDark ? dShadowLight : lShadowLight;
-    final Color textColor = isDark ? Colors.white70 : const Color(0xFF090909);
+    final Color textColor = isDark ? AppColors.white70 : AppColors.neumorphicTextDark;
 
     return Padding(
       padding: const EdgeInsets.only(top: 32.0),

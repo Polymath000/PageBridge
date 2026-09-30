@@ -1,3 +1,4 @@
+import 'package:pagebridge/core/theme/app_colors.dart';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,9 +25,9 @@ class CustomAppBar extends StatelessWidget {
       toolbarHeight: 80,
       pinned: true,
       automaticallyImplyLeading: false,
-      backgroundColor: Colors.transparent,
-      shadowColor: Colors.transparent,
-      surfaceTintColor: Colors.transparent,
+      backgroundColor: AppColors.transparent,
+      shadowColor: AppColors.transparent,
+      surfaceTintColor: AppColors.transparent,
       elevation: 0,
       expandedHeight: 120,
       flexibleSpace: ClipRRect(
