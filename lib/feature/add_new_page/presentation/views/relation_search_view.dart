@@ -81,46 +81,69 @@ class _RelationSearchViewState extends State<RelationSearchView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: RelationSearchAppBar(
-        name: widget.property.name,
-        onDone: () {
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
           widget.onSelectionConfirmed?.call(_selectedPagesNotifier.value);
           Navigator.pop(context, _selectedPagesNotifier.value);
         },
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
+        icon: const Icon(Icons.check),
+        label: const Text(
+          "Done",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
       body: Stack(
         children: [
           const CustomAnimationBackground(isAnimated: false),
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                  vertical: 16,
+          RefreshIndicator(
+            onRefresh: () async {
+              await context.read<ReturnPagesCubit>().returnPages(
+                databaseId: widget.property.relationDatabaseId ?? "",
+              );
+            },
+            color: Theme.of(context).colorScheme.primary,
+            backgroundColor: Theme.of(context).colorScheme.surface,
+            child: CustomScrollView(
+              controller: _scrollController,
+              slivers: [
+                RelationSearchAppBar(name: "Search in ${widget.property.name}"),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: 16,
+                    ),
+                    child: CustomSearchTextField(
+                      getPages: (value) {
+                        context.read<ReturnPagesCubit>().returnPages(
+                          query: value,
+                          databaseId: widget.property.relationDatabaseId ?? "",
+                        );
+                      },
+                      hintText: 'Search pages...',
+                    ),
+                  ),
                 ),
-                child: CustomSearchTextField(
-                  getPages: (value) {
-                    context.read<ReturnPagesCubit>().returnPages(
-                      query: value,
-                      databaseId: widget.property.relationDatabaseId ?? "",
-                    );
-                  },
-                  hintText: 'Search pages...',
-                ),
-              ),
-              Expanded(
-                child: BlocBuilder<ReturnPagesCubit, ReturnPagesState>(
+                BlocBuilder<ReturnPagesCubit, ReturnPagesState>(
                   builder: (context, state) {
                     if (state is ReturnPagesFailure) {
-                      return Center(child: Text('Error: ${state.message}'));
+                      return SliverFillRemaining(
+                        hasScrollBody: false,
+                        child: Center(child: Text('Error: ${state.message}')),
+                      );
                     }
 
                     if (state is ReturnPagesLoading) {
-                      return ListView.builder(
+                      return SliverPadding(
                         padding: EdgeInsets.symmetric(horizontal: 12.w),
-                        itemCount: 6,
-                        itemBuilder: (context, index) =>
-                            const RelationSearchCardSkeleton(),
+                        sliver: SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) => const RelationSearchCardSkeleton(),
+                            childCount: 6,
+                          ),
+                        ),
                       );
                     }
 
@@ -128,52 +151,58 @@ class _RelationSearchViewState extends State<RelationSearchView> {
                       final pages = state.pages;
 
                       if (pages.isEmpty) {
-                        return _buildEmptyState();
+                        return SliverFillRemaining(
+                          hasScrollBody: false,
+                          child: _buildEmptyState(),
+                        );
                       }
 
                       final totalCount =
                           pages.length + (state.isPaginating ? 1 : 0);
 
-                      return ListView.builder(
-                        controller: _scrollController,
-                        itemCount: totalCount,
-                        padding: EdgeInsets.symmetric(horizontal: 12.w),
-                        itemBuilder: (context, index) {
-                          if (index == pages.length) {
-                            return Padding(
-                              padding: EdgeInsets.symmetric(vertical: 20.h),
-                              child: const RelationSearchCardSkeleton(),
-                            );
-                          }
+                      return SliverPadding(
+                        padding: EdgeInsets.only(left: 12.w, right: 12.w, bottom: 80.h),
+                        sliver: SliverList(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                              if (index == pages.length) {
+                                return Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 20.h),
+                                  child: const RelationSearchCardSkeleton(),
+                                );
+                              }
 
-                          final page = pages[index];
+                              final page = pages[index];
 
-                          return ValueListenableBuilder<List<PageEntity>>(
-                            valueListenable: _selectedPagesNotifier,
-                            builder: (context, selectedPages, child) {
-                              final isSelected = selectedPages.any(
-                                (p) => p.id == page.id,
-                              );
+                              return ValueListenableBuilder<List<PageEntity>>(
+                                valueListenable: _selectedPagesNotifier,
+                                builder: (context, selectedPages, child) {
+                                  final isSelected = selectedPages.any(
+                                    (p) => p.id == page.id,
+                                  );
 
-                              return DatabaseListItemForRelationSearch(
-                                isSelected: isSelected,
-                                page: page,
-                                onChanged: (value) => _onPageSelectionChanged(
-                                  page: page,
-                                  isSelected: value ?? false,
-                                ),
+                                  return DatabaseListItemForRelationSearch(
+                                    isSelected: isSelected,
+                                    page: page,
+                                    onChanged: (value) => _onPageSelectionChanged(
+                                      page: page,
+                                      isSelected: value ?? false,
+                                    ),
+                                  );
+                                },
                               );
                             },
-                          );
-                        },
+                            childCount: totalCount,
+                          ),
+                        ),
                       );
                     }
 
-                    return const SizedBox.shrink();
+                    return const SliverToBoxAdapter(child: SizedBox.shrink());
                   },
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),

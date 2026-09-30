@@ -32,10 +32,11 @@ class ReturnPagesRemoteDataSourceImpl implements ReturnPagesRemoteDataSource {
       cancelToken: cancelToken,
       data: {
         'page_size': AppConstants.pageSizeOfTheAPI,
-        "filter": {
-          "property": "Name",
-          "title": {"contains": query},
-        },
+        if (query.trim().isNotEmpty)
+          "filter": {
+            "property": "Name", // This assumes the primary title property is always "Name"
+            "title": {"contains": query.trim()},
+          },
         "sorts": [
           {"timestamp": "last_edited_time", "direction": "ascending"},
         ],
@@ -48,7 +49,7 @@ class ReturnPagesRemoteDataSourceImpl implements ReturnPagesRemoteDataSource {
     }
     return {
       'pages': pages,
-      'has_more': data.data["has_more"],
+      'has_more': data.data["has_more"] ?? false,
       'next_cursor': data.data["next_cursor"],
     };
   }
