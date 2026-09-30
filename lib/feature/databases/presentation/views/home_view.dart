@@ -71,6 +71,7 @@ class _HomeViewState extends State<HomeView> {
                   final databasesTitle = workspaceName ?? 'Databases';
                   final theme = Theme.of(context);
                   return RefreshIndicator(
+                    edgeOffset: 200, // Below CustomAppBar (120) + search bar (~80)
                     onRefresh: () async {
                       await context.read<DatabasesCubit>().returnDatabases();
                     },

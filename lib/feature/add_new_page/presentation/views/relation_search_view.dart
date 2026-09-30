@@ -101,6 +101,7 @@ class _RelationSearchViewState extends State<RelationSearchView> {
         children: [
           const CustomAnimationBackground(isAnimated: false),
           RefreshIndicator(
+            edgeOffset: 150, // Below SliverAppBar (70) + search bar (~80)
             onRefresh: () async {
               await context.read<ReturnPagesCubit>().returnPages(
                 databaseId: widget.property.relationDatabaseId ?? "",
@@ -110,6 +111,7 @@ class _RelationSearchViewState extends State<RelationSearchView> {
             backgroundColor: Theme.of(context).colorScheme.surface,
             child: CustomScrollView(
               controller: _scrollController,
+              physics: const AlwaysScrollableScrollPhysics(),
               slivers: [
                 RelationSearchAppBar(name: "Search in ${widget.property.name}"),
                 SliverToBoxAdapter(

@@ -66,6 +66,7 @@ class _RecentPagesFeedState extends State<RecentPagesFeed> {
           child: Builder(
             builder: (context) {
               return RefreshIndicator(
+                edgeOffset: 200, // Below CustomAppBar (120) + search area (~80)
                 onRefresh: () async {
                   await context.read<RecentPagesCubit>().fetchRecentPages();
                 },

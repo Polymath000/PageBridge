@@ -10,7 +10,7 @@ class EndPoint {
   static const String token = '/oauth/token';
   static const String oAuth = '/oauth/authorize';
   final String dataSourceId;
-  late String returnPages = "/data_sources/$dataSourceId/query";
+  late String returnPages = "/databases/$dataSourceId/query";
 }
 
 Options headers({required String token, String notionVersion = "2022-06-28"}) =>
