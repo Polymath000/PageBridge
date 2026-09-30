@@ -11,7 +11,7 @@ abstract class CreateNewPageDataSource {
 }
 
 class CreateNewPageDataSourceImpl implements CreateNewPageDataSource {
-  DioConsumer dioConsumer;
+  final DioConsumer dioConsumer;
   CreateNewPageDataSourceImpl(this.dioConsumer);
   @override
   Future<String> createNewPage({

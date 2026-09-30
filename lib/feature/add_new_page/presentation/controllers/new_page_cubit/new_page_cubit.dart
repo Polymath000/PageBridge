@@ -1,7 +1,7 @@
+import 'package:pagebridge/feature/databases/domain/entities/property_entity.dart';
 import 'package:pagebridge/core/enums/notion_property_type.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:pagebridge/feature/databases/data/model/property_model.dart';
 
 import 'package:pagebridge/feature/add_new_page/domain/repo/create_new_page_repo.dart';
 
@@ -11,7 +11,7 @@ class NewPageCubit extends Cubit<NewPageState> {
   NewPageCubit({required this.createNewPageRepo}) : super(NewPageInitial());
   final CreateNewPageRepo createNewPageRepo;
 
-  List<PropertyModel> newPageProperties = [];
+  List<PropertyEntity> newPageProperties = [];
   String? pageContent;
 
   bool get hasData {
@@ -35,7 +35,7 @@ class NewPageCubit extends Cubit<NewPageState> {
       (element) => element.name == key,
     );
     if (index != -1) {
-      newPageProperties[index] = PropertyModel(
+      newPageProperties[index] = PropertyEntity(
         name: key,
         type: type,
         canEdit: true,
@@ -43,7 +43,7 @@ class NewPageCubit extends Cubit<NewPageState> {
       );
     } else {
       newPageProperties.add(
-        PropertyModel(name: key, type: type, canEdit: true, value: value),
+        PropertyEntity(name: key, type: type, canEdit: true, value: value),
       );
     }
   }
