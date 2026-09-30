@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:pagebridge/core/errors/failure.dart';
+import 'package:pagebridge/core/errors/expentions.dart';
 import 'package:pagebridge/core/network/network_info.dart';
 import 'package:pagebridge/feature/databases/data/data_source/database_remote_data_source.dart';
 import 'package:pagebridge/feature/databases/domain/repo/database_repo.dart';
@@ -28,6 +29,8 @@ class DatabaseRepoImpl extends DatabaseRepo {
       } else {
         return left(NetworkFailure.error());
       }
+    } on ServerException catch (e) {
+      return left(ServerFailure(message: e.errorModel.errorMessage));
     } on Exception catch (e) {
       if (e is DioException) {
         return left(ServerFailure.fromDioError(e));

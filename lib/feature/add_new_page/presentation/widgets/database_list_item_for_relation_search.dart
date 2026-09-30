@@ -4,8 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagebridge/feature/pages/domain/entities/page_entity.dart';
 import 'package:pagebridge/feature/add_new_page/presentation/widgets/database_card_for_relation_search.dart';
 
-class ListOfDatabasesFoRelationSearch extends StatelessWidget {
-  const ListOfDatabasesFoRelationSearch({
+class DatabaseListItemForRelationSearch extends StatelessWidget {
+  const DatabaseListItemForRelationSearch({
     super.key,
     required this.isSelected,
     required this.page,

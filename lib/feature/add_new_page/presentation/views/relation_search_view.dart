@@ -9,7 +9,7 @@ import 'package:pagebridge/core/helpers/custom_search_text_field.dart';
 import 'package:pagebridge/feature/pages/domain/entities/page_entity.dart';
 import 'package:pagebridge/feature/databases/domain/entities/property_entity.dart';
 import 'package:pagebridge/feature/pages/presentation/controllers/return_pages_cubit/return_pages_cubit.dart';
-import 'package:pagebridge/feature/add_new_page/presentation/widgets/list_of_databases_fo_relation_search.dart';
+import 'package:pagebridge/feature/add_new_page/presentation/widgets/database_list_item_for_relation_search.dart';
 import 'package:pagebridge/feature/add_new_page/presentation/widgets/relation_search_app_bar.dart';
 import 'package:pagebridge/feature/add_new_page/presentation/widgets/relation_search_card_skeleton.dart';
 
@@ -31,12 +31,15 @@ class RelationSearchView extends StatefulWidget {
 
 class _RelationSearchViewState extends State<RelationSearchView> {
   final ScrollController _scrollController = ScrollController();
-  List<PageEntity> _selectedPages = [];
+  late final ValueNotifier<List<PageEntity>> _selectedPagesNotifier;
 
   @override
   void initState() {
     super.initState();
-    _selectedPages = List.from(widget.initialSelectedPages);
+    _selectedPagesNotifier = ValueNotifier(
+      List.from(widget.initialSelectedPages),
+    );
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<ReturnPagesCubit>().returnPages(
         databaseId: widget.property.relationDatabaseId ?? "",
@@ -57,31 +60,33 @@ class _RelationSearchViewState extends State<RelationSearchView> {
     required PageEntity page,
     required bool isSelected,
   }) {
-    setState(() {
-      if (isSelected) {
-        if (!_selectedPages.any((item) => item.id == page.id)) {
-          _selectedPages.add(page);
-        }
-      } else {
-        _selectedPages.removeWhere((item) => item.id == page.id);
+    final currentList = List<PageEntity>.from(_selectedPagesNotifier.value);
+    if (isSelected) {
+      if (!currentList.any((item) => item.id == page.id)) {
+        currentList.add(page);
       }
-    });
+    } else {
+      currentList.removeWhere((item) => item.id == page.id);
+    }
+    _selectedPagesNotifier.value = currentList;
   }
 
   @override
   void dispose() {
     _scrollController.dispose();
+    _selectedPagesNotifier.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: relationSearchAppBar(
-        context: context,
+      appBar: RelationSearchAppBar(
         name: widget.property.name,
-        selectedPages: _selectedPages,
-        onSelectionConfirmed: widget.onSelectionConfirmed,
+        onDone: () {
+          widget.onSelectionConfirmed?.call(_selectedPagesNotifier.value);
+          Navigator.pop(context, _selectedPagesNotifier.value);
+        },
       ),
       body: Stack(
         children: [
@@ -142,17 +147,23 @@ class _RelationSearchViewState extends State<RelationSearchView> {
                           }
 
                           final page = pages[index];
-                          final isSelected = _selectedPages.any(
-                            (p) => p.id == page.id,
-                          );
 
-                          return ListOfDatabasesFoRelationSearch(
-                            isSelected: isSelected,
-                            page: page,
-                            onChanged: (value) => _onPageSelectionChanged(
-                              page: page,
-                              isSelected: value ?? false,
-                            ),
+                          return ValueListenableBuilder<List<PageEntity>>(
+                            valueListenable: _selectedPagesNotifier,
+                            builder: (context, selectedPages, child) {
+                              final isSelected = selectedPages.any(
+                                (p) => p.id == page.id,
+                              );
+
+                              return DatabaseListItemForRelationSearch(
+                                isSelected: isSelected,
+                                page: page,
+                                onChanged: (value) => _onPageSelectionChanged(
+                                  page: page,
+                                  isSelected: value ?? false,
+                                ),
+                              );
+                            },
                           );
                         },
                       );

@@ -20,7 +20,19 @@ class RelationTypeWidget extends StatefulWidget {
 }
 
 class _RelationTypeWidgetState extends State<RelationTypeWidget> {
-  List<PageEntity> _selectedPages = [];
+  late final ValueNotifier<List<PageEntity>> _selectedPagesNotifier;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedPagesNotifier = ValueNotifier<List<PageEntity>>([]);
+  }
+
+  @override
+  void dispose() {
+    _selectedPagesNotifier.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +43,10 @@ class _RelationTypeWidgetState extends State<RelationTypeWidget> {
           AppRoutes.relationSearch,
           arguments: {
             'property': widget.property,
-            'initialSelectedPages': _selectedPages,
+            'initialSelectedPages': _selectedPagesNotifier.value,
             'onSelectionConfirmed': (List<PageEntity> selectedPages) {
-              setState(() {
-                _selectedPages = selectedPages;
-              });
-              widget.onChanged?.call(_selectedPages.map((e) => e.id).toList());
+              _selectedPagesNotifier.value = selectedPages;
+              widget.onChanged?.call(selectedPages.map((e) => e.id).toList());
             },
           },
         );
@@ -45,45 +55,46 @@ class _RelationTypeWidgetState extends State<RelationTypeWidget> {
         color: AppColors.transparent,
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
-        child: _selectedPages.isEmpty
-            ? Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4.0),
-                child: Text(
-                  "Select pages",
-                  style: AppTextStyles.titleMedium?.copyWith(
-                    color: AppColors.grey,
-                    fontSize: 14.sp,
-                  ),
-                ),
-              )
-            : Wrap(
-                spacing: 6.0,
-                runSpacing: 4.0,
-                children: _selectedPages
-                    .map(
-                      (page) => Chip(
-                        label: Text(
-                          page.title,
-                          style: AppTextStyles.bodyMedium?.copyWith(
-                            color: Theme.of(context).colorScheme.onPrimary,
-                          ),
-                        ),
-                        backgroundColor: Theme.of(context).colorScheme.primary,
-                        deleteIconColor: Theme.of(
-                          context,
-                        ).colorScheme.onPrimary,
-                        onDeleted: () {
-                          setState(() {
-                            _selectedPages.removeWhere((p) => p.id == page.id);
-                            widget.onChanged?.call(
-                              _selectedPages.map((e) => e.id).toList(),
-                            );
-                          });
-                        },
+        child: ValueListenableBuilder<List<PageEntity>>(
+          valueListenable: _selectedPagesNotifier,
+          builder: (context, selectedPages, child) {
+            return selectedPages.isEmpty
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4.0),
+                    child: Text(
+                      "Select pages",
+                      style: AppTextStyles.titleMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        fontSize: 14.sp,
                       ),
-                    )
-                    .toList(),
-              ),
+                    ),
+                  )
+                : Wrap(
+                    spacing: 6.0,
+                    runSpacing: 4.0,
+                    children: selectedPages
+                        .map(
+                          (page) => Chip(
+                            label: Text(
+                              page.title,
+                              style: AppTextStyles.bodyMedium?.copyWith(
+                                color: Theme.of(context).colorScheme.onPrimary,
+                              ),
+                            ),
+                            backgroundColor: Theme.of(context).colorScheme.primary,
+                            deleteIconColor: Theme.of(context).colorScheme.onPrimary,
+                            onDeleted: () {
+                              final current = List<PageEntity>.from(_selectedPagesNotifier.value);
+                              current.removeWhere((p) => p.id == page.id);
+                              _selectedPagesNotifier.value = current;
+                              widget.onChanged?.call(current.map((e) => e.id).toList());
+                            },
+                          ),
+                        )
+                        .toList(),
+                  );
+          },
+        ),
       ),
     );
   }

@@ -2,6 +2,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:pagebridge/core/errors/failure.dart';
+import 'package:pagebridge/core/errors/expentions.dart';
 import 'package:pagebridge/core/network/network_info.dart';
 import 'package:pagebridge/feature/pages/data/data_source/return_pages_remote_data_source.dart';
 import 'package:pagebridge/feature/pages/domain/repo/return_pages_repo.dart';
@@ -33,12 +34,12 @@ class ReturnPagesRepoImpl extends ReturnPagesRepo {
       } else {
         return left(NetworkFailure.error());
       }
+    } on ServerException catch (e) {
+      return left(ServerFailure(message: e.errorModel.errorMessage));
+    } on DioException catch (e) {
+      return left(ServerFailure.fromDioError(e));
     } on Exception catch (e) {
-      if (e is DioException) {
-        return left(ServerFailure.fromDioError(e));
-      } else {
-        return left(ServerFailure(message: e.toString()));
-      }
+      return left(ServerFailure(message: e.toString()));
     }
   }
 }
