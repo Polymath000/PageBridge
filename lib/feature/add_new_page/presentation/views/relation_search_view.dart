@@ -86,8 +86,11 @@ class _RelationSearchViewState extends State<RelationSearchView> {
           widget.onSelectionConfirmed?.call(_selectedPagesNotifier.value);
           Navigator.pop(context, _selectedPagesNotifier.value);
         },
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        foregroundColor: Theme.of(context).colorScheme.onPrimary,
+        backgroundColor: Theme.of(context).floatingActionButtonTheme.backgroundColor?.withValues(alpha: 0.6),
+        elevation: 0,
+        focusElevation: 0,
+        hoverElevation: 0,
+        highlightElevation: 0,
         icon: const Icon(Icons.check),
         label: const Text(
           "Done",
