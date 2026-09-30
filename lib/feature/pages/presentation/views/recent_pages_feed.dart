@@ -6,6 +6,7 @@ import 'package:pagebridge/feature/pages/domain/repo/recent_pages_repo.dart';
 import 'package:pagebridge/feature/pages/presentation/controllers/recent_pages_cubit/recent_pages_cubit.dart';
 import 'package:pagebridge/core/helpers/custom_app_bar.dart';
 import 'package:pagebridge/core/helpers/custom_floating_action_button.dart';
+import 'package:pagebridge/core/helpers/app_refresh_indicator.dart';
 import 'package:pagebridge/feature/pages/presentation/widgets/recent_pages_feed_body.dart';
 
 class RecentPagesFeed extends StatefulWidget {
@@ -65,13 +66,11 @@ class _RecentPagesFeedState extends State<RecentPagesFeed> {
                 ..fetchRecentPages(),
           child: Builder(
             builder: (context) {
-              return RefreshIndicator(
-                edgeOffset: 200, // Below CustomAppBar (120) + search area (~80)
+              return AppRefreshIndicator(
+                edgeOffset: 200,
                 onRefresh: () async {
                   await context.read<RecentPagesCubit>().fetchRecentPages();
                 },
-                color: Theme.of(context).colorScheme.primary,
-                backgroundColor: Theme.of(context).colorScheme.surface,
                 child: CustomScrollView(
                   controller: _scrollController,
                   slivers: [

@@ -12,6 +12,7 @@ import 'package:pagebridge/feature/pages/presentation/controllers/return_pages_c
 import 'package:pagebridge/feature/add_new_page/presentation/widgets/database_list_item_for_relation_search.dart';
 import 'package:pagebridge/feature/add_new_page/presentation/widgets/relation_search_app_bar.dart';
 import 'package:pagebridge/feature/add_new_page/presentation/widgets/relation_search_card_skeleton.dart';
+import 'package:pagebridge/core/helpers/app_refresh_indicator.dart';
 
 class RelationSearchView extends StatefulWidget {
   final PropertyEntity property;
@@ -100,15 +101,13 @@ class _RelationSearchViewState extends State<RelationSearchView> {
       body: Stack(
         children: [
           const CustomAnimationBackground(isAnimated: false),
-          RefreshIndicator(
-            edgeOffset: 150, // Below SliverAppBar (70) + search bar (~80)
+          AppRefreshIndicator(
+            edgeOffset: 150,
             onRefresh: () async {
               await context.read<ReturnPagesCubit>().returnPages(
                 databaseId: widget.property.relationDatabaseId ?? "",
               );
             },
-            color: Theme.of(context).colorScheme.primary,
-            backgroundColor: Theme.of(context).colorScheme.surface,
             child: CustomScrollView(
               controller: _scrollController,
               physics: const AlwaysScrollableScrollPhysics(),

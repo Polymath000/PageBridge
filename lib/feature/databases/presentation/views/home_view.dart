@@ -8,6 +8,7 @@ import 'package:pagebridge/feature/databases/presentation/controllers/return_dat
 import 'package:pagebridge/core/helpers/custom_app_bar.dart';
 import 'package:pagebridge/feature/databases/presentation/widgets/home_view_body.dart';
 import 'package:pagebridge/core/helpers/custom_floating_action_button.dart';
+import 'package:pagebridge/core/helpers/app_refresh_indicator.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -69,14 +70,11 @@ class _HomeViewState extends State<HomeView> {
                       .read<MainLayoutCubit>()
                       .workspaceName;
                   final databasesTitle = workspaceName ?? 'Databases';
-                  final theme = Theme.of(context);
-                  return RefreshIndicator(
-                    edgeOffset: 200, // Below CustomAppBar (120) + search bar (~80)
+                  return AppRefreshIndicator(
+                    edgeOffset: 200,
                     onRefresh: () async {
                       await context.read<DatabasesCubit>().returnDatabases();
                     },
-                    color: theme.colorScheme.primary,
-                    backgroundColor: theme.colorScheme.surface,
                     child: CustomScrollView(
                       controller: _databasesScrollController,
                       slivers: [
