@@ -19,10 +19,7 @@ class PropertyType extends StatefulWidget {
 class _PropertyTypeState extends State<PropertyType> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.sizeOf(context).width * 0.55,
-      child:
-          widget.property.type == 'text' ||
+    return widget.property.type == 'text' ||
               widget.property.type == 'number' ||
               widget.property.type == 'url' ||
               widget.property.type == 'rich_text' ||
@@ -48,7 +45,6 @@ class _PropertyTypeState extends State<PropertyType> {
               property: widget.property,
               onChanged: widget.onChanged,
             )
-          : Container(),
-    );
+          : Container();
   }
 }

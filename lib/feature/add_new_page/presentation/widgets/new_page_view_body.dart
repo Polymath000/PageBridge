@@ -36,7 +36,7 @@ class NewPageViewBody extends StatelessWidget {
               maxLines: null,
               minLines: 3,
               decoration: InputDecoration(
-                labelText: 'Page Content (Optional)',
+                labelText: 'Page Content',
                 hintText: 'Start writing your page content here...',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
