@@ -21,7 +21,6 @@ class PropertyWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // LABEL OUTSIDE
           Row(
             children: [
               Icon(

@@ -15,7 +15,7 @@ class NewPageViewBody extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(height: 8),
-          ...database.properties.reversed.map(
+          ...database.properties.reversed.where((e) => e.canEdit).map(
             (e) => PropertyWidget(
               property: e,
               onChanged: (value) {

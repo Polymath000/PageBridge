@@ -20,31 +20,29 @@ class _PropertyTypeState extends State<PropertyType> {
   @override
   Widget build(BuildContext context) {
     return widget.property.type == 'text' ||
-              widget.property.type == 'number' ||
-              widget.property.type == 'url' ||
-              widget.property.type == 'rich_text' ||
-              widget.property.type == 'phone_number' ||
-              widget.property.type == 'email' ||
-              widget.property.type == 'created_time'
-          ? PropertyTypeText(onChanged: widget.onChanged)
-          // : widget.property.type == "files"
-          // ? PropertyTypeFile(onChanged: widget.onChanged)
-          : widget.property.type == 'select' || widget.property.type == "status"
-          ? PropertyTypeSelectOneItem(widget: widget)
-          : widget.property.type == 'multi_select'
-          ? PropertyTypeMultiSelect(
-              property: widget.property,
-              onChanged: widget.onChanged,
-            )
-          : widget.property.type == "checkbox"
-          ? CustomCheckBox(onChanged: widget.onChanged)
-          : widget.property.type == "date"
-          ? NotionDateWidget(propertyType: widget)
-          : widget.property.type == "relation"
-          ? RelationTypeWidget(
-              property: widget.property,
-              onChanged: widget.onChanged,
-            )
-          : Container();
+            widget.property.type == 'number' ||
+            widget.property.type == 'url' ||
+            widget.property.type == 'rich_text' ||
+            widget.property.type == 'phone_number' ||
+            widget.property.type == 'email' ||
+            widget.property.type == 'created_time'
+        ? PropertyTypeText(onChanged: widget.onChanged)
+        : widget.property.type == 'select' || widget.property.type == "status"
+        ? PropertyTypeSelectOneItem(widget: widget)
+        : widget.property.type == 'multi_select'
+        ? PropertyTypeMultiSelect(
+            property: widget.property,
+            onChanged: widget.onChanged,
+          )
+        : widget.property.type == "checkbox"
+        ? CustomCheckBox(onChanged: widget.onChanged)
+        : widget.property.type == "date"
+        ? NotionDateWidget(propertyType: widget)
+        : widget.property.type == "relation"
+        ? RelationTypeWidget(
+            property: widget.property,
+            onChanged: widget.onChanged,
+          )
+        : Container();
   }
 }

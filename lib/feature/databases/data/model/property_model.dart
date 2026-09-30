@@ -21,6 +21,7 @@ class PropertyModel extends PropertyEntity {
       'last_edited_by',
       'created_by',
       'created_time',
+      'files',
     ];
     if (nonEditableTypes.contains(type)) {
       isEditable = false;
