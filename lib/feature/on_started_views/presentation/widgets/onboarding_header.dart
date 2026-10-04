@@ -4,7 +4,11 @@ class OnboardingHeader extends StatelessWidget {
   final ValueNotifier<int> pageIndex;
   final VoidCallback onSkip;
 
-  const OnboardingHeader({super.key, required this.pageIndex, required this.onSkip});
+  const OnboardingHeader({
+    super.key,
+    required this.pageIndex,
+    required this.onSkip,
+  });
 
   @override
   Widget build(BuildContext context) {

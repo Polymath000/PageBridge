@@ -34,7 +34,8 @@ class ReturnPagesRemoteDataSourceImpl implements ReturnPagesRemoteDataSource {
         'page_size': AppConstants.pageSizeOfTheAPI,
         if (query.trim().isNotEmpty)
           "filter": {
-            "property": "Name", // This assumes the primary title property is always "Name"
+            "property":
+                "Name", // This assumes the primary title property is always "Name"
             "title": {"contains": query.trim()},
           },
         "sorts": [

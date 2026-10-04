@@ -9,7 +9,7 @@ class PageNotFoundView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Ensure styles are initialized if not already
-    
+
     AppTextStyles.init(context);
 
     return Scaffold(
@@ -28,19 +28,27 @@ class PageNotFoundView extends StatelessWidget {
                     shape: BoxShape.circle,
                     gradient: LinearGradient(
                       colors: [
-                        Theme.of(context).colorScheme.primary.withValues(alpha: 0.35),
-                        Theme.of(context).colorScheme.secondary.withValues(alpha: 0.15),
+                        Theme.of(
+                          context,
+                        ).colorScheme.primary.withValues(alpha: 0.35),
+                        Theme.of(
+                          context,
+                        ).colorScheme.secondary.withValues(alpha: 0.15),
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
                     border: Border.all(
-                      color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.5),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.primary.withValues(alpha: 0.5),
                       width: 2,
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.primary.withValues(alpha: 0.3),
                         blurRadius: 28,
                         spreadRadius: 4,
                       ),
@@ -59,10 +67,14 @@ class PageNotFoundView extends StatelessWidget {
                     vertical: 6,
                   ),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.2),
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.primary.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
-                      color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.4),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.primary.withValues(alpha: 0.4),
                       width: 1,
                     ),
                   ),
@@ -104,7 +116,11 @@ class PageNotFoundView extends StatelessWidget {
                       if (Navigator.of(context).canPop()) {
                         Navigator.of(context).pop();
                       } else {
-                        Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home, (_) => false);
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          AppRoutes.home,
+                          (_) => false,
+                        );
                       }
                     },
                     child: const Text(

@@ -75,9 +75,7 @@ class _RecentPagesFeedState extends State<RecentPagesFeed> {
                   controller: _scrollController,
                   slivers: [
                     CustomAppBar(title: 'Recent Pages', showActions: false),
-                    RecentPagesFeedBody(
-                      scrollController: _scrollController,
-                    ),
+                    RecentPagesFeedBody(scrollController: _scrollController),
                     const SliverToBoxAdapter(child: SizedBox(height: 100)),
                   ],
                 ),

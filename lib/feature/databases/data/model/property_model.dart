@@ -22,8 +22,7 @@ class PropertyModel extends PropertyEntity {
       NotionPropertyType.lastEditedBy ||
       NotionPropertyType.createdBy ||
       NotionPropertyType.createdTime ||
-      NotionPropertyType.files =>
-        false,
+      NotionPropertyType.files => false,
       _ => true,
     };
 
@@ -31,7 +30,8 @@ class PropertyModel extends PropertyEntity {
     String? expression;
     String? relatedDbId;
 
-    final config = json[typeStr]; // Keep typeStr here because the API payload key is still a string
+    final config =
+        json[typeStr]; // Keep typeStr here because the API payload key is still a string
 
     if (config != null && config is Map<String, dynamic>) {
       switch (typeEnum) {
@@ -76,10 +76,14 @@ class PropertyModel extends PropertyEntity {
       case NotionPropertyType.files:
         return {
           'files': (value is List)
-              ? value.map((file) => {
-                  'name': name,
-                  'external': {'url': file.toString()},
-                }).toList()
+              ? value
+                    .map(
+                      (file) => {
+                        'name': name,
+                        'external': {'url': file.toString()},
+                      },
+                    )
+                    .toList()
               : [],
         };
       case NotionPropertyType.checkbox:
@@ -103,7 +107,9 @@ class PropertyModel extends PropertyEntity {
       case NotionPropertyType.richText:
         return {
           'rich_text': [
-            {'text': {'content': value as String}},
+            {
+              'text': {'content': value as String},
+            },
           ],
         };
       case NotionPropertyType.phoneNumber:
@@ -117,7 +123,9 @@ class PropertyModel extends PropertyEntity {
       case NotionPropertyType.title:
         return {
           'title': [
-            {'text': {'content': value as String}},
+            {
+              'text': {'content': value as String},
+            },
           ],
         };
       case NotionPropertyType.relation:
@@ -129,7 +137,9 @@ class PropertyModel extends PropertyEntity {
       case NotionPropertyType.text:
         return {
           'rich_text': [
-            {'text': {'content': value as String}},
+            {
+              'text': {'content': value as String},
+            },
           ],
         };
       default:

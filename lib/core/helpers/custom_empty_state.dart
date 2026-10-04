@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pagebridge/config/themes/app_icons.dart';
 import 'package:pagebridge/config/themes/app_text_style.dart';
 
-
 /// A friendly empty-state widget distinct from error states.
 ///
 /// Displays an icon, a title, and an optional subtitle to guide
@@ -28,7 +27,11 @@ class CustomEmptyState extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon ?? AppIcons.inbox, size: 56, color: colorScheme.onSurfaceVariant),
+            Icon(
+              icon ?? AppIcons.inbox,
+              size: 56,
+              color: colorScheme.onSurfaceVariant,
+            ),
             const SizedBox(height: 16),
             Text(
               title,

@@ -23,7 +23,6 @@ class RecentPagesRemoteDataSourceImpl implements RecentPagesRemoteDataSource {
     String? query,
     CancelToken? cancelToken,
   }) async {
-
     var data = await dioConsumer.post(
       EndPoint.search,
       cancelToken: cancelToken,

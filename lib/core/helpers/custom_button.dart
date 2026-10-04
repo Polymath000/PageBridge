@@ -35,7 +35,9 @@ class _CustomButtonState extends State<CustomButton> {
     final Color baseColor = isDark ? dBase : lBase;
     final Color shadowDark = isDark ? dShadowDark : lShadowDark;
     final Color shadowLight = isDark ? dShadowLight : lShadowLight;
-    final Color textColor = isDark ? AppColors.white70 : AppColors.neumorphicTextDark;
+    final Color textColor = isDark
+        ? AppColors.white70
+        : AppColors.neumorphicTextDark;
 
     return Padding(
       padding: const EdgeInsets.only(top: 32.0),

@@ -5,7 +5,7 @@ class PageEntity {
   final String url;
   final String? iconEmoji;
   final String? iconUrl;
-  
+
   const PageEntity({
     required this.id,
     required this.title,

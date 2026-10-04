@@ -12,7 +12,7 @@ abstract class ApiConsumer {
     String path, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
-    Options? options,           // Added for headers
+    Options? options, // Added for headers
     bool isFormData = false,
     CancelToken? cancelToken, // Added
   });

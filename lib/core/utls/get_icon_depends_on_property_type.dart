@@ -3,7 +3,8 @@ import 'package:pagebridge/core/enums/notion_property_type.dart';
 
 IconData getIconDependsOnPropertyType(NotionPropertyType type) {
   return switch (type) {
-    NotionPropertyType.text || NotionPropertyType.richText => Icons.text_fields_outlined,
+    NotionPropertyType.text ||
+    NotionPropertyType.richText => Icons.text_fields_outlined,
     NotionPropertyType.number => Icons.numbers,
     NotionPropertyType.select => Icons.arrow_drop_down_circle_outlined,
     NotionPropertyType.multiSelect => Icons.list,

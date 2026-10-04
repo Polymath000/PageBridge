@@ -46,8 +46,11 @@ class PageModel extends PageEntity {
       }
     }
 
-    final dynamic properties = PropertyModel.fromJson(parsedTitle, json['properties']);
-    
+    final dynamic properties = PropertyModel.fromJson(
+      parsedTitle,
+      json['properties'],
+    );
+
     return PageModel(
       id: json['id'],
       title: parsedTitle,

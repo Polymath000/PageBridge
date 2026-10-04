@@ -87,7 +87,9 @@ class _RelationSearchViewState extends State<RelationSearchView> {
           widget.onSelectionConfirmed?.call(_selectedPagesNotifier.value);
           Navigator.pop(context, _selectedPagesNotifier.value);
         },
-        backgroundColor: Theme.of(context).floatingActionButtonTheme.backgroundColor?.withValues(alpha: 0.6),
+        backgroundColor: Theme.of(
+          context,
+        ).floatingActionButtonTheme.backgroundColor?.withValues(alpha: 0.6),
         elevation: 0,
         focusElevation: 0,
         hoverElevation: 0,
@@ -144,7 +146,8 @@ class _RelationSearchViewState extends State<RelationSearchView> {
                         padding: EdgeInsets.symmetric(horizontal: 12.w),
                         sliver: SliverList(
                           delegate: SliverChildBuilderDelegate(
-                            (context, index) => const RelationSearchCardSkeleton(),
+                            (context, index) =>
+                                const RelationSearchCardSkeleton(),
                             childCount: 6,
                           ),
                         ),
@@ -165,39 +168,43 @@ class _RelationSearchViewState extends State<RelationSearchView> {
                           pages.length + (state.isPaginating ? 1 : 0);
 
                       return SliverPadding(
-                        padding: EdgeInsets.only(left: 12.w, right: 12.w, bottom: 80.h),
+                        padding: EdgeInsets.only(
+                          left: 12.w,
+                          right: 12.w,
+                          bottom: 80.h,
+                        ),
                         sliver: SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            (context, index) {
-                              if (index == pages.length) {
-                                return Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 20.h),
-                                  child: const RelationSearchCardSkeleton(),
-                                );
-                              }
-
-                              final page = pages[index];
-
-                              return ValueListenableBuilder<List<PageEntity>>(
-                                valueListenable: _selectedPagesNotifier,
-                                builder: (context, selectedPages, child) {
-                                  final isSelected = selectedPages.any(
-                                    (p) => p.id == page.id,
-                                  );
-
-                                  return DatabaseListItemForRelationSearch(
-                                    isSelected: isSelected,
-                                    page: page,
-                                    onChanged: (value) => _onPageSelectionChanged(
-                                      page: page,
-                                      isSelected: value ?? false,
-                                    ),
-                                  );
-                                },
+                          delegate: SliverChildBuilderDelegate((
+                            context,
+                            index,
+                          ) {
+                            if (index == pages.length) {
+                              return Padding(
+                                padding: EdgeInsets.symmetric(vertical: 20.h),
+                                child: const RelationSearchCardSkeleton(),
                               );
-                            },
-                            childCount: totalCount,
-                          ),
+                            }
+
+                            final page = pages[index];
+
+                            return ValueListenableBuilder<List<PageEntity>>(
+                              valueListenable: _selectedPagesNotifier,
+                              builder: (context, selectedPages, child) {
+                                final isSelected = selectedPages.any(
+                                  (p) => p.id == page.id,
+                                );
+
+                                return DatabaseListItemForRelationSearch(
+                                  isSelected: isSelected,
+                                  page: page,
+                                  onChanged: (value) => _onPageSelectionChanged(
+                                    page: page,
+                                    isSelected: value ?? false,
+                                  ),
+                                );
+                              },
+                            );
+                          }, childCount: totalCount),
                         ),
                       );
                     }

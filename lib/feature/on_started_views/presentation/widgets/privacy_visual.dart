@@ -16,16 +16,9 @@ class PrivacyVisual extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: fillColor,
-        border: Border.all(
-          color: borderColor,
-          width: 1.2,
-        ),
+        border: Border.all(color: borderColor, width: 1.2),
       ),
-      child: Icon(
-        AppIcons.lockOutline,
-        size: 62,
-        color: foreground,
-      ),
+      child: Icon(AppIcons.lockOutline, size: 62, color: foreground),
     );
   }
 }

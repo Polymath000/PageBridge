@@ -4,9 +4,7 @@ import 'package:pagebridge/feature/databases/presentation/widgets/database_card.
 import 'package:skeletonizer/skeletonizer.dart';
 
 class CustomSkeletonizerDatabase extends StatelessWidget {
-  const CustomSkeletonizerDatabase({
-    super.key,
-  });
+  const CustomSkeletonizerDatabase({super.key});
 
   @override
   Widget build(BuildContext context) {

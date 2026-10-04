@@ -66,7 +66,7 @@ class AppColors {
 
   // Property Widget (Cards)
   static const Color propertyCardDark = Color(0xFF1E1E1E);
-  
+
   // Custom Animation Overlays
   static const Color overlayLight = Color(0x33FFFFFF);
   static const Color overlayDark = Color(0x14000000);
@@ -84,7 +84,7 @@ class AppColors {
   static const Color neumorphicShadowDarkDark = Color(0xFF1D2025);
   static const Color neumorphicShadowLightDark = Color(0xFF3E444D);
   static const Color neumorphicTextDark = Color(0xFF090909);
-  
+
   // Day Night Switch
   static const Color dayNightContainerLight = Color(0xFF3D7EAE);
   static const Color dayNightContainerDark = Color(0xFF1D1F2C);
@@ -93,5 +93,4 @@ class AppColors {
   static const Color dayNightSpot = Color(0xFF959DB1);
   static const Color dayNightClouds = Color(0xFFF3FDFF);
   static const Color dayNightBackClouds = Color(0xFFAACADF);
-
 }

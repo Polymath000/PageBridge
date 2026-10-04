@@ -7,7 +7,7 @@ class LoggerInterceptor extends Interceptor {
   void onError(final DioException err, final ErrorInterceptorHandler handler) {
     final options = err.requestOptions;
     final requestPath = '${options.baseUrl}${options.path}';
-    
+
     log(
       '${options.method} request ==> $requestPath\n'
       'Error type: ${err.type}\n'
@@ -15,7 +15,7 @@ class LoggerInterceptor extends Interceptor {
       name: 'DioError',
       error: err.error,
     );
-    handler.next(err); 
+    handler.next(err);
   }
 
   @override

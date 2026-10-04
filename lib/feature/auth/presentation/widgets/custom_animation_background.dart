@@ -8,13 +8,13 @@ class CustomAnimationBackground extends StatefulWidget {
   final bool isAnimated;
 
   const CustomAnimationBackground({super.key, this.isAnimated = true})
-      : mode = BackgroundMode.adaptive;
+    : mode = BackgroundMode.adaptive;
 
   const CustomAnimationBackground.light({super.key, this.isAnimated = true})
-      : mode = BackgroundMode.light;
+    : mode = BackgroundMode.light;
 
   const CustomAnimationBackground.dark({super.key, this.isAnimated = true})
-      : mode = BackgroundMode.dark;
+    : mode = BackgroundMode.dark;
 
   @override
   State<CustomAnimationBackground> createState() =>

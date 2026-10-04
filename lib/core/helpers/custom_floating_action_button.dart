@@ -3,10 +3,7 @@ import 'package:pagebridge/config/themes/app_icons.dart';
 import 'package:pagebridge/core/theme/app_colors.dart';
 
 class CustomFloatingActionButton extends StatelessWidget {
-  const CustomFloatingActionButton({
-    super.key,
-    required this.onPressed,
-  });
+  const CustomFloatingActionButton({super.key, required this.onPressed});
 
   final VoidCallback onPressed;
 

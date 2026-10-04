@@ -6,10 +6,7 @@ import 'package:pagebridge/core/utls/get_color.dart';
 import 'package:pagebridge/feature/databases/domain/entities/property_entity.dart';
 
 class MultiSelectChip extends StatelessWidget {
-  const MultiSelectChip({
-    super.key,
-    required this.option,
-  });
+  const MultiSelectChip({super.key, required this.option});
 
   final SelectOptionEntity? option;
 

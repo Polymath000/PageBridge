@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 
-
 class AppRefreshIndicator extends StatelessWidget {
   const AppRefreshIndicator({
     super.key,
@@ -25,10 +24,7 @@ class AppRefreshIndicator extends StatelessWidget {
       edgeOffset: edgeOffset,
       backgroundColor: colorScheme.surface,
       indicatorBuilder: (context, controller) {
-        return _GlassSpinner(
-          controller: controller,
-          colorScheme: colorScheme,
-        );
+        return _GlassSpinner(controller: controller, colorScheme: colorScheme);
       },
       child: child,
     );
@@ -36,10 +32,7 @@ class AppRefreshIndicator extends StatelessWidget {
 }
 
 class _GlassSpinner extends StatelessWidget {
-  const _GlassSpinner({
-    required this.controller,
-    required this.colorScheme,
-  });
+  const _GlassSpinner({required this.controller, required this.colorScheme});
 
   final IndicatorController controller;
   final ColorScheme colorScheme;

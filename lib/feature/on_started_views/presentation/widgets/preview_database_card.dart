@@ -6,7 +6,11 @@ class PreviewDatabaseCard extends StatelessWidget {
   final String title;
   final String icon;
 
-  const PreviewDatabaseCard({super.key, required this.title, required this.icon});
+  const PreviewDatabaseCard({
+    super.key,
+    required this.title,
+    required this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {

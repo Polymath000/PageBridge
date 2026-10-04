@@ -15,18 +15,20 @@ class NewPageViewBody extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(height: 8),
-          ...database.properties.reversed.where((e) => e.canEdit).map(
-            (e) => PropertyWidget(
-              property: e,
-              onChanged: (value) {
-                context.read<NewPageCubit>().addProperty(
-                  key: e.name,
-                  value: value,
-                  type: e.type,
-                );
-              },
-            ),
-          ),
+          ...database.properties.reversed
+              .where((e) => e.canEdit)
+              .map(
+                (e) => PropertyWidget(
+                  property: e,
+                  onChanged: (value) {
+                    context.read<NewPageCubit>().addProperty(
+                      key: e.name,
+                      value: value,
+                      type: e.type,
+                    );
+                  },
+                ),
+              ),
           PageContent(),
         ],
       ),

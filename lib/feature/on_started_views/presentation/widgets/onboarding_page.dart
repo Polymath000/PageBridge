@@ -6,7 +6,8 @@ class OnboardingPage extends StatelessWidget {
   final String description;
   final Widget Function() visualBuilder;
 
-  const OnboardingPage({super.key, 
+  const OnboardingPage({
+    super.key,
     required this.title,
     required this.description,
     required this.visualBuilder,
@@ -16,8 +17,9 @@ class OnboardingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final titleColor = Theme.of(context).colorScheme.onSurface;
-    final bodyColor =
-        isDark ? AppColors.white.withValues(alpha: 0.75) : AppColors.darkGrey;
+    final bodyColor = isDark
+        ? AppColors.white.withValues(alpha: 0.75)
+        : AppColors.darkGrey;
     final textTheme = Theme.of(context).textTheme;
     return Center(
       child: SingleChildScrollView(

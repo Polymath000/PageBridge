@@ -22,22 +22,24 @@ class PropertyType extends StatelessWidget {
       NotionPropertyType.richText ||
       NotionPropertyType.phoneNumber ||
       NotionPropertyType.email ||
-      NotionPropertyType.createdTime =>
-        PropertyTypeText(onChanged: onChanged),
+      NotionPropertyType.createdTime => PropertyTypeText(onChanged: onChanged),
 
       NotionPropertyType.select ||
-      NotionPropertyType.status =>
-        PropertyTypeSelectOneItem(widget: this),
+      NotionPropertyType.status => PropertyTypeSelectOneItem(widget: this),
 
-      NotionPropertyType.multiSelect =>
-        PropertyTypeMultiSelect(property: property, onChanged: onChanged),
+      NotionPropertyType.multiSelect => PropertyTypeMultiSelect(
+        property: property,
+        onChanged: onChanged,
+      ),
 
       NotionPropertyType.checkbox => CustomCheckBox(onChanged: onChanged),
 
       NotionPropertyType.date => NotionDateWidget(propertyType: this),
 
-      NotionPropertyType.relation =>
-        RelationTypeWidget(property: property, onChanged: onChanged),
+      NotionPropertyType.relation => RelationTypeWidget(
+        property: property,
+        onChanged: onChanged,
+      ),
 
       _ => const SizedBox.shrink(),
     };

@@ -42,7 +42,9 @@ class _CustomCheckBoxState extends State<CustomCheckBox> {
             widget.onChanged?.call(isButtonPressed);
           },
           child: Icon(
-            isButtonPressed ? AppIcons.checkBoxMaterial : AppIcons.checkBoxBlank,
+            isButtonPressed
+                ? AppIcons.checkBoxMaterial
+                : AppIcons.checkBoxBlank,
             color: isButtonPressed ? AppColors.darkBlue : AppColors.grey,
             size: 22.sp,
             fontWeight: FontWeight.w100,

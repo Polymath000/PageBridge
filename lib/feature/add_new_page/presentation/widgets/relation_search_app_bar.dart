@@ -8,10 +8,7 @@ import 'package:pagebridge/core/helpers/custom_back_arrow.dart';
 class RelationSearchAppBar extends StatelessWidget {
   final String name;
 
-  const RelationSearchAppBar({
-    super.key,
-    required this.name,
-  });
+  const RelationSearchAppBar({super.key, required this.name});
 
   @override
   Widget build(BuildContext context) {

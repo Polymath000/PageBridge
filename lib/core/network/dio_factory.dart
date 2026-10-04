@@ -31,7 +31,9 @@ class DioFactory {
     dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) async {
-          final token = await SecureStorage.readData(key: AppConstants.tokenKey);
+          final token = await SecureStorage.readData(
+            key: AppConstants.tokenKey,
+          );
           if (token != null && token.isNotEmpty) {
             options.headers['Authorization'] = 'Bearer $token';
           }

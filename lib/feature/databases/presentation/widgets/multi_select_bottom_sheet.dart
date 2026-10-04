@@ -48,7 +48,10 @@ class MultiSelectBottomSheet extends StatelessWidget {
           Flexible(
             child: ListView.builder(
               shrinkWrap: true,
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20.0,
+                vertical: 8.0,
+              ),
               itemCount: options.length,
               itemBuilder: (context, index) {
                 final option = options[index];
@@ -62,7 +65,10 @@ class MultiSelectBottomSheet extends StatelessWidget {
                       onTap: () => _toggleSelection(option.name),
                       borderRadius: BorderRadius.circular(8),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 12.0,
+                          horizontal: 8.0,
+                        ),
                         child: Row(
                           children: [
                             MultiSelectChip(option: option),

@@ -81,13 +81,21 @@ class _RelationTypeWidgetState extends State<RelationTypeWidget> {
                                 color: Theme.of(context).colorScheme.onPrimary,
                               ),
                             ),
-                            backgroundColor: Theme.of(context).colorScheme.primary,
-                            deleteIconColor: Theme.of(context).colorScheme.onPrimary,
+                            backgroundColor: Theme.of(
+                              context,
+                            ).colorScheme.primary,
+                            deleteIconColor: Theme.of(
+                              context,
+                            ).colorScheme.onPrimary,
                             onDeleted: () {
-                              final current = List<PageEntity>.from(_selectedPagesNotifier.value);
+                              final current = List<PageEntity>.from(
+                                _selectedPagesNotifier.value,
+                              );
                               current.removeWhere((p) => p.id == page.id);
                               _selectedPagesNotifier.value = current;
-                              widget.onChanged?.call(current.map((e) => e.id).toList());
+                              widget.onChanged?.call(
+                                current.map((e) => e.id).toList(),
+                              );
                             },
                           ),
                         )

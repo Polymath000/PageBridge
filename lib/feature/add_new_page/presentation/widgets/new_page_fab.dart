@@ -29,7 +29,9 @@ class NewPageFab extends StatelessWidget {
           Navigator.pop(context, url);
         }
       },
-      backgroundColor: Theme.of(context).floatingActionButtonTheme.backgroundColor?.withValues(alpha: 0.6),
+      backgroundColor: Theme.of(
+        context,
+      ).floatingActionButtonTheme.backgroundColor?.withValues(alpha: 0.6),
       elevation: 0,
       focusElevation: 0,
       hoverElevation: 0,

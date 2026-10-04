@@ -43,13 +43,13 @@ class AppConfirmDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextStyle titleStyle =
         (AppTextStyles.titleMedium ?? const TextStyle()).copyWith(
-      color: Theme.of(context).colorScheme.onSurface,
-      fontWeight: FontWeight.w600,
-    );
+          color: Theme.of(context).colorScheme.onSurface,
+          fontWeight: FontWeight.w600,
+        );
     final TextStyle messageStyle =
         (AppTextStyles.bodyMedium ?? const TextStyle()).copyWith(
-      color: Theme.of(context).colorScheme.onSurfaceVariant,
-    );
+          color: Theme.of(context).colorScheme.onSurfaceVariant,
+        );
 
     return Dialog(
       insetPadding: const EdgeInsets.symmetric(horizontal: 24),
@@ -71,7 +71,9 @@ class AppConfirmDialog extends StatelessWidget {
                     onPressed: () => Navigator.of(context).pop(false),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: Theme.of(context).colorScheme.onSurface,
-                      side: BorderSide(color: Theme.of(context).colorScheme.outline),
+                      side: BorderSide(
+                        color: Theme.of(context).colorScheme.outline,
+                      ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),

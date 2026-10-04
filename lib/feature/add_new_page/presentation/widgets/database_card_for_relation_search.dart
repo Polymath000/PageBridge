@@ -22,7 +22,9 @@ class DatabaseCardForRelationSearch extends StatelessWidget {
         page.title,
         style: AppTextStyles.titleMedium!.copyWith(
           fontSize: 15.sp,
-          color: isSelected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.onSurface,
+          color: isSelected
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.onSurface,
         ),
       ),
       value: isSelected,
