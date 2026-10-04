@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import "package:flutter_bloc/flutter_bloc.dart";
 import "package:pagebridge/feature/main_layout/presentation/cubit/main_layout_cubit.dart";
-import 'package:pagebridge/config/themes/app_text_style.dart';
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({
@@ -79,7 +78,7 @@ class CustomAppBar extends StatelessWidget {
                   Flexible(
                     child: Text(
                       title,
-                      style: AppTextStyles.titleLarge?.copyWith(
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         color: colorScheme.onSurface,
                         fontWeight: FontWeight.w700,
                         fontSize: 22.sp,

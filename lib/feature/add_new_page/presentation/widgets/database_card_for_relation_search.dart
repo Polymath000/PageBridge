@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pagebridge/config/themes/app_text_style.dart';
 import 'package:pagebridge/feature/pages/domain/entities/page_entity.dart';
 
 class DatabaseCardForRelationSearch extends StatelessWidget {
@@ -20,7 +19,7 @@ class DatabaseCardForRelationSearch extends StatelessWidget {
     return CheckboxListTile(
       title: Text(
         page.title,
-        style: AppTextStyles.titleMedium!.copyWith(
+        style: Theme.of(context).textTheme.titleMedium!.copyWith(
           fontSize: 15.sp,
           color: isSelected
               ? Theme.of(context).colorScheme.primary

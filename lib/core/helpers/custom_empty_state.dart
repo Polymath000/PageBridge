@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pagebridge/config/themes/app_icons.dart';
-import 'package:pagebridge/config/themes/app_text_style.dart';
 
 /// A friendly empty-state widget distinct from error states.
 ///
@@ -36,7 +35,7 @@ class CustomEmptyState extends StatelessWidget {
             Text(
               title,
               textAlign: TextAlign.center,
-              style: AppTextStyles.titleLarge?.copyWith(
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 color: colorScheme.onSurface,
                 fontWeight: FontWeight.w600,
               ),
@@ -46,7 +45,7 @@ class CustomEmptyState extends StatelessWidget {
               Text(
                 subtitle!,
                 textAlign: TextAlign.center,
-                style: AppTextStyles.titleMedium?.copyWith(
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: colorScheme.onSurfaceVariant,
                 ),
               ),

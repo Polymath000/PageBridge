@@ -2,7 +2,6 @@ import 'package:pagebridge/core/enums/notion_property_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagebridge/core/theme/app_colors.dart';
-import 'package:pagebridge/config/themes/app_text_style.dart';
 import 'package:pagebridge/core/utls/get_icon_depends_on_property_type.dart';
 import 'package:pagebridge/feature/databases/domain/entities/property_entity.dart';
 import 'package:pagebridge/feature/databases/presentation/widgets/property_type.dart';
@@ -35,7 +34,7 @@ class PropertyWidget extends StatelessWidget {
                   property.name.toUpperCase(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.titleMedium!.copyWith(
+                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
                     color: AppColors.grey,
                     fontSize: 12.sp,
                     fontWeight: FontWeight.bold,

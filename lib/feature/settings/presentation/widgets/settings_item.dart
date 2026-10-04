@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pagebridge/config/themes/app_icons.dart';
-import 'package:pagebridge/config/themes/app_text_style.dart';
 
 class SettingsItem extends StatelessWidget {
   const SettingsItem({
@@ -39,7 +38,7 @@ class SettingsItem extends StatelessWidget {
       ),
       title: Text(
         title,
-        style: AppTextStyles.titleMedium?.copyWith(
+        style: Theme.of(context).textTheme.titleMedium?.copyWith(
           color: color,
           fontWeight: FontWeight.w600,
         ),
@@ -47,7 +46,7 @@ class SettingsItem extends StatelessWidget {
       subtitle: subtitle != null
           ? Text(
               subtitle!,
-              style: AppTextStyles.bodyMedium?.copyWith(
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
             )

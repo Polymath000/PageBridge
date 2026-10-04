@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:pagebridge/config/themes/app_text_style.dart';
 
 Future<bool> showAppConfirmDialog({
   required final BuildContext context,
@@ -42,12 +41,12 @@ class AppConfirmDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextStyle titleStyle =
-        (AppTextStyles.titleMedium ?? const TextStyle()).copyWith(
+        (Theme.of(context).textTheme.titleMedium ?? const TextStyle()).copyWith(
           color: Theme.of(context).colorScheme.onSurface,
           fontWeight: FontWeight.w600,
         );
     final TextStyle messageStyle =
-        (AppTextStyles.bodyMedium ?? const TextStyle()).copyWith(
+        (Theme.of(context).textTheme.bodyMedium ?? const TextStyle()).copyWith(
           color: Theme.of(context).colorScheme.onSurfaceVariant,
         );
 

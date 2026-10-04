@@ -7,7 +7,6 @@ import 'package:pagebridge/core/responsive/clamped_text_scaler.dart';
 import 'package:pagebridge/core/responsive/responsive_scale.dart';
 import 'package:pagebridge/core/services/shared_preferences_singleton.dart';
 import 'package:pagebridge/core/theme/app_theme.dart';
-import 'package:pagebridge/config/themes/app_text_style.dart';
 import 'package:pagebridge/feature/settings/presentation/controllers/theme_mode_cubit/theme_mode_cubit.dart';
 
 class PageBridgeApp extends StatelessWidget {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pagebridge/core/theme/app_colors.dart';
-import 'package:pagebridge/config/themes/app_text_style.dart';
 import 'package:pagebridge/config/themes/app_icons.dart';
 
 class CustomErrorWidget extends StatelessWidget {
@@ -20,7 +19,7 @@ class CustomErrorWidget extends StatelessWidget {
             Text(
               errorMessage,
               textAlign: TextAlign.center,
-              style: AppTextStyles.titleLarge!.copyWith(
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
                 fontWeight: FontWeight.bold,
                 color: AppColors.lightRed,
               ),
@@ -52,7 +51,7 @@ class CustomErrorWidgetRelationType extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.visible,
               textAlign: TextAlign.start,
-              style: AppTextStyles.titleLarge!.copyWith(
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
                 fontWeight: FontWeight.bold,
                 color: AppColors.lightRed,
               ),

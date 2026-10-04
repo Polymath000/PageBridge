@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagebridge/config/routes/on_generate_routes.dart';
 import 'package:pagebridge/core/theme/app_colors.dart';
-import 'package:pagebridge/config/themes/app_text_style.dart';
 import 'package:pagebridge/feature/pages/domain/entities/page_entity.dart';
 import 'package:pagebridge/feature/databases/domain/entities/property_entity.dart';
 
@@ -63,7 +62,7 @@ class _RelationTypeWidgetState extends State<RelationTypeWidget> {
                     padding: const EdgeInsets.symmetric(vertical: 4.0),
                     child: Text(
                       "Select pages",
-                      style: AppTextStyles.titleMedium?.copyWith(
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         color: Theme.of(context).colorScheme.onSurfaceVariant,
                         fontSize: 14.sp,
                       ),
@@ -77,7 +76,7 @@ class _RelationTypeWidgetState extends State<RelationTypeWidget> {
                           (page) => Chip(
                             label: Text(
                               page.title,
-                              style: AppTextStyles.bodyMedium?.copyWith(
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                 color: Theme.of(context).colorScheme.onPrimary,
                               ),
                             ),

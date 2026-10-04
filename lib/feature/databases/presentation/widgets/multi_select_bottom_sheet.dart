@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pagebridge/config/themes/app_text_style.dart';
 import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:pagebridge/feature/databases/domain/entities/property_entity.dart';
 import 'package:pagebridge/feature/databases/presentation/widgets/multi_select_chip.dart';
@@ -44,7 +43,7 @@ class MultiSelectBottomSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           _buildDragHandle(),
-          _buildHeader(),
+          _buildHeader(context),
           Flexible(
             child: ListView.builder(
               shrinkWrap: true,
@@ -108,14 +107,14 @@ class MultiSelectBottomSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Align(
         alignment: Alignment.centerLeft,
         child: Text(
           "Select Options",
-          style: AppTextStyles.titleMedium?.copyWith(
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
             fontSize: 16.sp,
             fontWeight: FontWeight.bold,
           ),

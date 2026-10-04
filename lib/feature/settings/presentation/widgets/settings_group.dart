@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pagebridge/config/themes/app_text_style.dart';
 
 class SettingsGroup extends StatelessWidget {
   const SettingsGroup({super.key, required this.title, required this.children});
@@ -15,7 +14,7 @@ class SettingsGroup extends StatelessWidget {
           padding: const EdgeInsets.only(left: 16, bottom: 12),
           child: Text(
             title.toUpperCase(),
-            style: AppTextStyles.labelMedium?.copyWith(
+            style: Theme.of(context).textTheme.labelMedium?.copyWith(
               color: Theme.of(context).colorScheme.primary,
               letterSpacing: 1.2,
               fontWeight: FontWeight.bold,

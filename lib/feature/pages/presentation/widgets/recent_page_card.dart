@@ -1,7 +1,6 @@
 import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:pagebridge/config/themes/app_icons.dart';
-import 'package:pagebridge/config/themes/app_text_style.dart';
 import 'package:pagebridge/feature/pages/domain/entities/page_entity.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -34,7 +33,7 @@ class RecentPageCard extends StatelessWidget {
               : Icon(AppIcons.description),
           title: Text(
             page.title,
-            style: AppTextStyles.titleMedium?.copyWith(fontSize: 15),
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: 15),
           ),
           trailing: Icon(AppIcons.openInNew, size: 20, color: AppColors.grey),
           onTap: () {

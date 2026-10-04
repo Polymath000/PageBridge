@@ -3,7 +3,6 @@ import 'package:pagebridge/config/themes/app_icons.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pagebridge/core/theme/app_colors.dart';
-import 'package:pagebridge/config/themes/app_text_style.dart';
 import 'package:pagebridge/feature/auth/presentation/widgets/custom_animation_background.dart';
 import 'package:pagebridge/core/helpers/custom_search_text_field.dart';
 import 'package:pagebridge/feature/pages/domain/entities/page_entity.dart';
@@ -229,7 +228,7 @@ class _RelationSearchViewState extends State<RelationSearchView> {
           SizedBox(height: 16.r),
           Text(
             "No pages found",
-            style: AppTextStyles.titleMedium!.copyWith(color: AppColors.grey),
+            style: Theme.of(context).textTheme.titleMedium!.copyWith(color: AppColors.grey),
           ),
         ],
       ),

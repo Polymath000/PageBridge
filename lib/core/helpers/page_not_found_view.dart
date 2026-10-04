@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pagebridge/config/themes/app_icons.dart';
-import 'package:pagebridge/config/themes/app_text_style.dart';
 import 'package:pagebridge/config/routes/on_generate_routes.dart';
 
 class PageNotFoundView extends StatelessWidget {
@@ -80,7 +79,7 @@ class PageNotFoundView extends StatelessWidget {
                   ),
                   child: Text(
                     '404 NOT FOUND',
-                    style: AppTextStyles.labelMedium?.copyWith(
+                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
                       color: Theme.of(context).colorScheme.primary,
                       letterSpacing: 1.2,
                       fontSize: 12,
@@ -91,13 +90,13 @@ class PageNotFoundView extends StatelessWidget {
                 const SizedBox(height: 16),
                 Text(
                   'Lost in Cyberspace',
-                  style: AppTextStyles.headlineMedium,
+                  style: Theme.of(context).textTheme.headlineMedium,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 12),
                 Text(
                   'The page you requested could not be found.',
-                  style: AppTextStyles.bodyMedium,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 36),

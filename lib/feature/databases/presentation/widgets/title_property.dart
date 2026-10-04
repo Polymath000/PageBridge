@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pagebridge/config/themes/app_text_style.dart';
 
 class TitleProperty extends StatelessWidget {
   const TitleProperty({super.key, required this.onChanged});
@@ -16,17 +15,17 @@ class TitleProperty extends StatelessWidget {
       maxLines: 2,
       decoration: InputDecoration(
         hintText: 'New Page',
-        labelStyle: AppTextStyles.titleLarge!.copyWith(
+        labelStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
           color: textColor,
           fontSize: 22.sp,
         ),
-        hintStyle: AppTextStyles.titleLarge!.copyWith(
+        hintStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
           color: textColor,
           fontSize: 22.sp,
         ),
         border: InputBorder.none,
       ),
-      style: AppTextStyles.titleLarge!.copyWith(
+      style: Theme.of(context).textTheme.titleLarge!.copyWith(
         color: textColor,
         fontSize: 22.sp,
       ),

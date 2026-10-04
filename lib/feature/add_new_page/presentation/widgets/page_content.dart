@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pagebridge/config/themes/app_text_style.dart';
 import 'package:pagebridge/feature/add_new_page/presentation/controllers/new_page_cubit/new_page_cubit.dart';
 
 class PageContent extends StatelessWidget {
@@ -17,7 +16,7 @@ class PageContent extends StatelessWidget {
           child: TextFormField(
             maxLines: null,
             minLines: 8,
-            style: AppTextStyles.bodyLarge?.copyWith(height: 1.5),
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(height: 1.5),
             decoration: const InputDecoration(
               hintText: "Start typing your content here...",
               border: InputBorder.none,

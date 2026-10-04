@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:pagebridge/config/routes/on_generate_routes.dart';
 import 'package:pagebridge/core/theme/app_colors.dart';
-import 'package:pagebridge/config/themes/app_text_style.dart';
 import 'package:pagebridge/config/themes/app_icons.dart';
 
 import 'package:pagebridge/core/helpers/custom_show_snack_bar.dart';
@@ -116,7 +115,7 @@ class DatabaseCard extends StatelessWidget {
                               database.title,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: AppTextStyles.titleLarge!.copyWith(
+                              style: Theme.of(context).textTheme.titleLarge!.copyWith(
                                 color: colorScheme.onSurface,
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.w600,

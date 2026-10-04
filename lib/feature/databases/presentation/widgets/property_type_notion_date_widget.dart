@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:pagebridge/config/themes/app_text_style.dart';
 import 'package:pagebridge/feature/databases/presentation/widgets/property_type.dart';
 
 class NotionDateWidget extends StatefulWidget {
@@ -69,7 +68,7 @@ class _NotionDateWidgetState extends State<NotionDateWidget> {
         },
         child: Text(
           date != null ? DateFormat('yyyy-MM-dd').format(date!) : "Empty",
-          style: AppTextStyles.titleMedium!.copyWith(
+          style: Theme.of(context).textTheme.titleMedium!.copyWith(
             color: date != null
                 ? Theme.of(context).colorScheme.onSurface
                 : (Theme.of(context).colorScheme.onSurfaceVariant),
