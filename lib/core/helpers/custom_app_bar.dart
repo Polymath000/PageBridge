@@ -22,14 +22,14 @@ class CustomAppBar extends StatelessWidget {
     final ownerAvatarUrl = context.read<MainLayoutCubit>().ownerAvatarUrl;
 
     return SliverAppBar(
-      toolbarHeight: 80,
+      toolbarHeight: 60,
       pinned: true,
       automaticallyImplyLeading: false,
       backgroundColor: AppColors.transparent,
       shadowColor: AppColors.transparent,
       surfaceTintColor: AppColors.transparent,
       elevation: 0,
-      expandedHeight: 120,
+      expandedHeight: 80,
       flexibleSpace: ClipRRect(
         borderRadius: const BorderRadius.vertical(bottom: Radius.circular(24)),
         child: BackdropFilter(
@@ -91,7 +91,7 @@ class CustomAppBar extends StatelessWidget {
                   ),
                 ],
               ),
-              expandedTitleScale: 1.15,
+              expandedTitleScale: 1,
             ),
           ),
         ),

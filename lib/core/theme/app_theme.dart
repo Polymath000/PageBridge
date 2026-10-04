@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'app_colors.dart';
+import 'app_text_theme.dart';
 
-class AppTheme {
-  static ThemeData lightTheme = ThemeData(
+abstract final class AppTheme {
+  static ThemeData light() => ThemeData(
     brightness: Brightness.light,
     useMaterial3: true,
     colorScheme: ColorScheme.fromSeed(
@@ -48,15 +49,10 @@ class AppTheme {
       ),
     ),
 
-    textTheme: const TextTheme(
-      bodyLarge: TextStyle(color: AppColors.lightText),
-      bodyMedium: TextStyle(color: AppColors.lightText),
-      titleLarge: TextStyle(color: AppColors.lightText),
-      titleMedium: TextStyle(color: AppColors.lightText),
-    ),
+    textTheme: AppTextTheme.build(AppColors.lightText),
   );
 
-  static ThemeData darkTheme = ThemeData(
+  static ThemeData dark() => ThemeData(
     brightness: Brightness.dark,
     useMaterial3: true,
 
@@ -106,11 +102,6 @@ class AppTheme {
       ),
     ),
 
-    textTheme: const TextTheme(
-      bodyLarge: TextStyle(color: AppColors.darkText),
-      bodyMedium: TextStyle(color: AppColors.darkText),
-      titleLarge: TextStyle(color: AppColors.darkText),
-      titleMedium: TextStyle(color: AppColors.darkText),
-    ),
+    textTheme: AppTextTheme.build(AppColors.darkText),
   );
 }

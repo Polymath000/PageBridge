@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:pagebridge/config/themes/app_images.dart';
 import 'package:pagebridge/core/constants/constants.dart';

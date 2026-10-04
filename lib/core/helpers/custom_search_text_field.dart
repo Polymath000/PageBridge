@@ -105,8 +105,8 @@ class _CustomSearchTextFieldState extends State<CustomSearchTextField> {
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
                   contentPadding: EdgeInsets.symmetric(
-                    vertical: 14.h,
-                    horizontal: 4.w,
+                    vertical: 14.r,
+                    horizontal: 4.r,
                   ),
                 ),
               ),

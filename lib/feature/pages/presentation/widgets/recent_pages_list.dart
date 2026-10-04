@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pagebridge/config/themes/app_icons.dart';
+import 'package:pagebridge/core/helpers/adaptive_sliver_grid.dart';
 import 'package:pagebridge/core/helpers/custom_empty_state.dart';
 import 'package:pagebridge/core/utls/error_widget.dart';
 import 'package:pagebridge/feature/pages/presentation/controllers/recent_pages_cubit/recent_pages_cubit.dart';
@@ -70,8 +71,10 @@ class _RecentPagesListState extends State<RecentPagesList> {
               ),
             );
           }
-          return SliverList(
-            delegate: SliverChildBuilderDelegate((context, index) {
+          return AdaptiveSliverGrid(
+            itemCount: items.length + (state.isPaginating ? 1 : 0),
+            spacing: 16,
+            itemBuilder: (context, index) {
               if (index >= items.length) {
                 return Column(
                   mainAxisSize: MainAxisSize.min,
@@ -82,7 +85,7 @@ class _RecentPagesListState extends State<RecentPagesList> {
                 );
               }
               return RecentPageCard(page: items[index]);
-            }, childCount: items.length + (state.isPaginating ? 1 : 0)),
+            },
           );
         }
         return const SliverToBoxAdapter(child: SizedBox.shrink());

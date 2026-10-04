@@ -143,7 +143,7 @@ class _RelationSearchViewState extends State<RelationSearchView> {
 
                     if (state is ReturnPagesLoading) {
                       return SliverPadding(
-                        padding: EdgeInsets.symmetric(horizontal: 12.w),
+                        padding: EdgeInsets.symmetric(horizontal: 12.r),
                         sliver: SliverList(
                           delegate: SliverChildBuilderDelegate(
                             (context, index) =>
@@ -169,9 +169,9 @@ class _RelationSearchViewState extends State<RelationSearchView> {
 
                       return SliverPadding(
                         padding: EdgeInsets.only(
-                          left: 12.w,
-                          right: 12.w,
-                          bottom: 80.h,
+                          left: 12.r,
+                          right: 12.r,
+                          bottom: 80.r,
                         ),
                         sliver: SliverList(
                           delegate: SliverChildBuilderDelegate((
@@ -180,7 +180,7 @@ class _RelationSearchViewState extends State<RelationSearchView> {
                           ) {
                             if (index == pages.length) {
                               return Padding(
-                                padding: EdgeInsets.symmetric(vertical: 20.h),
+                                padding: EdgeInsets.symmetric(vertical: 20.r),
                                 child: const RelationSearchCardSkeleton(),
                               );
                             }
@@ -226,7 +226,7 @@ class _RelationSearchViewState extends State<RelationSearchView> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(AppIcons.searchOff, size: 64.sp, color: AppColors.grey),
-          SizedBox(height: 16.h),
+          SizedBox(height: 16.r),
           Text(
             "No pages found",
             style: AppTextStyles.titleMedium!.copyWith(color: AppColors.grey),

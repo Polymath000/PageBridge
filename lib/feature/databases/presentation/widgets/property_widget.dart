@@ -29,7 +29,7 @@ class PropertyWidget extends StatelessWidget {
                 size: 14.sp,
                 color: AppColors.grey,
               ),
-              SizedBox(width: 8.w),
+              SizedBox(width: 8.r),
               Expanded(
                 child: Text(
                   property.name.toUpperCase(),
@@ -45,7 +45,7 @@ class PropertyWidget extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 8.h),
+          SizedBox(height: 8.r),
           Container(
             width: double.infinity,
             padding: const EdgeInsets.only(left: 12, top: 2),

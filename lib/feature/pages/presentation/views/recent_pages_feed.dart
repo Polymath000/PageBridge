@@ -59,29 +59,27 @@ class _RecentPagesFeedState extends State<RecentPagesFeed> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.transparent,
-      body: SafeArea(
-        child: BlocProvider(
-          create: (context) =>
-              RecentPagesCubit(repo: getit.get<RecentPagesRepo>())
-                ..fetchRecentPages(),
-          child: Builder(
-            builder: (context) {
-              return AppRefreshIndicator(
-                edgeOffset: 200,
-                onRefresh: () async {
-                  await context.read<RecentPagesCubit>().fetchRecentPages();
-                },
-                child: CustomScrollView(
-                  controller: _scrollController,
-                  slivers: [
-                    CustomAppBar(title: 'Recent Pages', showActions: false),
-                    RecentPagesFeedBody(scrollController: _scrollController),
-                    const SliverToBoxAdapter(child: SizedBox(height: 100)),
-                  ],
-                ),
-              );
-            },
-          ),
+      body: BlocProvider(
+        create: (context) =>
+            RecentPagesCubit(repo: getit.get<RecentPagesRepo>())
+              ..fetchRecentPages(),
+        child: Builder(
+          builder: (context) {
+            return AppRefreshIndicator(
+              edgeOffset: 200,
+              onRefresh: () async {
+                await context.read<RecentPagesCubit>().fetchRecentPages();
+              },
+              child: CustomScrollView(
+                controller: _scrollController,
+                slivers: [
+                  CustomAppBar(title: 'Recent Pages', showActions: false),
+                  RecentPagesFeedBody(scrollController: _scrollController),
+                  const SliverToBoxAdapter(child: SizedBox(height: 100)),
+                ],
+              ),
+            );
+          },
         ),
       ),
       floatingActionButton: ValueListenableBuilder<bool>(

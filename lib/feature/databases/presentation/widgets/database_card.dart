@@ -81,8 +81,8 @@ class DatabaseCard extends StatelessWidget {
                     children: [
                       // Emoji / Icon container
                       Container(
-                        width: 48.h,
-                        height: 48.h,
+                        width: 48.r,
+                        height: 48.r,
                         decoration: BoxDecoration(
                           color: colorScheme.primaryContainer.withValues(
                             alpha: 0.35,
@@ -92,8 +92,8 @@ class DatabaseCard extends StatelessWidget {
                         alignment: Alignment.center,
                         child: (database.icon?.emoji?.isEmpty ?? true)
                             ? SizedBox(
-                                height: 24.h,
-                                width: 24.h,
+                                height: 24.r,
+                                width: 24.r,
                                 child: Image(
                                   image: AssetImage(
                                     Assets.assetsImagesDatabaseicon,

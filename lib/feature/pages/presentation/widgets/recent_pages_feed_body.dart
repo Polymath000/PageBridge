@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pagebridge/core/helpers/custom_search_text_field.dart';
+import 'package:pagebridge/core/helpers/sliver_max_width.dart';
 import 'package:pagebridge/feature/pages/presentation/controllers/recent_pages_cubit/recent_pages_cubit.dart';
 import 'package:pagebridge/feature/pages/presentation/widgets/recent_pages_list.dart';
 
@@ -10,7 +11,8 @@ class RecentPagesFeedBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverPadding(
+    return SliverMaxWidth(
+      maxWidth: 840,
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 16),
       sliver: SliverMainAxisGroup(
         slivers: [

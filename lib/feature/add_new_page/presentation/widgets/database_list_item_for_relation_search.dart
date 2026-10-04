@@ -19,7 +19,7 @@ class DatabaseListItemForRelationSearch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 8.h),
+      margin: EdgeInsets.only(bottom: 8.r),
       decoration: BoxDecoration(
         color: isSelected
             ? Theme.of(context).colorScheme.primary.withValues(alpha: 0.1)

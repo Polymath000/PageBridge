@@ -158,7 +158,7 @@ class _BackgroundPalette {
 
   static const _BackgroundPalette dark = _BackgroundPalette(
     backgroundGradient: [
-      AppColors.gunmetal,
+      AppColors.darkBlue,
       AppColors.spaceBlack,
       AppColors.darkerGrey,
     ],
@@ -170,7 +170,7 @@ class _BackgroundPalette {
 
   static const _BackgroundPalette light = _BackgroundPalette(
     backgroundGradient: [
-      AppColors.lightSurface,
+      AppColors.lightBlue,
       AppColors.lightGray,
       AppColors.mediumGray,
     ],

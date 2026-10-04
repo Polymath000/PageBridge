@@ -9,11 +9,11 @@ class CustomLoadingIndecator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: height.h),
+      padding: EdgeInsets.symmetric(vertical: height.r),
       child: Center(
         child: SizedBox(
-          height: 190.h,
-          child: SpinKitSpinningLines(color: AppColors.green, size: 160.h),
+          height: 190.r,
+          child: SpinKitSpinningLines(color: AppColors.green, size: 160.r),
         ),
       ),
     );

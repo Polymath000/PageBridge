@@ -58,39 +58,37 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.transparent,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            BlocProvider(
-              create: (context) =>
-                  DatabasesCubit(databaseRepo: getit.get<DatabaseRepo>()),
-              child: Builder(
-                builder: (context) {
-                  final workspaceName = context
-                      .read<MainLayoutCubit>()
-                      .workspaceName;
-                  final databasesTitle = workspaceName ?? 'Databases';
-                  return AppRefreshIndicator(
-                    edgeOffset: 200,
-                    onRefresh: () async {
-                      await context.read<DatabasesCubit>().returnDatabases();
-                    },
-                    child: CustomScrollView(
-                      controller: _databasesScrollController,
-                      slivers: [
-                        CustomAppBar(title: databasesTitle),
-                        HomeViewBody(
-                          scrollController: _databasesScrollController,
-                        ),
-                        const SliverToBoxAdapter(child: SizedBox(height: 60)),
-                      ],
-                    ),
-                  );
-                },
-              ),
+      body: Stack(
+        children: [
+          BlocProvider(
+            create: (context) =>
+                DatabasesCubit(databaseRepo: getit.get<DatabaseRepo>()),
+            child: Builder(
+              builder: (context) {
+                final workspaceName = context
+                    .read<MainLayoutCubit>()
+                    .workspaceName;
+                final databasesTitle = workspaceName ?? 'Databases';
+                return AppRefreshIndicator(
+                  edgeOffset: 200,
+                  onRefresh: () async {
+                    await context.read<DatabasesCubit>().returnDatabases();
+                  },
+                  child: CustomScrollView(
+                    controller: _databasesScrollController,
+                    slivers: [
+                      CustomAppBar(title: databasesTitle),
+                      HomeViewBody(
+                        scrollController: _databasesScrollController,
+                      ),
+                      const SliverToBoxAdapter(child: SizedBox(height: 60)),
+                    ],
+                  ),
+                );
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
       floatingActionButton: ValueListenableBuilder<bool>(
         valueListenable: _showFab,

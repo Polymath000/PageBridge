@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pagebridge/config/themes/app_icons.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pagebridge/core/helpers/adaptive_sliver_grid.dart';
 import 'package:pagebridge/core/helpers/custom_empty_state.dart';
 import 'package:pagebridge/core/utls/error_widget.dart';
 import 'package:pagebridge/feature/databases/presentation/controllers/return_databases_cubit/return_databases_cubit.dart';
@@ -72,8 +73,10 @@ class _DatabasesListState extends State<DatabasesList> {
               ),
             );
           }
-          return SliverList(
-            delegate: SliverChildBuilderDelegate((context, index) {
+          return AdaptiveSliverGrid(
+            itemCount: items.length + (state.isPaginating ? 1 : 0),
+            spacing: 16,
+            itemBuilder: (context, index) {
               if (index >= items.length) {
                 return Column(
                   mainAxisSize: MainAxisSize.min,
@@ -84,10 +87,10 @@ class _DatabasesListState extends State<DatabasesList> {
                 );
               }
               return DatabaseCard(database: items[index]);
-            }, childCount: items.length + (state.isPaginating ? 1 : 0)),
+            },
           );
         }
-        return SliverToBoxAdapter(child: SizedBox.shrink());
+        return const SliverToBoxAdapter(child: SizedBox.shrink());
       },
     );
   }
