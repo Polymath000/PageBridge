@@ -1,5 +1,4 @@
 import 'package:pagebridge/core/theme/app_colors.dart';
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import "package:flutter_bloc/flutter_bloc.dart";
@@ -24,75 +23,71 @@ class CustomAppBar extends StatelessWidget {
       toolbarHeight: 60,
       pinned: true,
       automaticallyImplyLeading: false,
-      backgroundColor: AppColors.transparent,
+      backgroundColor: Colors.transparent,
       shadowColor: AppColors.transparent,
       surfaceTintColor: AppColors.transparent,
       elevation: 0,
       expandedHeight: 80,
-      flexibleSpace: ClipRRect(
-        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(24)),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-          child: Container(
-            decoration: BoxDecoration(
-              color: colorScheme.surface.withValues(alpha: 0.5),
-              borderRadius: const BorderRadius.vertical(
-                bottom: Radius.circular(24),
-              ),
-              border: Border(
-                bottom: BorderSide(
-                  color: colorScheme.outlineVariant.withValues(alpha: 0.2),
-                  width: 0.5,
+      flexibleSpace: Container(
+        decoration: BoxDecoration(
+          color: Colors.black.withValues(alpha: 0.6),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.black.withValues(alpha: 0.6),
+              Colors.black.withValues(alpha: 0.6),
+            ],
+          ),
+          borderRadius: const BorderRadius.vertical(
+            bottom: Radius.circular(20),
+          ),
+        ),
+        child: FlexibleSpaceBar(
+          titlePadding: const EdgeInsets.only(left: 20, bottom: 20),
+          title: Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              if (ownerAvatarUrl != null) ...[
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: colorScheme.primary.withValues(alpha: 0.4),
+                      width: 2,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: colorScheme.primary.withValues(alpha: 0.15),
+                        blurRadius: 8,
+                        spreadRadius: 1,
+                      ),
+                    ],
+                  ),
+                  child: CircleAvatar(
+                    radius: 14,
+                    backgroundImage: NetworkImage(ownerAvatarUrl),
+                  ),
+                ),
+                const SizedBox(width: 10),
+              ],
+              Flexible(
+                child: Text(
+                  title,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    color: colorScheme.onSurface,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 22.sp,
+                    letterSpacing: -0.5,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
-            ),
-            child: FlexibleSpaceBar(
-              titlePadding: const EdgeInsets.only(left: 20, bottom: 20),
-              title: Row(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  if (ownerAvatarUrl != null) ...[
-                    Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: colorScheme.primary.withValues(alpha: 0.4),
-                          width: 2,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: colorScheme.primary.withValues(alpha: 0.15),
-                            blurRadius: 8,
-                            spreadRadius: 1,
-                          ),
-                        ],
-                      ),
-                      child: CircleAvatar(
-                        radius: 14,
-                        backgroundImage: NetworkImage(ownerAvatarUrl),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                  ],
-                  Flexible(
-                    child: Text(
-                      title,
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        color: colorScheme.onSurface,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 22.sp,
-                        letterSpacing: -0.5,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
-              ),
-              expandedTitleScale: 1,
-            ),
+            ],
           ),
+          expandedTitleScale: 1,
         ),
       ),
     );

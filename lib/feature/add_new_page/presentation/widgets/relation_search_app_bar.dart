@@ -1,7 +1,5 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pagebridge/core/theme/app_colors.dart';
 import 'package:pagebridge/core/helpers/custom_back_arrow.dart';
 
 class RelationSearchAppBar extends StatelessWidget {
@@ -16,7 +14,7 @@ class RelationSearchAppBar extends StatelessWidget {
     return SliverAppBar(
       pinned: true,
       toolbarHeight: 70,
-      backgroundColor: AppColors.transparent,
+      backgroundColor: Colors.transparent,
       elevation: 0,
       automaticallyImplyLeading: false,
       leading: const CustomBackArrow(),
@@ -32,19 +30,19 @@ class RelationSearchAppBar extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
       ),
       centerTitle: true,
-      flexibleSpace: ClipRRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-          child: Container(
-            decoration: BoxDecoration(
-              color: colorScheme.surface.withValues(alpha: 0.6),
-              border: Border(
-                bottom: BorderSide(
-                  color: colorScheme.outlineVariant.withValues(alpha: 0.2),
-                  width: 0.5,
-                ),
-              ),
-            ),
+      flexibleSpace: Container(
+        decoration: BoxDecoration(
+          color: Colors.black.withValues(alpha: 0.6),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.black.withValues(alpha: 0.6),
+              Colors.black.withValues(alpha: 0.6),
+            ],
+          ),
+          borderRadius: const BorderRadius.vertical(
+            bottom: Radius.circular(20),
           ),
         ),
       ),

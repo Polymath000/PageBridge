@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ui';
 import 'package:pagebridge/config/themes/app_icons.dart';
 
 import 'package:flutter/material.dart';
@@ -50,65 +49,59 @@ class _CustomSearchTextFieldState extends State<CustomSearchTextField> {
     return ValueListenableBuilder<TextEditingValue>(
       valueListenable: searchController,
       builder: (context, value, child) {
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(28.r),
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
-            child: Container(
-              decoration: BoxDecoration(
-                color: colorScheme.surface.withValues(alpha: 0.45),
-                borderRadius: BorderRadius.circular(28.r),
-                border: Border.all(
-                  color: colorScheme.outlineVariant.withValues(alpha: 0.25),
-                  width: 0.5,
+        return Container(
+          decoration: BoxDecoration(
+            color: Colors.black.withValues(alpha: 0.6),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Colors.black.withValues(alpha: 0.6),
+                Colors.black.withValues(alpha: 0.6),
+              ],
+            ),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: TextField(
+            controller: searchController,
+            onChanged: _onSearchChanged,
+            style: TextStyle(color: textColor, fontSize: 15.sp),
+            decoration: InputDecoration(
+              hintText: widget.hintText,
+              hintStyle: TextStyle(
+                color: iconColor,
+                fontWeight: FontWeight.w400,
+                fontSize: 14.sp,
+              ),
+              filled: false,
+              prefixIcon: Padding(
+                padding: const EdgeInsets.only(left: 14, right: 8),
+                child: Icon(
+                  AppIcons.materialSearch,
+                  color: iconColor,
+                  size: 20,
                 ),
               ),
-              child: TextField(
-                controller: searchController,
-                onChanged: _onSearchChanged,
-                style: TextStyle(color: textColor, fontSize: 15.sp),
-                decoration: InputDecoration(
-                  hintText: widget.hintText,
-                  hintStyle: TextStyle(
-                    color: iconColor,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14.sp,
-                  ),
-                  filled: false,
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.only(left: 14, right: 8),
-                    child: Icon(
-                      AppIcons.materialSearch,
-                      color: iconColor,
-                      size: 20,
-                    ),
-                  ),
-                  prefixIconConstraints: const BoxConstraints(
-                    minWidth: 40,
-                    minHeight: 40,
-                  ),
-                  suffixIcon: value.text.isNotEmpty
-                      ? IconButton(
-                          icon: Icon(
-                            AppIcons.clear,
-                            color: iconColor,
-                            size: 18,
-                          ),
-                          onPressed: () {
-                            searchController.clear();
-                            _debounce?.cancel();
-                            widget.getPages?.call('');
-                          },
-                        )
-                      : null,
-                  border: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(
-                    vertical: 14.r,
-                    horizontal: 4.r,
-                  ),
-                ),
+              prefixIconConstraints: const BoxConstraints(
+                minWidth: 40,
+                minHeight: 40,
+              ),
+              suffixIcon: value.text.isNotEmpty
+                  ? IconButton(
+                      icon: Icon(AppIcons.clear, color: iconColor, size: 18),
+                      onPressed: () {
+                        searchController.clear();
+                        _debounce?.cancel();
+                        widget.getPages?.call('');
+                      },
+                    )
+                  : null,
+              border: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              contentPadding: EdgeInsets.symmetric(
+                vertical: 14.r,
+                horizontal: 4.r,
               ),
             ),
           ),
