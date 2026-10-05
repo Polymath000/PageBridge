@@ -32,17 +32,15 @@ class RelationSearchAppBar extends StatelessWidget {
       centerTitle: true,
       flexibleSpace: Container(
         decoration: BoxDecoration(
-          color: Colors.black.withValues(alpha: 0.6),
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Colors.black.withValues(alpha: 0.6),
-              Colors.black.withValues(alpha: 0.6),
-            ],
-          ),
+          color: colorScheme.surface.withValues(alpha: 0.8),
           borderRadius: const BorderRadius.vertical(
             bottom: Radius.circular(20),
+          ),
+          border: Border(
+            bottom: BorderSide(
+              color: colorScheme.outlineVariant.withValues(alpha: 0.2),
+              width: 1,
+            ),
           ),
         ),
       ),
