@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:pagebridge/config/themes/app_icons.dart';
 import 'package:pagebridge/config/routes/on_generate_routes.dart';
+import 'package:pagebridge/config/themes/app_text_style.dart';
 
 class PageNotFoundView extends StatelessWidget {
   const PageNotFoundView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Ensure styles are initialized if not already
-
     AppTextStyles.init(context);
 
     return Scaffold(
