@@ -14,6 +14,7 @@
   - `lib/config/`: App routing (`on_generate_routes.dart`), theme configs, extensions.
 
 ## Tooling & Debugging Setup
+- **Android Toolchain:** Gradle upgraded to `9.1.0`, Android Gradle Plugin (AGP) upgraded to `9.0.1`, and Kotlin (KGP) upgraded to `2.3.20` to satisfy Flutter build validation.
 - **Dart Development Service (DDS):** Required for full Flutter DevTools capabilities (especially the **Performance** tab, Perfetto trace streaming, and CPU sampling).
 - **Configurations (`.vscode/launch.json`):** Launch profiles (Debug, Profile, Release) configured without `--no-dds` so DDS runs and proxies VM Service event streams correctly.
 

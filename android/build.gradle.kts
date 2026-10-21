@@ -20,9 +20,19 @@ subprojects {
 }
 
 subprojects {
-    plugins.withType<com.android.build.gradle.BasePlugin> {
-        val android = project.extensions.getByName("android") as com.android.build.gradle.BaseExtension
-        android.buildFeatures.buildConfig = true
+    plugins.withId("com.android.application") {
+        project.extensions.findByType(com.android.build.api.dsl.ApplicationExtension::class.java)?.apply {
+            buildFeatures {
+                buildConfig = true
+            }
+        }
+    }
+    plugins.withId("com.android.library") {
+        project.extensions.findByType(com.android.build.api.dsl.LibraryExtension::class.java)?.apply {
+            buildFeatures {
+                buildConfig = true
+            }
+        }
     }
 }
 
