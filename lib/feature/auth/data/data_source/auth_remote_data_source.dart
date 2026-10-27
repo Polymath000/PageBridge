@@ -46,6 +46,16 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       FlutterWebAuth2.authenticate(
         url: authorizeUri.toString(),
         callbackUrlScheme: config.callbackScheme,
+        options: const FlutterWebAuth2Options(
+          preferEphemeral: false,
+          customTabsPackageOrder: [
+            'com.android.chrome',
+            'com.huawei.browser',
+            'org.mozilla.firefox',
+            'com.microsoft.emmx',
+            'com.sec.android.app.sbrowser',
+          ],
+        ),
       );
 
   String _extractCode(String callbackUrl, String expectedState) {
